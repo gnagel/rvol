@@ -8,9 +8,12 @@ Gem::Specification.new do |s|
   s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["tonik"]
-  s.date = %q{2010-07-15}
-  s.description = %q{TODO: longer description of your gem}
+  s.authors = ["Toni Karhu"]
+  s.date = %q{2010-08-08}
+  s.description = %q{The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
+    Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
+    these opportunities i need some information. Also as a long term investor i want to invest in companies that are rated highly by online services like msn money ,
+    fool, yahoo etc.}
   s.email = %q{tonikarhu@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -23,10 +26,30 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "features/downloadChainsForTicker.feature",
+     "features/downloadStockscouterData.feature",
+     "features/downloadearnings.feature",
      "features/rfinance.feature",
+     "features/step_definitions/downloadearnings_steps.rb",
      "features/step_definitions/rfinance_steps.rb",
      "features/support/env.rb",
+     "finance.mm",
+     "lib/LoadSPX.rb",
+     "lib/earningsscraper.rb",
+     "lib/economicscraper.rb",
+     "lib/ivolatility.rb",
+     "lib/jobrunner.rb",
+     "lib/loadStatistics.rb",
+     "lib/loadstockscouter.rb",
+     "lib/loadtodayschains500.rb",
+     "lib/model/chain.rb",
+     "lib/model/earning.rb",
+     "lib/model/earnings.rb",
+     "lib/model/ticker.rb",
+     "lib/optionschainsscraper.rb",
      "lib/rfinance.rb",
+     "lib/spx.txt",
+     "rfinance.gemspec",
      "test/helper.rb",
      "test/test_rfinance.rb"
   ]
@@ -34,7 +57,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{A ruby gem for downloading financial data}
   s.test_files = [
     "test/helper.rb",
      "test/test_rfinance.rb"
