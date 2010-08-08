@@ -4,6 +4,10 @@ Feature: download chains for ticker
 
   Scenario: Download list of options chains from yahoo 
     Given there is a connection to the internet available 
-    And i have given the ticker name
-    When I downloadAll chains for a given ticker
+    When I download chains for a given ticker
     Then I should get a set of options chains containing all chains for that ticker
+
+  Scenario: Download S&P500 options chains from yahoo 
+    Given there is a connection to the internet available 
+    When I download chains for the S&P500
+    Then I should get all chains for the S&P 500

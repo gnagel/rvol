@@ -1,12 +1,12 @@
 require 'rubygems'
 require 'open-uri'
 require 'hpricot'
-require 'FileUtils'
 require 'model/chain.rb'
 
 class OptionChainsScraper
 
 def initialize()
+  @@log = Logger.new('./log/error.log','daily') 
 end
 
 def loadData(ticker,date)
@@ -14,10 +14,11 @@ def loadData(ticker,date)
   @url = "http://finance.yahoo.com/q/op?s="+URI.escape(ticker+"&m="+date)
   
   @response = ''
+  @the_stack = []
   
   open(@url, "User-Agent" => "Ruby/#{RUBY_VERSION}") { |f|
                   
-    puts "Fetched document: #{f.base_uri}"
+    #puts "Fetched document: #{f.base_uri}"
      
     # Save the response body
     @response = f.read
@@ -30,24 +31,34 @@ def loadData(ticker,date)
  
  values = (table/"//tr")
  for obj in values
-    if obj.to_html.include? "C00"
-     # puts "A CALL"
-      parseTD(obj,"C",date,ticker)
-    end
+     if obj.to_html.include? "C00"
+       # puts "A CALL"
+       chain = parseTD(obj,"C",date,ticker) 
+        if chain != nil
+          @the_stack.push chain
+        end 
+     end
   
-  if obj.to_html.include? "P00"
-     # puts "A PUT"
-     parseTD(obj,"P",date,ticker)
-  end
+     if obj.to_html.include? "P00"
+       # puts "A PUT"
+       chain =  parseTD(obj,"P",date,ticker)
+       if chain != nil
+         @the_stack.push chain
+      end
+     end
+ end
  
-  end
+ return  @the_stack
+end
 
-end 
+def testInternetConnection?
+   Ping.pingecho "google.com", 1, 80
+end   
 
 def parseTD(td,type,date,ticker)
      
-		
-      #FileUtils.mkdir 'data/chains/'+ticker
+      @chain
+     
       parsed = (td/"//td")
       if parsed.length==8
       
@@ -62,16 +73,33 @@ def parseTD(td,type,date,ticker)
 	  
       #local_filename = "data/chains"+"/"+ticker+"/"+date+".txt"
 		
-      local_filename = 'data/chains'+'/'+ticker.chop+'-'+date+'.txt'
-      File.open(local_filename, 'a') {|f| f.write(type+','+strike+','+symbol+','+last+','+chg+','+bid+','+ask+','+vol+','+open+"\n") }
-	  
-	  # create a chain holder object for the data
-	  chain = Chain.new(strike,symbol,last,chg,bid,ask,vol,open)
-      
+	    # create a chain holder object for the data
+	    @chain = Chain.new(type,ticker,date,strike,symbol,last,chg,bid,ask,vol,open)
+       
       end
+     
+ return @chain
 
 end
 
+
+def toFile(ticker,date,array)
+  
+  local_filename = 'data/chains'+'/'+ticker+'-'+date+'.txt'
+  if !File.exist?(local_filename)
+  
+    array.length.times do |i|
+    chain = array[i]
+    File.open(local_filename, 'a') {|f| f.write(chain.type+','+chain.strike+','+chain.symbol+','+chain.last+','+chain.chg+','+chain.bid+','+chain.ask+','+chain.vol+','+chain.openInt+"\n") }
+    end
+
+  else
+      @@log.error('file: '+ local_filename + ' exists already' )
+    end
+
+
+
+end
   #begin
   # run the thing
   #puts 'testing chain load'

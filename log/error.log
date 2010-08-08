@@ -1,0 +1,8 @@
+# Logfile created on Sun Aug 08 16:40:09 +0300 2010 by logger.rb/22285
+E, [2010-08-08T16:54:46.597263 #757] ERROR -- : file: data/chains/GOOG-2010-12.txtexists already
+E, [2010-08-08T16:55:05.498504 #758] ERROR -- : file: data/chains/GOOG-2010-12.txt exists already
+E, [2010-08-08T17:01:53.605090 #766] ERROR -- : file: data/chains/GOOG-2010-12.txt exists already
+E, [2010-08-08T17:03:03.757654 #767] ERROR -- : file: data/chains/GOOG-2010-12.txt exists already
+E, [2010-08-08T17:07:34.049093 #770] ERROR -- : file: data/chains/GOOG-2010-12.txt exists already
+E, [2010-08-08T17:46:48.464076 #858] ERROR -- : file: data/chains/GOOG-2010-12.txt exists already
+E, [2010-08-08T17:53:28.310650 #863] ERROR -- : file: data/chains/GOOG-2010-12.txt exists already
