@@ -8,7 +8,8 @@ begin
     gem.summary = "A ruby gem for downloading financial data"
     gem.description = "The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
     Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
-    these opportunities i need some information. Also as a long term investor i want to invest in companies that are rated highly by online services like msn money ,
+    these opportunities i need some information. I need information about earnings dates, i need information about options chains, i need information about volatility skews.
+    Also as a long term investor i want to invest in companies that are rated highly by online services like msn money ,
     fool, yahoo etc."
     gem.email = "tonikarhu@gmail.com"
     gem.homepage = "http://github.com/tonik/rfinance"
