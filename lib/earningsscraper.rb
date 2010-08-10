@@ -11,7 +11,7 @@ class EarningsScraper
   # Generate the date string with a form like this: 20100209
   #                                                 YYYYMMDD
   # this will return the next 30 dates and load the earnings for these dates only spx stocks are listed
-  def dayString
+  def getEarings30
   
     local_filename = "data/earnings/earnings.txt"
     if(File.exist?(local_filename))
@@ -36,7 +36,7 @@ class EarningsScraper
   # is ticker in the S&P 500
   def containsSpx(ticker)
     
-    file = "spx.txt"
+    file = "./data/spx.txt"
     
     f = File.open(file, 'r')
     
@@ -82,25 +82,16 @@ class EarningsScraper
       puts "contains" +ticker
       File.open(local_filename, 'a') {|f| f.write(ticker+','+date+"\n") }
 	  # create earnings object
-	  earnings = Earning.new(ticker,date)
+	  earning = Earning.new(ticker,date)
       end
     end
   end
-  
-
-
-
-  
 
 rescue Exception => e
   print e, "\n"
 end
 
-#TODO write this part as tests
 
-begin 
-  test = EarningsScraper.new 
-  puts test.dayString
-end
+
 
 end

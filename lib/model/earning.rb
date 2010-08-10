@@ -1,4 +1,4 @@
-class earning
+class Earning
   attr_accessor :symbol, :date
  
   def initialize(symbol, date)

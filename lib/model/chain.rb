@@ -1,9 +1,8 @@
 require 'logger'
 class Chain
-  attr_accessor :type, :ticker, :date, :strike, :symbol, :last, :chg, :bid, :ask, :vol, :openInt
+  attr_accessor :type, :ticker, :date, :strike, :symbol, :last, :chg, :bid, :ask, :vol, :openInt, :ivolatility
  
- @@log = Logger.new('./log/error.log','daily') 
- 
+
   def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
     @type=type
     @ticker=ticker
