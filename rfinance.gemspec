@@ -9,13 +9,15 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2010-08-09}
+  s.date = %q{2010-08-12}
+  s.default_executable = %q{rfinance.rb}
   s.description = %q{The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
     Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
     these opportunities i need some information. I need information about earnings dates, i need information about options chains, i need information about volatility skews.
     Also as a long term investor i want to invest in companies that are rated highly by online services like msn money ,
     fool, yahoo etc.}
   s.email = %q{tonikarhu@gmail.com}
+  s.executables = ["rfinance.rb"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -28,6 +30,8 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "data/chains/GOOG-2010-12.txt",
+     "data/earnings/earnings.txt",
+     "data/spx.txt",
      "features/downloadChainsForTicker.feature",
      "features/downloadStockscouterData.feature",
      "features/downloadearnings.feature",
@@ -38,6 +42,7 @@ Gem::Specification.new do |s|
      "features/support/env.rb",
      "finance.mm",
      "lib/LoadSPX.rb",
+     "lib/downloadUtilities.rb",
      "lib/earningsscraper.rb",
      "lib/economicscraper.rb",
      "lib/ivolatility.rb",
@@ -51,7 +56,7 @@ Gem::Specification.new do |s|
      "lib/model/ticker.rb",
      "lib/optionschainsscraper.rb",
      "lib/rfinance.rb",
-     "lib/spx.txt",
+     "lib/util.rb",
      "log/error.log",
      "rfinance.gemspec",
      "test/helper.rb",

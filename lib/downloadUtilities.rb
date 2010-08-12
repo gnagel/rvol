@@ -1,5 +1,4 @@
 require 'open-uri'
-require 'CSV'
 
 class DownloadUtilities
 
@@ -12,16 +11,14 @@ def downloadStockPrice(ticker)
 
 		file =  f.read
 		splitted = file.split(',')
-		puts splitted[1]
-		
+	
 		return splitted[1]
 
     }
 end
-# quick self test
-begin 
-scrape = DownloadUtilities.new
-scrape.downloadStockPrice('GOOG')
+
+def testInternetConnection?
+   Ping.pingecho "google.com", 1, 80
 end
 
 end

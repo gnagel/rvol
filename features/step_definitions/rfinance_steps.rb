@@ -1,11 +1,15 @@
-Given /^i have data for the day$/ do
-  pending # express the regexp above with the code you wish you had
+require "./lib/rfinance"
+
+Given /^I have a connection to the internet and I know what i want to download$/ do
+  @ticker = 'GOOG'
+  
 end
 
-When /^I start the generate report task$/ do
-  pending # express the regexp above with the code you wish you had
+When /^I start the downloadTicker task$/ do
+  @tick = Rfinance.loadPrice(@ticker)
 end
 
-Then /^I get a PDF report for the day$/ do
-  pending # express the regexp above with the code you wish you had
+Then /^I get the price for that ticker$/ do
+  Float(@tick) > 0
+  puts "got the price: "+@tick
 end
