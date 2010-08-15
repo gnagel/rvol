@@ -113,7 +113,9 @@ end
 
 
 def expireTime(time)
- return  ((time + 1) / 365).abs
+ time2 = Float(time) + Float(1)
+ time3 = time2/Float(365)
+ return  time3
 end
 
 begin

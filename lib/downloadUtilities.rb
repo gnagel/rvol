@@ -6,7 +6,6 @@ def downloadStockPrice(ticker)
 
     url = 'http://download.finance.yahoo.com/d/quotes.csv?s='+ticker+'&f=sl1d1t1c1ohgv&e=.csv'
 
-	  #open(url,:proxy => "http://172.16.42.137:8080") { |f|
 	  open(url) { |f|
 
 		file =  f.read

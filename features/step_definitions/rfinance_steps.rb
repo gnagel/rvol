@@ -1,7 +1,7 @@
 require "./lib/rfinance"
 
 Given /^I have a connection to the internet and I know what i want to download$/ do
-  @ticker = 'GOOG'
+  @ticker = 'VXX'
   
 end
 
