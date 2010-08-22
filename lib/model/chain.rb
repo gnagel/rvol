@@ -1,6 +1,10 @@
 require 'logger'
-require "./lib/ivolatility"
-require "./lib/downloadUtilities"
+
+
+require "util"
+require "ivolatility"
+require "downloadutilities"
+
 
 class Chain
   attr_accessor :type, :ticker, :date, :strike, :symbol, :last, :chg, :bid, :ask, :vol, :openInt, :ivolatility
@@ -18,6 +22,7 @@ class Chain
     @ask=ask
     @vol=vol
     @openInt=openInt
+    calculate
   end
   
   def toString
@@ -28,25 +33,28 @@ class Chain
   
   private 
   def calculate
-    
-    lastPrice = downloadStockPrice(@ticker)
+    dutil = DownloadUtilities.new
+    lastPrice = dutil.downloadStockPrice(@ticker)
     strike = @strike
-    # calculate date from month 2010-07 into date then get days to expiry
-    # how to calculate 3rd friday of month??
-    #loop Month days until got the 3rd friday then store store that value
-    
-    exptime = 0.04109
+    iv = Ivolatility.new
+
+    exptime =  Util.get3rdWeek(@date)
+   
+    exptimeYear = iv.expireTime(exptime)
+ 
+    # constantdate
     irate = 0.14 / 100;
 
     yields = 0
 
     oprice = @last
 
-    iv = Ivolatility.new
 
     # call 0 put 1
-    puts iv.IV(lastPrice, strike, exptime, irate, yields, 0, oprice)
-    
+    @type=='C'?callOrPut=0:callOrPut=1
+    #puts lastPrice.to_f, strike.to_f, exptimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f
+    @ivolatility = iv.IV(lastPrice.to_f, strike.to_f, exptimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
+   
   end
   
 

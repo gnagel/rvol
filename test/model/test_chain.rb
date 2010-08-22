@@ -1,15 +1,24 @@
-require 'helper'
-require "./lib/model/chain"
+require '../helper'
+require "../../lib/model/chain"
 
 
 
-class TestRfinance < Test::Unit::TestCase
+class TestChain < Test::Unit::TestCase
 
   
   def test_chain
   
-  chain c = Chain.new()
+    c = Chain.new('C','GOOG', '2010-08',490.to_f, 'AAAH', 420.to_f,0.to_f,410.to_f,
+      430.to_f,0.to_f,0.to_f)
   
+  end
+
+  # todo
+  def test_chain2
+
+    c = Chain.new('P','GOOG', '2010-12',490.to_f, 'AAAH', 420.to_f,0.to_f,410.to_f,
+      430.to_f,0.to_f,0.to_f)
+
   end
   
   
