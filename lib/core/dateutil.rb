@@ -2,7 +2,7 @@
 class DateUtil
   # will find the amount of days to the 3rd friday of the month month is given
   # in the form 2010-07
-  def Util.get3rdWeek(date)
+  def DateUtil.get3rdweek(date)
 
   yearmonth =  date.split('-')
  
@@ -45,11 +45,11 @@ class DateUtil
   daysToExpiry
   end
 
-def Util.days_in_month(year, month)
+def DateUtil.days_in_month(year, month)
   (Date.new(year, 12, 31) << (12-month)).day
 end
 
-def Util.fridayFinder(year, month)
+def DateUtil.fridayFinder(year, month)
   date = Date.new(DateTime.now.year,DateTime.now.month,1)
   date2 = Date.new(date.year,date.month,days_in_month(date.year,date.month))
   # iterate from today to the 3rd week of the month
@@ -73,7 +73,7 @@ def Util.fridayFinder(year, month)
   daysToExpiry
   end
 
-def Util.daysToExpiryThisMonth
+def DateUtil.daysToExpiryThisMonth
   date = DateTime.now
   date2 = Date.new(date.year,date.month,self.fridayFinder(date.year, date.month))
    # iterate from today to the 3rd week of the month
@@ -86,7 +86,7 @@ def Util.daysToExpiryThisMonth
   daysToExpiry
 end
 
-def Util.nextMonth(date)
+def DateUtil.nextMonth(date)
  
   date = Date.new(date.year,date.month+1,date.day)
   

@@ -1,6 +1,4 @@
 require 'logger'
-
-
 require "util"
 require "ivolatility"
 require "downloadutilities"
@@ -38,7 +36,7 @@ class Chain
     strike = @strike
     iv = Ivolatility.new
 
-    exptime =  Util.get3rdWeek(@date)
+    exptime =  DateUtil.get3rdWeek(@date)
    
     exptimeYear = iv.expireTime(exptime)
  

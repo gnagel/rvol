@@ -122,17 +122,15 @@ def expireTime(time)
 end
 
 begin
+
   lastPrice = 23.28
   strike = 25
   exptime = 0.04109
   irate = 0.11 / 100;
-
   yields = 0
- 
   oprice = 4.60
   
   iv = Ivolatility.new
-  
   # call 0 put 1
   puts iv.IV(lastPrice, strike, exptime, irate, yields, 0, oprice)
   

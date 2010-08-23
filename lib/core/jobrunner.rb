@@ -1,4 +1,8 @@
 class JobRunner
+
+#
+# Class to run download jobs 
+#
 def jobThread
   while true
     puts "Started job at: #{Time.now}"

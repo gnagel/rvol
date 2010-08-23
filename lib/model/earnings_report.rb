@@ -1,7 +1,7 @@
 require 'util'
 require 'optionschainsscraper'
 # This class holds the items needed for the earnings report
-# It also hods methods to generate the report into a human readable format
+# It also holds methods to generate the report into a human readable format
 # The report can be printed on the command line or output as a pdf.
 #
 class Earnings_Report
