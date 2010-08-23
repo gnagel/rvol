@@ -1,6 +1,6 @@
 require 'resolv-replace'
 require 'ping'
-require "./lib/optionschainsscraper.rb"
+require "optionschainsscraper"
 
 Given /^there is a connection to the internet available$/ do
  #puts Ping.pingecho "google.com", 1, 80
