@@ -1,7 +1,7 @@
 require 'logger'
-require "util"
-require "ivolatility"
-require "downloadutilities"
+require "core/DateUtil"
+require "math/ivolatility"
+require "scrapers/stockscraper"
 
 
 class Chain
@@ -31,12 +31,12 @@ class Chain
   
   private 
   def calculate
-    dutil = DownloadUtilities.new
-    lastPrice = dutil.downloadStockPrice(@ticker)
+   
+    lastPrice = StockScraper.downloadStockPrice(@ticker)
     strike = @strike
     iv = Ivolatility.new
 
-    exptime =  DateUtil.get3rdWeek(@date)
+    exptime =  DateUtil.getThirdWeek(@date)
    
     exptimeYear = iv.expireTime(exptime)
  
@@ -50,7 +50,6 @@ class Chain
 
     # call 0 put 1
     @type=='C'?callOrPut=0:callOrPut=1
-    #puts lastPrice.to_f, strike.to_f, exptimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f
     @ivolatility = iv.IV(lastPrice.to_f, strike.to_f, exptimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
    
   end

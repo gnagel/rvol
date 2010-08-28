@@ -1,13 +1,14 @@
 class Earnings
   attr_accessor :earnings, :dateToday
- 
+  
   def initialize(day)
         @earnings = Hash.new
         @dateToday = day
   end
   
   def put(earning,date)
-    @earnings[earning]=date
+    earningO = Earning.new(date,earning)
+    @earnings[earningO]=date
   end
   
   def getKeys
@@ -21,5 +22,21 @@ class Earnings
   def getHash
   @earnings
   end
+
+end
+
+class Earning
+  attr_accessor :chains, :date, :ticker
+  
+  def initialize(day,ticker)
+        @date = day
+        @ticker = ticker
+        @chains = Hash.new
+  end
+  
+  def addChains(date,chains)
+    @chains[date]=chains
+  end
+
 
 end

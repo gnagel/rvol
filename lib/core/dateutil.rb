@@ -2,7 +2,7 @@
 class DateUtil
   # will find the amount of days to the 3rd friday of the month month is given
   # in the form 2010-07
-  def DateUtil.get3rdweek(date)
+  def DateUtil.getThirdWeek(date)
 
   yearmonth =  date.split('-')
  
@@ -35,7 +35,7 @@ class DateUtil
         if day.cwday.to_i == 5
           fridays+=1
           if fridays == 3
-            puts 'these options expire on: '+day.to_s
+            #puts 'these options expire on: '+day.to_s
          
             break 
           end
@@ -57,9 +57,7 @@ def DateUtil.fridayFinder(year, month)
   daysToExpiry = 0
   (date..date2).each { |day|
    daysToExpiry+=1
-
-     
-
+   
         # if friday add up
         if day.cwday.to_i == 5
           fridays+=1
@@ -91,26 +89,6 @@ def DateUtil.nextMonth(date)
   date = Date.new(date.year,date.month+1,date.day)
   
 end
-
-
-#
-#def toFile(ticker,date,array)
-#  
-#  local_filename = '../data/chains'+'/'+ticker+'-'+date+'.txt'
-#  if !File.exist?(local_filename)
-#  
-#    array.length.times do |i|
-#    chain = array[i]
-#    File.open(local_filename, 'a') {|f| f.write(chain.type+','+chain.strike+','+chain.symbol+','+chain.last+','+chain.chg+','+chain.bid+','+chain.ask+','+chain.vol+','+chain.openInt+','+chain.ivolatility+"\n") }
-#
-#    
-#    end
-#
-#  else
-#      @@log.error('file: '+ local_filename + ' exists already' )
-#    end
-
-
 
 end
   

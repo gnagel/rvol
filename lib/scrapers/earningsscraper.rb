@@ -3,6 +3,8 @@ require 'rubygems'
 require 'open-uri'
 require 'hpricot'
 require 'model/earnings'
+require "scrapers/optionschainsscraper"
+require "core/dateutil"
 
 class EarningsScraper
   
@@ -11,20 +13,22 @@ class EarningsScraper
   # Generate the date string with a form like this: 20100209 = YYYYMMDD
   # this will return the next 30 dates and load the earnings for these dates only spx stocks are listed
   # returns a hash of earnigs for this day
-  def getEarnings30
+  def EarningsScraper.getEarningsMonth
    
     t = DateTime.now
     @earningsHash = Earnings.new(t)
      
     t.step(t+30,step=1) { |n| 
       date = n.strftime("%Y%m%d") 
-      getEarnings(date)
+      EarningsScraper.getEarnings(date)
+      
     }
+    
     @earningsHash
   end
 
   # date must be in the form yyyymmdd: 20100209
-  def getEarnings(date)
+  def EarningsScraper.getEarnings(date)
     
     url="http://biz.yahoo.com/research/earncal/"+date+".html"
     response = ''
@@ -48,7 +52,7 @@ class EarningsScraper
    
     if obj.to_html.include? "http://finance.yahoo.com/q?"
       ticker = obj.inner_text
-      if(containsSpx(ticker))
+      if(EarningsScraper.containsSpx(ticker))
          @earningsHash.put(ticker,date)
         
       end
@@ -61,7 +65,7 @@ end
 
 
 # is ticker in the S&P 500
-def containsSpx(ticker)
+def EarningsScraper.containsSpx(ticker)
   
   file = "./data/spx.txt"
   
@@ -78,14 +82,27 @@ def containsSpx(ticker)
   return false
 end
 
+# Attach chains to all earnings
+def EarningsScraper.attachChains(earnings)
+ 
+  earnings.getHash.each {|key, value|
+    scraper = OptionChainsScraper.new
+    date = DateTime.now
+    for i in 1 .. 5
+      if i > 1
+       date = DateUtil.nextMonth(date)
 
+       
+    end
+     parsedDate = date.strftime("%Y-%m")
+     chains = scraper.loadData(key.ticker,parsedDate)
+     key.addChains(parsedDate,chains)
 
-# file stuff
-#          local_filename = "data/earnings/earnings.txt"
-#         if(File.exist?(local_filename))
-#            File.delete(local_filename)
-#          end
-#        File.open(local_filename, 'a') {|f| f.write(ticker+','+date+"\n") }
+    end
+  }
+
+end
+
 
 
 end

@@ -24,12 +24,14 @@ def loadData(ticker,date)
   # HPricot RDoc: http://code.whytheluckystiff.net/hpricot/
  doc = Hpricot(@response)  
  
- table = doc.search("//table")
+ table = doc.search("//table[@class='yfnc_datamodoutline1']")
 
  values = (table/"//tr")
  
+ count = 0
  for obj in values
      if obj.to_html.include? "C00"
+       count +=1
        # puts "A CALL"
        chain = parseTD(obj,"C",date,ticker) 
         if chain != nil
@@ -38,21 +40,26 @@ def loadData(ticker,date)
      end
   
      if obj.to_html.include? "P00"
+        count +=1
        # puts "A PUT"
        chain =  parseTD(obj,"P",date,ticker)
        if chain != nil
          @the_stack.push chain
       end
      end
+   
  end
   
-  
+  if count==0 
+   # raise 'no chains for ' + ticker + '  date: ' +date.to_s
+  end 
+ 
    
  return  @the_stack
 end
 
 def testInternetConnection?
-   Ping.pingecho "google.com", 1, 80
+  Ping.pingecho "google.com", 1, 80
 end   
 
 def parseTD(td,type,date,ticker)
@@ -71,11 +78,10 @@ def parseTD(td,type,date,ticker)
       vol     = parsed[6].inner_text
       open    = parsed[7].inner_text
 	  
-      #local_filename = "data/chains"+"/"+ticker+"/"+date+".txt"
-		
+ 
 	    # create a chain holder object for the data
 	    @chain = Chain.new(type,ticker,date,strike,symbol,last,chg,bid,ask,vol,open)
-      @chain.toString
+ 
       
       end
      
