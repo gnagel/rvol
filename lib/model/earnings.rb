@@ -37,6 +37,13 @@ class Earning
   def addChains(date,chains)
     @chains[date]=chains
   end
+  
+ 
+  
+  def loadVolatilityForBackMonth
+    # load next month
+    
+  end
 
 
 end

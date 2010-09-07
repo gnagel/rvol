@@ -1,4 +1,5 @@
 require 'scrapers/stockscraper'
+require "reports/earnings_report"
 
 module Rfinance
 
@@ -8,11 +9,16 @@ def Rfinance.loadPrice(ticker)
 end
 # download earnings for this month
 def Rfinance.loadEarnings
-@earnings = EarningsScraper.getEarningsMonth
+EarningsScraper.getEarningsMonth
 end
 # attaches the current options chains for each company in the earnings hash
 def Rfinance.attachChainsToEarnings(earnings)
-earnings = EarningsScraper.attachChains(earnings)
+EarningsScraper.attachChains(earnings)
+end
+
+# generate the report
+def Rfinance.generateReport(earnings)
+Earnings_Report.generateReport(earnings)
 end
 
 end

@@ -24,7 +24,7 @@ doc = Hpricot(@response)
 #  - Copy the XPath and confirm that it's the same as shown below
 table =  (doc/"html/body/div/div[2]/div[2]/div[2]/div/table[2]")
 rown = (table/"tr")
-puts rown
+
 
 end
 
@@ -50,7 +50,7 @@ def loadTop50
   #  - Copy the XPath and confirm that it's the same as shown below
   table =  (doc/"html/body/div/div[2]/div[2]/div[2]/div/table[2]")
   rown = (table/"tr")
-  puts rown
+
 end
 
 def loadTop10 
@@ -74,7 +74,7 @@ doc = Hpricot(@response3)
 #  - Copy the XPath and confirm that it's the same as shown below
 table =  (doc/"html/body/div/div[2]/div[2]/div[2]/div/table[2]")
 rown = (table/"tr")
-puts rown
+
 end
 
 end

@@ -32,7 +32,7 @@ def loadData(ticker,date)
  for obj in values
      if obj.to_html.include? "C00"
        count +=1
-       # puts "A CALL"
+      
        chain = parseTD(obj,"C",date,ticker) 
         if chain != nil
           @the_stack.push chain
@@ -41,7 +41,7 @@ def loadData(ticker,date)
   
      if obj.to_html.include? "P00"
         count +=1
-       # puts "A PUT"
+      
        chain =  parseTD(obj,"P",date,ticker)
        if chain != nil
          @the_stack.push chain

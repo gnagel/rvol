@@ -35,8 +35,7 @@ class DateUtil
         if day.cwday.to_i == 5
           fridays+=1
           if fridays == 3
-            #puts 'these options expire on: '+day.to_s
-         
+           
             break 
           end
         end
@@ -62,7 +61,7 @@ def DateUtil.fridayFinder(year, month)
         if day.cwday.to_i == 5
           fridays+=1
           if fridays == 3
-            puts 'this month options expire on: '+day.to_s
+           
             break
           end
         end
@@ -85,9 +84,16 @@ def DateUtil.daysToExpiryThisMonth
 end
 
 def DateUtil.nextMonth(date)
- 
-  date = Date.new(date.year,date.month+1,date.day)
-  
+  if(date.month!=12)
+  date = Date.new(date.year,date.month+1,1)
+  else
+    date = Date.new(date.year+1,1,1)
+  end
+end
+
+# parse to the correct date
+def DateUtil.dateParsed(date)
+  date.strftime("%Y-%m")
 end
 
 end

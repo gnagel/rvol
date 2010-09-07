@@ -64,34 +64,14 @@ def containsSpx(ticker)
 	
 	value = line.chomp
 		if(value == ticker)
-		puts "FOUND  " + value
+
 		return true
 		end
 	}
 	return false
 end
 
-begin
-  
-	puts "loading"
-	# delete the old
-	file = "spx.txt"
-	if(File.exist?(file))
-	puts "deleting file"
-	File.delete(file)
-	end
-	# initialize the script and run it
-	loadSpx = LoadSpx.new
-	loadSpx.loadSpx
 
-	# should find
-	puts loadSpx.containsSpx("AAPL")
-	# should  find
-	puts loadSpx.containsSpx("ZMF")
-	# should find
-	puts loadSpx.containsSpx("ZMH")
-
-end
 
 end
 

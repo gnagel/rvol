@@ -11,5 +11,5 @@ end
 
 Then /^I get the price for that ticker$/ do
   Float(@tick) > 0
-  puts "got the price: "+@tick
+
 end

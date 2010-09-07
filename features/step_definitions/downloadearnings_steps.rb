@@ -1,5 +1,8 @@
-require "scrapers/earningsscraper"
-require "rfinance"
+require 'scrapers/earningsscraper'
+require 'rfinance'
+require 'ruport'
+require 'core/store'
+
 
 Given /^i am connected to the internet$/ do
      Ping.pingecho "google.com", 1, 80
@@ -24,15 +27,33 @@ When /^i call attachChains$/ do
 end
 
 Then /^I get a list of chains for the companies in the earnings report$/ do
-  @earnings.getHash.each { |key, value|
-     puts key.ticker
-     puts value
+  
+  
+  table = Table(%w[Date Ticker impliedVolatility1 impliedvolatility2])
   
   @earnings.getHash.sort{|a,b| a[1]<=>b[1]}.each { |elem|
-       puts "#{elem[1]}, #{elem[0].ticker}"
-     }
+    
+       table << [elem[1], elem[0].ticker, "0", "0"]
   }
+  puts table
+  
+  Store.saveObject('test',@earnings)
+  
+
 end
+
+Given /^I have a list of earnings with chains$/ do
+  @eanings
+end
+
+When /^i call generate report$/ do
+  Rfinance.generateReport
+end
+
+Then /^I get a nicely formatted report$/ do
+  pending # express the regexp above with the code you wish you had
+end
+
 
 Given /^I i have a company i want skew information$/ do
   pending # express the regexp above with the code you wish you had

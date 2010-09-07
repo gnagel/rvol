@@ -3,7 +3,7 @@ require 'ping'
 require "scrapers/optionschainsscraper"
 
 Given /^there is a connection to the internet available$/ do
- #puts Ping.pingecho "google.com", 1, 80
+ 
  chains = OptionChainsScraper.new()
  chains.testInternetConnection?
 end

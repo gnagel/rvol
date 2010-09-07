@@ -13,6 +13,11 @@ Feature: Download earnings
 	  When i call attachChains
 	  Then I get a list of chains for the companies in the earnings report
 	
+	Scenario: Generate Report
+	  Given I have a list of earnings with chains 
+	  When i call generate report
+	  Then I get a nicely formatted report
+	
 	Scenario: Calculate front volatility versus back volatility for 2 months and 1 year
 	  Given I i have a company i want skew information
 	  When i call calculateSkews
