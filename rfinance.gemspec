@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rfinance}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2010-08-12}
+  s.date = %q{2010-09-07}
   s.default_executable = %q{rfinance.rb}
   s.description = %q{The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
     Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
@@ -25,15 +25,14 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     ".project",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "data/chains/GOOG-2010-12.txt",
-     "data/earnings/earnings.txt",
+     "bin/rfinance.rb",
      "data/spx.txt",
      "features/downloadChainsForTicker.feature",
-     "features/downloadStockscouterData.feature",
      "features/downloadearnings.feature",
      "features/rfinance.feature",
      "features/step_definitions/downloadChainsForTicker_steps.rb",
@@ -41,25 +40,24 @@ Gem::Specification.new do |s|
      "features/step_definitions/rfinance_steps.rb",
      "features/support/env.rb",
      "finance.mm",
-     "lib/LoadSPX.rb",
-     "lib/downloadUtilities.rb",
-     "lib/earningsscraper.rb",
-     "lib/economicscraper.rb",
-     "lib/ivolatility.rb",
-     "lib/jobrunner.rb",
-     "lib/loadStatistics.rb",
-     "lib/loadstockscouter.rb",
-     "lib/loadtodayschains500.rb",
+     "lib/core/dateutil.rb",
+     "lib/math/ivolatility.rb",
      "lib/model/chain.rb",
-     "lib/model/earning.rb",
      "lib/model/earnings.rb",
-     "lib/model/ticker.rb",
-     "lib/optionschainsscraper.rb",
+     "lib/reports/earnings_report.rb",
      "lib/rfinance.rb",
-     "lib/util.rb",
-     "log/error.log",
+     "lib/scrapers/earningsscraper.rb",
+     "lib/scrapers/optionschainsscraper.rb",
+     "lib/scrapers/stockscraper.rb",
      "rfinance.gemspec",
+     "test/core/test_dateutil.rb",
      "test/helper.rb",
+     "test/math/test_ivolatility.rb",
+     "test/model/test_chain.rb",
+     "test/model/test_earnings.rb",
+     "test/reports/test_earnings_report.rb",
+     "test/scrapers/test_earnings_scraper.rb",
+     "test/scrapers/test_options_chains_scraper.rb",
      "test/test_rfinance.rb"
   ]
   s.homepage = %q{http://github.com/tonik/rfinance}
@@ -68,7 +66,14 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{A ruby gem for downloading financial data}
   s.test_files = [
-    "test/helper.rb",
+    "test/core/test_dateutil.rb",
+     "test/helper.rb",
+     "test/math/test_ivolatility.rb",
+     "test/model/test_chain.rb",
+     "test/model/test_earnings.rb",
+     "test/reports/test_earnings_report.rb",
+     "test/scrapers/test_earnings_scraper.rb",
+     "test/scrapers/test_options_chains_scraper.rb",
      "test/test_rfinance.rb"
   ]
 
