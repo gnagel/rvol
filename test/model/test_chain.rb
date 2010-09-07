@@ -1,5 +1,5 @@
-require '../helper'
-require "../../lib/model/chain"
+require 'helper'
+require "model/chain"
 
 
 

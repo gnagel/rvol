@@ -1,4 +1,5 @@
-rfinance ruby gem for retrieving financial data from the internet for processing to mine investment opportunities
+rfinance ruby gem for retrieving financial data from the internet and process it into readable reports
+
 Copyright (C) 2010 Toni Karhu 
 
 This program is free software; you can redistribute it and/or

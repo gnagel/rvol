@@ -1,5 +1,5 @@
-require '../helper'
-require "../../lib/model/earnings"
+require 'helper'
+require "model/earnings"
 
 
 

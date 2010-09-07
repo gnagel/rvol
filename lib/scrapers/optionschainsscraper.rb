@@ -2,67 +2,75 @@ require 'rubygems'
 require 'open-uri'
 require 'hpricot'
 require 'model/chain.rb'
+require 'typhoeus'
 
 class OptionChainsScraper
 
-def initialize()
-  @@log = Logger.new('error.log','daily') 
-end
-
-def loadData(ticker,date)
-  puts 'loading ' + ticker + '  date: ' +date.to_s
-  @url = "http://finance.yahoo.com/q/op?s="+URI.escape(ticker+"&m="+date)
+#
+# load chains for the next 4 months.
+#
+def OptionChainsScraper.loadChains(ticker)
   
-  @response = ''
-  @the_stack = []
+  chains = Array.new
   
-  open(@url, "User-Agent" => "Ruby/#{RUBY_VERSION}") { |f|
-
-  @response = f.read
-  }
-    
-  # HPricot RDoc: http://code.whytheluckystiff.net/hpricot/
- doc = Hpricot(@response)  
- 
- table = doc.search("//table[@class='yfnc_datamodoutline1']")
-
- values = (table/"//tr")
- 
- count = 0
- for obj in values
-     if obj.to_html.include? "C00"
-       count +=1
-      
-       chain = parseTD(obj,"C",date,ticker) 
-        if chain != nil
-          @the_stack.push chain
-        end 
-     end
-  
-     if obj.to_html.include? "P00"
-        count +=1
-      
-       chain =  parseTD(obj,"P",date,ticker)
-       if chain != nil
-         @the_stack.push chain
+  date = DateUtil.dateParsed(DateTime.now)
+  scraper = OptionChainsScraper.new
+  date = DateTime.now
+  for i in 1 .. 5
+      if i > 1
+        date = DateUtil.nextMonth(date)
       end
-     end
-   
- end
+        
+        parsed = date.strftime("%Y-%m")
+        hydra = Typhoeus::Hydra.new
+        chains = Array.new
+      
+        url = "http://finance.yahoo.com/q/op?s="+URI.escape(ticker+"&m="+parsed)
+        request = Typhoeus::Request.new(url)
+
+        request.on_complete { | response |
+
+          doc = Hpricot(response.body)  
+          table = doc.search("//table[@class='yfnc_datamodoutline1']")
+          values = (table/"//tr")
+          
+          for obj in values
+              if obj.to_html.include? "C00"
+                chain = OptionChainsScraper.parseTD(obj,"C",parsed,ticker) 
+                 if chain != nil
+                   chains.push chain
+                    p chain
+                 end 
+              end
+
+              if obj.to_html.include? "P00"
+                chain =  OptionChainsScraper.parseTD(obj,"P",parsed,ticker)
+                if chain != nil
+                  chains.push chain
+                  p chain
+                end
+              end
+          end
   
-  if count==0 
-   # raise 'no chains for ' + ticker + '  date: ' +date.to_s
-  end 
+        }
+         
+        hydra.queue(request)
+
+
+  end # end for i in ..
  
-   
- return  @the_stack
+        
+  p 'starting hydra'
+  hydra.run
+  p 'hydra done'
+  
+  chains
 end
 
-def testInternetConnection?
-  Ping.pingecho "google.com", 1, 80
-end   
 
-def parseTD(td,type,date,ticker)
+
+# Parses a td 
+def OptionChainsScraper.parseTD(td,type,date,ticker)
      
       @chain
      

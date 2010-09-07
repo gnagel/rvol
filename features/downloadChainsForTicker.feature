@@ -7,8 +7,3 @@ Feature: download chains for ticker
     When I download chains for a given ticker
     Then I should get a set of options chains containing all chains for that ticker
 
-  # write later..
-  #Scenario: Download S&P500 options chains from yahoo 
-  #  Given there is a connection to the internet available 
-  #  When I download chains for the S&P500
-  #  Then I should get all chains for the S&P 500
