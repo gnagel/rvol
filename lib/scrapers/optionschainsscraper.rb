@@ -6,6 +6,8 @@ require 'typhoeus'
 
 class OptionChainsScraper
 
+
+
 #
 # load chains for the next 4 months.
 #
@@ -15,17 +17,25 @@ def OptionChainsScraper.loadChains(ticker)
   
   date = DateUtil.dateParsed(DateTime.now)
   scraper = OptionChainsScraper.new
+
+  hydra = Typhoeus::Hydra.new(:max_concurrency => 50)
+  
+  i=0
+      
+  ticker.each { |tick|  
+  
   date = DateTime.now
+     
   for i in 1 .. 5
       if i > 1
         date = DateUtil.nextMonth(date)
       end
         
         parsed = date.strftime("%Y-%m")
-        hydra = Typhoeus::Hydra.new
+    
         chains = Array.new
       
-        url = "http://finance.yahoo.com/q/op?s="+URI.escape(ticker+"&m="+parsed)
+        url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsed)
         request = Typhoeus::Request.new(url)
 
         request.on_complete { | response |
@@ -36,29 +46,30 @@ def OptionChainsScraper.loadChains(ticker)
           
           for obj in values
               if obj.to_html.include? "C00"
-                chain = OptionChainsScraper.parseTD(obj,"C",parsed,ticker) 
+                chain = OptionChainsScraper.parseTD(obj,"C",parsed,tick) 
                  if chain != nil
                    chains.push chain
-                    p chain
+                
                  end 
               end
 
               if obj.to_html.include? "P00"
-                chain =  OptionChainsScraper.parseTD(obj,"P",parsed,ticker)
+                chain =  OptionChainsScraper.parseTD(obj,"P",parsed,tick)
                 if chain != nil
                   chains.push chain
-                  p chain
+                 
                 end
               end
           end
   
         }
-         
-        hydra.queue(request)
-
+       puts 'queueing' + tick + parsed
+       
+       hydra.queue(request)
 
   end # end for i in ..
- 
+  
+  }
         
   p 'starting hydra'
   hydra.run

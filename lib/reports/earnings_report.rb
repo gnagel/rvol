@@ -9,23 +9,20 @@ class Earnings_Report
 def Earnings_Report.generateReport(earnings)
   
    table = Table(%w[Date Ticker impliedVolatility1 impliedvolatility2])
-   earnings.each { |elem|
+   earnings.sort { |a,b| a.date <=> b.date }.each { |elem|
        table << [elem.date, elem.ticker, "0", "0"]
      }
   puts table
    
 end
   
-
-  
-def loadVolatilities
+def Earnings_Report.attachChains(earnings)
+    chains = OptionChainsScraper.loadChains(earnings.collect! {|x| x.ticker })
+    chains.each{|x| puts x.symbol }
+    rescue Exception
+      puts $!, $@
     
-  
+    
 end
-
-
-
-
-
 
 end

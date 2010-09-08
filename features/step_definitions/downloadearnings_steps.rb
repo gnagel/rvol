@@ -1,7 +1,6 @@
 require 'scrapers/earningsscraper'
 require 'rfinance'
 require 'ruport'
-require 'core/store'
 
 Given /^i am connected to the internet$/ do
 end
@@ -13,4 +12,5 @@ end
 
 Then /^I get a list of coming earnings for the next month$/ do
 Earnings_Report.generateReport(@earnings)
+Earnings_Report.attachChains(@earnings)
 end

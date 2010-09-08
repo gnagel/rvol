@@ -20,7 +20,7 @@ class Chain
     @ask=ask
     @vol=vol
     @openInt=openInt
-    calculate
+    #calculate
   end
   
   def toString
