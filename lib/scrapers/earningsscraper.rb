@@ -52,10 +52,8 @@ class EarningsScraper
 
 # is ticker in the S&P 500
 def EarningsScraper.containsSpx(ticker)
-  
-  file = "./data/spx.txt"
-  
-  f = File.open(file, 'r')
+
+  f = File.open("../data/spx.txt", 'r')
   
  f.each_line { | line |
     

@@ -4,8 +4,10 @@ require "math/ivolatility"
 require "scrapers/stockscraper"
 
 
-class Chain
-  attr_accessor :type, :ticker, :date, :strike, :symbol, :last, :chg, :bid, :ask, :vol, :openInt, :ivolatility
+class Chain < ActiveRecord::Base
+  belongs_to :Stock
+  attr_accessor :type, :ticker, :date, :strike, :symbol, :last, :chg, :bid, :ask, :vol, :openInt,:lastPrice,
+  :ivolatility, :expTime, :expTimeYear, :irate, :yields
  
 
   def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
@@ -20,38 +22,41 @@ class Chain
     @ask=ask
     @vol=vol
     @openInt=openInt
-    #calculate
+    #self.calculateIVol
   end
   
   def toString
     puts self.inspect
   end
   
+
   
-  
-  private 
-  def calculate
+  def calculateIVol
    
-    lastPrice = StockScraper.downloadStockPrice(@ticker)
+    @lastPrice = StockScraper.downloadStockPrice(@ticker)
     strike = @strike
     iv = Ivolatility.new
 
-    exptime =  DateUtil.getThirdWeek(@date)
+    @expTime =  DateUtil.getDaysToExpFriday(@date)
    
-    exptimeYear = iv.expireTime(exptime)
+    @expTimeYear = iv.expireTime(@expTime)
  
     # constantdate
-    irate = 0.14 / 100;
+    @irate = 0.14 / 100;
 
-    yields = 0
+    @yields = 0
 
     oprice = @last
 
-
+   
     # call 0 put 1
     @type=='C'?callOrPut=0:callOrPut=1
-    @ivolatility = iv.IV(lastPrice.to_f, strike.to_f, exptimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
-   
+    ivol = iv.IV(@lastPrice.to_f, strike.to_f, @expTimeYear.to_f, @irate.to_f, @yields.to_f, callOrPut, oprice.to_f)
+    @ivolatility = 0
+    if(ivol<1000.00&&ivol>0)
+    @ivolatility = ivol
+    end
+ 
   end
   
 

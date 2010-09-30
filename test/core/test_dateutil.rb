@@ -3,45 +3,52 @@ require "core/dateutil"
 
 class TestDateUtil < Test::Unit::TestCase
 
+  #
+  # Hard to test as dates change and we use current dates in calculations
+  #
   def test_3rdWeek
-
-    value = DateUtil.getThirdWeek("2010-11")
-    puts value
-  end
-
-  def test_3rdWeekThisMonth
     
-    value = DateUtil.getThirdWeek("2010-09")
-    p 'this month'
-    puts value
-  end
-
-  def test_3rdWeekBefore
-  
-    value = DateUtil.getThirdWeek("2010-01")
-    puts value
-  end
-  
-  def test_FridayFinder
+    date = DateTime.now
+    value = DateUtil.getDaysToExpFriday(date)
    
-    value = DateUtil.fridayFinder(Date.new.year,Date.new.month)
+    puts "DateUtil.getDaysToExpFriday(date)  " +date.to_s
     puts value
+    assert_not_nil value
+    
+    date2 = Date.new(date.year,date.month+1,date.day)
+    puts "DateUtil.getDaysToExpFriday(date2)  " +date2.to_s
+    value = DateUtil.getDaysToExpFriday(date2)
+    assert_not_nil value
+    puts value
+  end
   
+
+  #
+  # Generate the option symbol from the date for  the front month. If the date is past expiry give next month
+  #
+  def test_DateUtil_getOptSymbThisMonth
+   symb = DateUtil.getOptSymbThisMonth("GOOG")
+   puts 'symbol this month: '+symb
+   assert_not_nil symb
   end
 
-  def test_daysToExpiry
-   
-      p 'days this month:'
+  #
+  # Generate the option symbol from the date for the back month. If the date is past expiry give next month
+  #
+  def test_DateUtil_getOptSymbNextMonth
+    symb = DateUtil.getOptSymbNextMonth("GOOG")
+    puts 'symbol next month : '+symb
+    assert_not_nil symb
   end
 
-  def test_nextMonth
-      p 'getting next month:'
-      
-      date = DateTime.now
-
+  #
+  # Parse the options expiry month from the opt symbol
+  #
+  def test_DateUtil_getDateFromOptSymbol
+    date = DateUtil.getDateFromOptSymbol("ADBE","ADBE101016C00035000")
+    puts 'date ' +date.to_s
+    assert_not_nil date
   end
-
-
 
 
 end

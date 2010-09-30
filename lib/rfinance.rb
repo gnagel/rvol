@@ -1,6 +1,7 @@
+require 'rubygems'
 require 'scrapers/stockscraper'
 require "reports/earnings_report"
-
+require 'optparse'
 module Rfinance
 
 # download current price for ticker

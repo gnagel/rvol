@@ -3,50 +3,50 @@ require 'open-uri'
 require 'hpricot'
 require 'model/chain.rb'
 require 'typhoeus'
+require "core/dateutil"
 
 class OptionChainsScraper
 
 
 
 #
-# load chains for the next 4 months.
+# load chains for the next 3 months.
 #
 def OptionChainsScraper.loadChains(ticker)
   
   chains = Array.new
-  
-  date = DateUtil.dateParsed(DateTime.now)
+
   scraper = OptionChainsScraper.new
 
-  hydra = Typhoeus::Hydra.new(:max_concurrency => 50)
+  hydra = Typhoeus::Hydra.new
   
   i=0
       
   ticker.each { |tick|  
   
   date = DateTime.now
-     
-  for i in 1 .. 5
+
+  
+  for i in 1 .. 3
       if i > 1
         date = DateUtil.nextMonth(date)
       end
-        
-        parsed = date.strftime("%Y-%m")
-    
-        chains = Array.new
-      
-        url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsed)
+        # this is the date for the url
+        parsedDate = date.strftime("%Y-%m")
+       
+
+        url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsedDate)
         request = Typhoeus::Request.new(url)
-
         request.on_complete { | response |
-
+          
           doc = Hpricot(response.body)  
           table = doc.search("//table[@class='yfnc_datamodoutline1']")
           values = (table/"//tr")
           
           for obj in values
               if obj.to_html.include? "C00"
-                chain = OptionChainsScraper.parseTD(obj,"C",parsed,tick) 
+                
+                chain = OptionChainsScraper.parseTD(obj,"C",tick) 
                  if chain != nil
                    chains.push chain
                 
@@ -54,7 +54,7 @@ def OptionChainsScraper.loadChains(ticker)
               end
 
               if obj.to_html.include? "P00"
-                chain =  OptionChainsScraper.parseTD(obj,"P",parsed,tick)
+                chain =  OptionChainsScraper.parseTD(obj,"P",tick)
                 if chain != nil
                   chains.push chain
                  
@@ -63,7 +63,10 @@ def OptionChainsScraper.loadChains(ticker)
           end
   
         }
-       puts 'queueing' + tick + parsed
+        
+        
+        
+       #puts 'queueing' + tick + parsed
        
        hydra.queue(request)
 
@@ -81,9 +84,7 @@ end
 
 
 # Parses a td 
-def OptionChainsScraper.parseTD(td,type,date,ticker)
-     
-      @chain
+def OptionChainsScraper.parseTD(td,type,ticker)
      
       parsed = (td/"//td")
       if parsed.length==8
@@ -97,14 +98,16 @@ def OptionChainsScraper.parseTD(td,type,date,ticker)
       vol     = parsed[6].inner_text
       open    = parsed[7].inner_text
 	  
- 
+
 	    # create a chain holder object for the data
-	    @chain = Chain.new(type,ticker,date,strike,symbol,last,chg,bid,ask,vol,open)
- 
+      dateS = DateUtil.getDateFromOptSymbol(ticker,symbol)
+   
+	    chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
+      
       
       end
      
- return @chain
+ return chain
 
 end
 

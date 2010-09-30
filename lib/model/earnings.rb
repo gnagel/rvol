@@ -26,7 +26,7 @@ class Earnings
 end
 
 class Earning
-  attr_accessor :chains, :date, :ticker
+  attr_accessor :chains, :date, :ticker, :frontMonth, :backMonth
   
   def initialize(day,ticker)
         @date = day
