@@ -15,12 +15,8 @@ class TestChain < Test::Unit::TestCase
 
   # todo
   def test_chain2
-
     c = Chain.new('P','GOOG', '2010-12',490.to_f, 'AAAH', 420.to_f,0.to_f,410.to_f,
       430.to_f,0.to_f,0.to_f)
-
   end
-  
-  
-  
+
 end

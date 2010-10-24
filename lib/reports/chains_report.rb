@@ -7,7 +7,7 @@ require 'ruport'
 # The report can be printed on the command line or output as a pdf.
 #
 class Chains_Report
- attr_accessor :earnings, :chains
+
 
 def Chains_Report.generateReport(ticker)
   

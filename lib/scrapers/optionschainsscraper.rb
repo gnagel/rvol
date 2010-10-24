@@ -18,7 +18,8 @@ def OptionChainsScraper.loadChains(ticker)
 
   scraper = OptionChainsScraper.new
 
-  hydra = Typhoeus::Hydra.new
+  hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
+  hydra.disable_memoization
   
   i=0
       
@@ -27,7 +28,7 @@ def OptionChainsScraper.loadChains(ticker)
   date = DateTime.now
 
   
-  for i in 1 .. 3
+  for i in 1 .. 2
       if i > 1
         date = DateUtil.nextMonth(date)
       end
@@ -38,7 +39,8 @@ def OptionChainsScraper.loadChains(ticker)
         url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsedDate)
         request = Typhoeus::Request.new(url)
         request.on_complete { | response |
-          
+        puts response.code
+        if(response.code==200)
           doc = Hpricot(response.body)  
           table = doc.search("//table[@class='yfnc_datamodoutline1']")
           values = (table/"//tr")
@@ -48,7 +50,7 @@ def OptionChainsScraper.loadChains(ticker)
                 
                 chain = OptionChainsScraper.parseTD(obj,"C",tick) 
                  if chain != nil
-                   chains.push chain
+                  chains << chain
                 
                  end 
               end
@@ -56,12 +58,15 @@ def OptionChainsScraper.loadChains(ticker)
               if obj.to_html.include? "P00"
                 chain =  OptionChainsScraper.parseTD(obj,"P",tick)
                 if chain != nil
-                  chains.push chain
+                  chains << chain
                  
                 end
               end
           end
-  
+        else
+          puts 'failed with code: '+ response.code
+        end
+        
         }
         
         
@@ -78,7 +83,7 @@ def OptionChainsScraper.loadChains(ticker)
   hydra.run
   p 'hydra done'
   
-  chains
+  return chains
 end
 
 

@@ -8,7 +8,7 @@ require 'ruport'
 # The report can be printed on the command line or output as a pdf.
 #
 class Earnings_Report
- attr_accessor :earnings, :chains
+
 
 def Earnings_Report.generate
   earnings = Earnings_Report.loadData

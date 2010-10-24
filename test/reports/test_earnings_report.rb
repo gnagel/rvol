@@ -1,5 +1,4 @@
 require 'helper'
-require "model/earnings"
 require "reports/earnings_report"
 
 class TestEarnings_Report < Test::Unit::TestCase

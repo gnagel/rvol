@@ -130,12 +130,19 @@ end
 # Parse the options expiry month from the opt symbol
 #
 def DateUtil.getDateFromOptSymbol(ticker,optSymbol)
+  begin
   ##remove ticker from front
   parsed1 = optSymbol.delete ticker
   ## get next 4 yymm
   parsed2 = parsed1[0..3]
-  Date.strptime(parsed2,"%y%m")
+  return Date.strptime(parsed2,"%y%m")
   
+  rescue Exception => e
+    puts 'failed date'
+    puts ticker
+    puts optSymbol
+    return 'N/A'
+  end
 end  
 
 end

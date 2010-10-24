@@ -2,26 +2,39 @@ require 'logger'
 require "core/DateUtil"
 require "math/ivolatility"
 require "scrapers/stockscraper"
+require 'dm-core'
+require 'dm-validations'
 
+class Chain 
+  include DataMapper::Resource
 
-class Chain < ActiveRecord::Base
-  belongs_to :Stock
-  attr_accessor :type, :ticker, :date, :strike, :symbol, :last, :chg, :bid, :ask, :vol, :openInt,:lastPrice,
-  :ivolatility, :expTime, :expTimeYear, :irate, :yields
- 
+  property :id,                          Serial    # An auto-increment integer key
+  property :created_at,                  DateTime  # A DateTime, for any date you might like.
+  property :type,                        String
+  property :ticker,                      String
+  property :date,                        DateTime
+  property :strike,                      String
+  property :symbol,                      String
+  property :last,                        String
+  property :chg,                         String
+  property :bid,                         String
+  property :ask,                         String
+  property :vol,                         String    
+  property :openInt,                     String  
 
   def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
-    @type=type
-    @ticker=ticker
-    @date=date
-    @strike=strike
-    @symbol=symbol
-    @last=last
-    @chg=chg
-    @bid=bid
-    @ask=ask
-    @vol=vol
-    @openInt=openInt
+    self.created_at = Time.now
+    self.type=type
+    self.ticker=ticker
+    self.date=date
+    self.strike=strike
+    self.symbol=symbol
+    self.last=last
+    self.chg=chg
+    self.bid=bid
+    self.ask=ask
+    self.vol=vol
+    self.openInt=openInt
     #self.calculateIVol
   end
   
