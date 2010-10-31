@@ -1,15 +1,14 @@
-puts 'fuck you'
+require 'helper'
+require 'rubygems'
+require 'dm-core'
+require 'dm-migrations'
+require "model/stock"
 
-strikes = [ 12, 13, 14, 15, 16,17, 18, 19 , 20 , 21]
-
-lastPrice = 16
-
-closest4 = Array.new
-
-strikes.each { |e|  
- value= (lastPrice-e).abs
-closest4.push value
-}
-p 'result'
-#puts closest4
-puts closest4.min
+ begin
+    DataMapper::Logger.new($stdout, :debug)
+ DataMapper.setup(:default, 'sqlite://data/markettoday.db')   
+ p 'loading'
+ sd = StockDaily.get(1)
+  sd2 = StockDaily.first(:symbol=>'BLL')
+ puts sd2.price 
+ end

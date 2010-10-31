@@ -108,7 +108,7 @@ end
 def DateUtil.getOptSymbThisMonth(ticker)
   date = DateTime.now
   if(DateUtil.getDaysToExpFriday(date)==0)
-  date = Date.new(date.year,date.month+1,date.day)
+  date = Date.new(date.year,date.month+1,1)
   end  
   
   oticker = ticker+date.strftime("%y%m")
@@ -120,7 +120,7 @@ end
 def DateUtil.getOptSymbNextMonth(ticker)
   date = DateTime.now
   if(DateUtil.getDaysToExpFriday(date)==0)
-  date = Date.new(date.year,date.month+1,date.day)
+  date = Date.new(date.year,date.month+1,1)
   end
   date = DateUtil.nextMonth(date)
   oticker = ticker+date.strftime("%y%m")

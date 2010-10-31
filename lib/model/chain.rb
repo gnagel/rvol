@@ -20,7 +20,8 @@ class Chain
   property :bid,                         String
   property :ask,                         String
   property :vol,                         String    
-  property :openInt,                     String  
+  property :openInt,                     String
+  property :ivolatility,                 String    
 
   def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
     self.created_at = Time.now
@@ -35,7 +36,7 @@ class Chain
     self.ask=ask
     self.vol=vol
     self.openInt=openInt
-    #self.calculateIVol
+    self.calculateIVol
   end
   
   def toString
@@ -43,31 +44,33 @@ class Chain
   end
   
 
+  # calcualtes the implied volatility for the chain
   
   def calculateIVol
-   
-    @lastPrice = StockScraper.downloadStockPrice(@ticker)
-    strike = @strike
+    DataMapper.setup(:default, 'sqlite://data/markettoday.db')
+    begin
+    
+    lastPrice = StockDaily.first(:symbol=>self.ticker)
+    puts 'LASTPRICE:' + lastPrice.price.to_s
+    strike = self.strike
     iv = Ivolatility.new
-
-    @expTime =  DateUtil.getDaysToExpFriday(@date)
-   
-    @expTimeYear = iv.expireTime(@expTime)
- 
+    expTime =  DateUtil.getDaysToExpFriday(self.date)
+    puts 'expdays ' + expTime.to_s
+    expTimeYear = iv.expireTime(expTime)
+    puts 'exptimeyear ' + expTimeYear.to_s
     # constantdate
-    @irate = 0.14 / 100;
-
-    @yields = 0
-
-    oprice = @last
-
-   
+    irate = 0.14 / 100;
+    yields = 0
+    oprice = self.last
     # call 0 put 1
-    @type=='C'?callOrPut=0:callOrPut=1
-    ivol = iv.IV(@lastPrice.to_f, strike.to_f, @expTimeYear.to_f, @irate.to_f, @yields.to_f, callOrPut, oprice.to_f)
-    @ivolatility = 0
-    if(ivol<1000.00&&ivol>0)
-    @ivolatility = ivol
+    type=='C'?callOrPut=0:callOrPut=1
+
+    ivol = iv.IV(lastPrice.price.to_f, self.strike.to_f, expTimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
+    
+    self.ivolatility = ivol.to_f
+
+    rescue Exception => boom
+      puts 'ivolatility calculation failed ' + boom
     end
  
   end

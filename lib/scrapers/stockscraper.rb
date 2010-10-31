@@ -1,32 +1,52 @@
 require 'typhoeus'
 require 'json'
 require 'hpricot'
+require "model/stock"
 
 class StockScraper
 
-@@cachedStock = {}
-@@hydra = Typhoeus::Hydra.new
 
-def StockScraper.downloadStockPrice(ticker)
-    if @@cachedStock[ticker]==nil
+
+def StockScraper.downloadStock(tickers)
+  hydra = Typhoeus::Hydra.new(:max_concurrency => 20,:timeout => 100)
+  count = 0
     
-     
-      url = 'http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(ticker+'&f=sl1d1t1c1ohgv&e=.csv')
+      tickers.each{ | ticker|
+      begin
+      #url = 'http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(ticker+'&f=sl1d1t1c1ohgv&e=.csv')
+      url = 'http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(ticker.to_s+'&f=l1a2vnqyd&e=.csv')
       request = Typhoeus::Request.new(url)
-    
+      
       request.on_complete { | response |
-        file =  response.body
-        p file
-        splitted = file.split(',')
-        @@cachedStock[ticker] = splitted[1]
+     
+        if(response.code==200)
+        
+        splitted = response.body.split(',')
+        stock = StockDaily.new
+        stock.symbol=ticker.to_s
+        stock.price = splitted[0]
+        stock.avolume = splitted[1]
+        stock.volume = splitted[2]
+        stock.name = splitted[3]
+        stock.exdividenddate= splitted[4]
+        stock.dividendyield= splitted[5]
+        stock.dpershare= splitted[6]
+        stock.save        
+        else
+            puts 'failed'
+            puts response.code
+            puts response.body
+        end 
       }
     
-      @@hydra.queue(request)      
-      @@hydra.run
-      return  @@cachedStock[ticker]
-    end
-    
-    return @@cachedStock[ticker]
+      hydra.queue(request)
+     rescue Exception => exp
+       puts exp
+     end  
+    }
+    p 'running download stock'
+    hydra.run
+    p 'run finished'
 end
 
 
@@ -34,7 +54,7 @@ def StockScraper.downloadStockPriceYQL(tickers)
 
 results = Array.new
 # do 20 concurrent at a time
-hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
+hydra = Typhoeus::Hydra.new(:max_concurrency => 1)
 
 tickers.each{ | ticker|
 begin
@@ -75,7 +95,7 @@ end
 def StockScraper.downloadSP500
   
   results = Array.new
-  hydra = Typhoeus::Hydra.new
+  hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
   
   for i in 0 .. 9
  
