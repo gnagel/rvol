@@ -22,7 +22,21 @@ class TestDateUtil < Test::Unit::TestCase
     puts value
   end
   
-
+  def test_expiry_date
+  days = DateUtil.fridayFinder(DateTime.now.year,DateTime.now.month)
+  assert_not_nil days
+  puts '3rd friday date:'
+  puts days
+  end
+  #
+  # Generate the option symbol from the date for  the front month. If the date is past expiry give next month
+  #
+  def test_DateUtil_getOptSymbThisMonth
+   symb = DateUtil.getOptSymbThisMonth("GOOG")
+   puts 'symbol this month: '+symb
+   assert_not_nil symb
+  end
+  
   #
   # Generate the option symbol from the date for  the front month. If the date is past expiry give next month
   #
@@ -37,7 +51,7 @@ class TestDateUtil < Test::Unit::TestCase
   #
   def test_DateUtil_getOptSymbNextMonth
     symb = DateUtil.getOptSymbNextMonth("GOOG")
-    puts 'symbol next month : '+symb
+    puts 'symbol next month: '+symb
     assert_not_nil symb
   end
 

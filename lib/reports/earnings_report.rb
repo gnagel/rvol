@@ -5,35 +5,46 @@ require 'math/arraymath'
 require 'model/earning'
 require 'model/chain'
 require 'ruport'
+
 # This class holds the items needed for the earnings report
 # It also holds methods to generate the report into a human readable format
 # The report can be printed on the command line or output as a pdf.
 #
 class Earnings_Report
 
+  # A Sqlite3 connection to a persistent database
+  DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db')
 
+  
 def Earnings_Report.generate
-  DataMapper.setup(:default, 'sqlite://data/markettoday.db')
   earnings = Earning.all
   Earnings_Report.generateReport(earnings)
 end
 
 def Earnings_Report.generateReport(earnings)
-   table = Table(%w[Date Ticker impliedVolatility1 impliedvolatility2])
+   e = Earnings_Report.new
+   table = Table(%w[Date Ticker impliedVolatility1 impliedvolatility2 difference])
    earnings.sort { |a,b| a.date <=> b.date }.each { |elem|
-       table << [elem.date, elem.ticker, elem.frontMonth , elem.backMonth ]
+       begin
+       difference = "%0.2f" %(elem.frontMonth-elem.backMonth)
+       rescue
+       end
+       table << [elem.date, elem.ticker, e.checkValue(elem.frontMonth), e.checkValue(elem.backMonth),difference]
      }
    puts table
 end
 
+def checkValue(value)
+  if(value=='nan'||value==nil)
+    return ''
+  end
+  return value
+end
 #  
 # Load earnings tickers and attach chains to them
 #
 def Earnings_Report.loadData
-  
-    DataMapper::Logger.new($stdout, :debug)
-    DataMapper.setup(:default, 'sqlite://data/markettoday.db')
-    
+
     earning = Earning
     earnings = earning.all
 
@@ -76,11 +87,13 @@ def Earnings_Report.loadData
           if(chain.strike.to_f==strike1)
             impliedVolatilities2 << chain.ivolatility.to_f
           end  
-        }
-        puts impliedVolatilities.mean
-        puts impliedVolatilities2.mean
-        e.frontMonth = impliedVolatilities.mean
-        e.backMonth = impliedVolatilities2.mean
+        } 
+          if(impliedVolatilities.mean!='NaN')
+            e.frontMonth = "%0.2f" % (impliedVolatilities.mean*100)
+          end
+          if(impliedVolatilities2.mean!='NaN')
+            e.backMonth = "%0.2f" % (impliedVolatilities2.mean*100)
+          end
         end
       end
       e.save
@@ -96,13 +109,11 @@ def Earnings_Report.getChains(chains,osymbol)
   chainsA = Array.new
   chains.each{|chain|
    if (chain.symbol.include? osymbol)
+     puts chain.symbol
      chainsA << chain
    end
   }
   chainsA
 end
-
-
-
 
 end

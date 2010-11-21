@@ -18,11 +18,10 @@ def OptionChainsScraper.loadChains(ticker)
 
   hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
   hydra.disable_memoization
-  
-  i=0
+
   count=0
       
-  ticker.each { |tick|  
+  ticker.each { |tick|
   
   date = DateTime.now
   
@@ -41,8 +40,9 @@ def OptionChainsScraper.loadChains(ticker)
         request.on_complete { | response |
        
         if(response.code==200)
-          count=+1
-          puts '******200!****** '+count.to_s
+          count= count+1
+          puts '******200!****** '+tick
+          puts count
           doc = Hpricot(response.body)  
           table = doc.search("//table[@class='yfnc_datamodoutline1']")
           values = (table/"//tr")

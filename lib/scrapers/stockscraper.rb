@@ -2,13 +2,16 @@ require 'typhoeus'
 require 'json'
 require 'hpricot'
 require "model/stock"
+require 'CSV'
+
 
 class StockScraper
 
 
 
 def StockScraper.downloadStock(tickers)
-  hydra = Typhoeus::Hydra.new(:max_concurrency => 20,:timeout => 100)
+  hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
+  hydra.disable_memoization
   count = 0
     
       tickers.each{ | ticker|
@@ -20,7 +23,8 @@ def StockScraper.downloadStock(tickers)
       request.on_complete { | response |
      
         if(response.code==200)
-        
+        count+=1
+        puts count.to_s + ' tickers size '+tickers.size.to_s
         splitted = response.body.split(',')
         stock = StockDaily.new
         stock.symbol=ticker.to_s
@@ -43,6 +47,60 @@ def StockScraper.downloadStock(tickers)
      rescue Exception => exp
        puts exp
      end  
+    }
+    p 'running download stock'
+    hydra.run
+    p 'run finished'
+end
+
+def StockScraper.downloadStock2(tickers)
+  hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
+  hydra.disable_memoization
+
+      chunks = tickers.chunk(5)
+      
+      chunks.each{|chunk|
+      puts 'running for chunk'
+      csvTickers = chunk.join(',')
+      begin
+      url = 'http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(csvTickers+'&f=sl1a2vnqyd&e=.csv')
+      puts csvTickers
+      request = Typhoeus::Request.new(url)
+      
+      request.on_complete { | response |
+     
+        if(response.code==200)
+        
+        CSV::Reader.parse(response.body) do|row|
+          p row
+          splitted = row
+          stock = StockDaily.new
+          stock.symbol=splitted[0]
+          stock.price = splitted[1]
+          stock.avolume = splitted[2]
+          stock.volume = splitted[3]
+          stock.name = splitted[4]
+          stock.exdividenddate= splitted[5]
+          stock.dividendyield= splitted[6]
+          stock.dpershare= splitted[7]
+          stock.save
+        end  
+        
+
+        stock = StockDaily.new
+     
+             
+        else
+            puts 'failed'
+            puts response.code
+            puts response.body
+        end 
+      }
+    
+      hydra.queue(request)
+      rescue Exception => exp
+      puts exp
+      end  
     }
     p 'running download stock'
     hydra.run

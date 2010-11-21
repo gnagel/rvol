@@ -1,8 +1,7 @@
 require 'rubygems'
-require 'dm-core'
-require 'dm-migrations'
 require "scrapers/stockscraper"
 require "model/stock"
+require "core/datapersistence"
 
 # This class wraps up all financial data downloads and stores the information into a database.
 # Errors are logged for quality of service
@@ -15,20 +14,13 @@ class Downloader
 
 # initialize download
 def init
-   DataMapper::Logger.new($stdout, :debug)
-   # A Sqlite3 connection to a persistent database
-   DataMapper.setup(:default, 'sqlite://data/markettoday.db')
-   DataMapper::Model.raise_on_save_failure = false
-   # checks properties
-   DataMapper.finalize
-   DataMapper.auto_migrate!
-   #DataMapper.auto_upgrade!
-   
+   DataPersistence.new
    self.downloadSP500Tickers
+   self.createIndexEtfs
    self.downloadSP500stock
    self.downloadSP500Chains
-   #self.createIndexEtfs
    self.downloadEarnings
+   self.doCalculations
 
 end  
 
@@ -45,10 +37,36 @@ def downloadSP500Tickers
    tick.symbol     = ticker
    tick.index      = 'SP500'
    tick.save
-   rescue
-     puts 'error' + ticker
+   rescue => boom
+     puts 'error  ' + ticker
+     puts boom
    end 
  }
+end
+
+# Download index data and chains
+# SPY, DIA, IWM, USO , GLD ,QQQQ, 
+# Also download volaitlity: VIX , VXX , VXZ
+# Download equities with weeklies
+#
+def createIndexEtfs
+   indexes = ['^OEX','^XEO','^DJX','^SPX','EEM','FAZ','FAS','IWM','QQQQ','SPY','XLF','TLT','TBT','SLV']
+   equity = ['AAPL','AMZN','BAC','BIDU','BP','C','CSCO','F','GE','GOOG','GS','MSFT','NFLX','INTC','IBM','PCLN','RIMM']
+   oil = ['USO']
+   gold = ['GLD','GDX']
+   volatility=['^VIX','VXX','VXZ']
+   emergingMarkets=['BRF','EEM']
+   currencies=['UUP']
+   etfs = [indexes,equity,oil,gold,volatility,emergingMarkets,currencies]
+   etfs.flatten!
+   etfs.each{|x| 
+     tick = Ticker.new
+     tick.created_at = Time.now
+     tick.symbol     = x
+     tick.index      = 'index-etf'
+     tick.save
+   }
+   
 end
 
 
@@ -58,9 +76,9 @@ end
 #
 def downloadSP500stock
   puts 'starting downloadSP500Stock'
-  result = Ticker.all(:index => 'SP500')
+  result = Ticker.all()
   puts result.size
-  sp = StockScraper.downloadStock(result.collect{|tic| tic.symbol})
+  sp = StockScraper.downloadStock2(result.collect{|tic| tic.symbol})
 end
 
 # This will download all chains for the S&P500 
@@ -77,33 +95,10 @@ end
 ##
 def downloadEarnings
  result = Ticker.all(:index => 'SP500')
- earningsmonth = EarningsScraper.getEarningsMonth2(result.collect{|tic| tic.symbol})
- earningsmonth.each{ |x| x.save }
+ EarningsScraper.getEarningsMonth2(result.collect{|tic| tic.symbol})
+ #earningsmonth.each{ |x| x.save }
 end
 
-# Download index data and chains
-# SPY, DIA, IWM, USO , GLD ,QQQQ, 
-# Also download volaitlity: VIX , VXX , VXZ
-#
-def createIndexEtfs
-   indexes = ['SPY','DIA','QQQ','IWM','RUT','RUI','MNX','NDX','MDY','DJX','XLF']
-   oil = ['OIH','USO']
-   gold = ['GLD','UGL','GDX']
-   volatility=['VIX','VXX','VXZ']
-   emergingMarkets=['BRF','EEM']
-   currencies=['UUP']
-   bonds = ['TIP','CLY']
-   etfs = [indexes,oil,gold,volatility,emergingMarkets,currencies,bonds]
-   etfs.flatten!
-   etfs.each{|x| 
-     tick = Ticker.new
-     tick.created_at = Time.now
-     tick.symbol     = x
-     tick.index      = 'index-etf'
-     tick.save
-   }
-   
-end
 
 
 #
@@ -113,6 +108,15 @@ end
 def downloadEvents
 # tbd
 end
+
+#
+# Preprocess data for reports 
+#
+def doCalculations
+## earnings fron and back month calc  
+Earnings_Report.loadData
+end
+
 
 def printErrors(object)
   object.errors.each do |e|

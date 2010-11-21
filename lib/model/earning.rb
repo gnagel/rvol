@@ -8,8 +8,8 @@ class Earning
   property :created_at,                  DateTime  # A DateTime, for any date you might like.
   property :date,                        String
   property :ticker,                      String
-  property :frontMonth,                  String
-  property :backMonth,                   String
+  property :frontMonth,                  Float
+  property :backMonth,                   Float
   
   def initialize(date,ticker)
     self.date = date

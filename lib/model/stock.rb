@@ -10,7 +10,11 @@ class Ticker
   property :created_at,                  DateTime  # A DateTime, for any date you might like.
   property :symbol,                      String, :unique => true
   property :index,                       String
+  property :frontMonth,                  Float
+  property :backMonth,                   Float
 end
+
+
 
 #
 # Holds daily data for a stock 
@@ -19,6 +23,8 @@ class StockDaily
   include DataMapper::Resource
   property :id,            Serial
   property :symbol,        String
+  # A DateTime, for any date you might like.
+  property :created_at,    DateTime  
   # l1 Last Trade (Price Only)
   property :price,         String
   # a2 average volume

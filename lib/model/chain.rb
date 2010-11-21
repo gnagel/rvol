@@ -2,8 +2,7 @@ require 'logger'
 require "core/DateUtil"
 require "math/ivolatility"
 require "scrapers/stockscraper"
-require 'dm-core'
-require 'dm-validations'
+
 
 class Chain 
   include DataMapper::Resource
@@ -47,17 +46,14 @@ class Chain
   # calcualtes the implied volatility for the chain
   
   def calculateIVol
-    DataMapper.setup(:default, 'sqlite://data/markettoday.db')
     begin
     
     lastPrice = StockDaily.first(:symbol=>self.ticker)
-    puts 'LASTPRICE:' + lastPrice.price.to_s
     strike = self.strike
     iv = Ivolatility.new
     expTime =  DateUtil.getDaysToExpFriday(self.date)
-    puts 'expdays ' + expTime.to_s
+    
     expTimeYear = iv.expireTime(expTime)
-    puts 'exptimeyear ' + expTimeYear.to_s
     # constantdate
     irate = 0.14 / 100;
     yields = 0
