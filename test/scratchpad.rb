@@ -6,7 +6,6 @@ require "core/downloader"
 
 
  begin
-
    d = Downloader.new
    d.downloadEarnings
  end
