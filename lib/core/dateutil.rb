@@ -109,8 +109,9 @@ class DateUtil
     date1 = DateTime.now
     expDay = DateUtil.fridayFinder(date1.year,date1.month) + 1
     date = Date.new(date1.year,date1.month,expDay)
-
+ 
     if(DateUtil.getDaysToExpFriday(date)==0)
+      expDay = DateUtil.fridayFinder(date1.year,date1.month+1) + 1
       date = Date.new(date.year,date.month+1,expDay)
     end
 
@@ -121,16 +122,17 @@ class DateUtil
   # Generate the option symbol from the date for the back month. If the date is past expiry give next month
   #
   def DateUtil.getOptSymbNextMonth(ticker)
-    date1 = DateTime.now
-    expDay = DateUtil.fridayFinder(date1.year,date1.month+1) + 1
-    puts 'fuck'+expDay.to_s
     date = DateTime.now
-    if(DateUtil.getDaysToExpFriday(date)==0)
-      date = Date.new(date.year,date.month+1,expDay)
+    # id days to expiry is 0 and month is 11 the next back month is next year   
+    if(date.month==11&&DateUtil.getDaysToExpFriday(date)==0)
+      expDay = DateUtil.fridayFinder(date.year+1,1) + 1
+      date = Date.new(date.year+1,1,expDay)
     else
-      date = Date.new(date.year,date.month,expDay)
+      # next month is dec or the next
+      expDay = DateUtil.fridayFinder(date.year,date.month+1) + 1
+      date = Date.new(date.year,date.month+1,expDay)
     end
-    date = DateUtil.nextMonth(date)
+ 
     oticker = ticker+date.strftime("%y%m%d")
   end
 
@@ -139,14 +141,20 @@ class DateUtil
   #
   def DateUtil.getDateFromOptSymbol(ticker,optSymbol)
     begin
+      ## remove ^ from front if exists
+      if(ticker.slice(0)==94)
+       ticker.slice!(0)
+      end
       ##remove ticker from front
       parsed1 = optSymbol.delete ticker
       ## get next 4 yymm
-      parsed2 = parsed1[0..3]
-      return Date.strptime(parsed2,"%y%m")
+      parsed2 = parsed1[0..5]
+      date = Date.strptime(parsed2,"%y%m%d")
+      return date
 
     rescue Exception => e
       puts 'failed date'
+      puts e
       puts ticker
       puts optSymbol
       return 'N/A'

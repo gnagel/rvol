@@ -1,5 +1,5 @@
 require 'helper'
-require "model/earnings"
+require "model/earning"
 
 
 

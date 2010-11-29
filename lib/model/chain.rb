@@ -6,6 +6,8 @@ require "scrapers/stockscraper"
 
 class Chain 
   include DataMapper::Resource
+  
+  @@cache = Hash.new
 
   property :id,                          Serial    # An auto-increment integer key
   property :created_at,                  DateTime  # A DateTime, for any date you might like.
@@ -35,20 +37,21 @@ class Chain
     self.ask=ask
     self.vol=vol
     self.openInt=openInt
-    self.calculateIVol
+    self.ivolatility = 0
+    #self.calculateIVol
   end
   
   def toString
     puts self.inspect
   end
   
-
+  #
   # calcualtes the implied volatility for the chain
-  
+  #
   def calculateIVol
     begin
     
-    lastPrice = StockDaily.first(:symbol=>self.ticker)
+    lastPrice = @@cache[self.ticker] ||= StockDaily.first(:symbol=>self.ticker)
     strike = self.strike
     iv = Ivolatility.new
     expTime =  DateUtil.getDaysToExpFriday(self.date)
@@ -66,7 +69,8 @@ class Chain
     self.ivolatility = ivol.to_f
 
     rescue Exception => boom
-      puts 'ivolatility calculation failed ' + boom
+      puts 'ivolatility calculation failed '
+      puts boom
     end
  
   end

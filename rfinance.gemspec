@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2010-10-24}
+  s.date = %q{2010-11-23}
   s.default_executable = %q{rfinance.rb}
   s.description = %q{The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
     Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
@@ -32,38 +32,38 @@ Gem::Specification.new do |s|
      "VERSION",
      "bin/rfinance.rb",
      "data/markettoday.db",
-     "data/spx.txt",
-     "features/downloadChainsForTicker.feature",
-     "features/downloadearnings.feature",
      "features/rfinance.feature",
-     "features/step_definitions/downloadChainsForTicker_steps.rb",
-     "features/step_definitions/downloadearnings_steps.rb",
      "features/step_definitions/rfinance_steps.rb",
      "features/support/env.rb",
      "finance.mm",
-     "lib/core/datamapper.rb",
      "lib/core/dateutil.rb",
      "lib/core/downloader.rb",
+     "lib/math/arraymath.rb",
      "lib/math/ivolatility.rb",
      "lib/model/chain.rb",
      "lib/model/earning.rb",
      "lib/model/stock.rb",
      "lib/reports/chains_report.rb",
      "lib/reports/earnings_report.rb",
+     "lib/reports/index_etf_report.rb",
      "lib/rfinance.rb",
      "lib/scrapers/earningsscraper.rb",
      "lib/scrapers/optionschainsscraper.rb",
+     "lib/scrapers/rssScraper.rb",
      "lib/scrapers/stockscraper.rb",
      "rfinance.gemspec",
      "test/core/test_dateutil.rb",
      "test/core/test_downloader.rb",
      "test/helper.rb",
+     "test/log.txt",
+     "test/math/test_arraymath.rb",
      "test/math/test_ivolatility.rb",
      "test/model/test_chain.rb",
      "test/model/test_earnings.rb",
      "test/model/test_stock.rb",
      "test/reports/test_chains_report.rb",
      "test/reports/test_earnings_report.rb",
+     "test/reports/test_index_report.rb",
      "test/scrapers/test_earnings_scraper.rb",
      "test/scrapers/test_options_chains_scraper.rb",
      "test/scrapers/test_stockscraper.rb",
@@ -79,12 +79,14 @@ Gem::Specification.new do |s|
     "test/core/test_dateutil.rb",
      "test/core/test_downloader.rb",
      "test/helper.rb",
+     "test/math/test_arraymath.rb",
      "test/math/test_ivolatility.rb",
      "test/model/test_chain.rb",
      "test/model/test_earnings.rb",
      "test/model/test_stock.rb",
      "test/reports/test_chains_report.rb",
      "test/reports/test_earnings_report.rb",
+     "test/reports/test_index_report.rb",
      "test/scrapers/test_earnings_scraper.rb",
      "test/scrapers/test_options_chains_scraper.rb",
      "test/scrapers/test_stockscraper.rb",
@@ -99,13 +101,43 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
+      s.add_runtime_dependency(%q<hpricot>, [">= 0"])
+      s.add_runtime_dependency(%q<dm-core>, [">= 0"])
+      s.add_runtime_dependency(%q<dm-validations>, [">= 0"])
+      s.add_runtime_dependency(%q<ruport>, [">= 0"])
+      s.add_runtime_dependency(%q<typhoeus>, [">= 0"])
+      s.add_runtime_dependency(%q<dm-sqlite-adapter>, [">= 0"])
+      s.add_runtime_dependency(%q<dm-migrations>, [">= 0"])
+      s.add_runtime_dependency(%q<shoulda>, [">= 0"])
+      s.add_runtime_dependency(%q<ruport-util>, [">= 0"])
+      s.add_runtime_dependency(%q<rufus-scheduler>, [">= 0"])
     else
       s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
+      s.add_dependency(%q<hpricot>, [">= 0"])
+      s.add_dependency(%q<dm-core>, [">= 0"])
+      s.add_dependency(%q<dm-validations>, [">= 0"])
+      s.add_dependency(%q<ruport>, [">= 0"])
+      s.add_dependency(%q<typhoeus>, [">= 0"])
+      s.add_dependency(%q<dm-sqlite-adapter>, [">= 0"])
+      s.add_dependency(%q<dm-migrations>, [">= 0"])
+      s.add_dependency(%q<shoulda>, [">= 0"])
+      s.add_dependency(%q<ruport-util>, [">= 0"])
+      s.add_dependency(%q<rufus-scheduler>, [">= 0"])
     end
   else
     s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
+    s.add_dependency(%q<hpricot>, [">= 0"])
+    s.add_dependency(%q<dm-core>, [">= 0"])
+    s.add_dependency(%q<dm-validations>, [">= 0"])
+    s.add_dependency(%q<ruport>, [">= 0"])
+    s.add_dependency(%q<typhoeus>, [">= 0"])
+    s.add_dependency(%q<dm-sqlite-adapter>, [">= 0"])
+    s.add_dependency(%q<dm-migrations>, [">= 0"])
+    s.add_dependency(%q<shoulda>, [">= 0"])
+    s.add_dependency(%q<ruport-util>, [">= 0"])
+    s.add_dependency(%q<rufus-scheduler>, [">= 0"])
   end
 end
 

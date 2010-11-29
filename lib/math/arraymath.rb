@@ -1,5 +1,5 @@
 #
-# Statistical methods for arrays
+# Statistical methods for array
 #
 class Array
   def closest int

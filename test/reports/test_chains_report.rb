@@ -1,18 +1,16 @@
 require 'helper'
-require "model/earnings"
-require "reports/chains_report"
+require "model/earning"
+require "reports/chainsreport"
 
 class Test_Chains_Report < Test::Unit::TestCase
 
   def test_Chains_report
     
   start_time = Time.now 
-  Chains_Report.generateReport("ADBE")
+  ChainsReport.new.generateReport(['ADBE'])
   total_time = Time.now - start_time 
   puts total_time
-  
-  rescue => e
-    p e
+
   end
   
   

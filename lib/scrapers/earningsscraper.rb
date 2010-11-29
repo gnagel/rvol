@@ -10,9 +10,9 @@ require 'typhoeus'
 class EarningsScraper
 
   #
-  # Generally, you should be running requests through hydra. Here is how that looks  
+  # Earnings scraper 
   #
-  def EarningsScraper.getEarningsMonth2(filter)
+  def getEarningsMonth2(filter)
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
 
     t = DateTime.now
@@ -29,8 +29,7 @@ class EarningsScraper
             puts 'success 200'
          
             doc = Hpricot(response.body)
-            chains = (doc/"//a[@href]")
-          
+            chains = doc.search("//a[@href]")
             for obj in chains
 
               if obj.to_html.include? "http://finance.yahoo.com/q?"
@@ -39,7 +38,6 @@ class EarningsScraper
                 if filter.include?(ticker)
                   earning = Earning.new(date,ticker)
                   boolea = earning.save
-                  puts 'SAVE:' +boolea.to_s
                 end
               end
 

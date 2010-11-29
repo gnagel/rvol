@@ -2,7 +2,7 @@ require 'dm-core'
 require 'dm-validations'
   
 #
-# Holds 
+# Holds Ticker names for different indexes
 #
 class Ticker
   include DataMapper::Resource
@@ -23,27 +23,23 @@ class StockDaily
   include DataMapper::Resource
   property :id,            Serial
   property :symbol,        String
-  # A DateTime, for any date you might like.
-  property :created_at,    DateTime  
-  # l1 Last Trade (Price Only)
-  property :price,         String
-  # a2 average volume
-  property :avolume,       String
-  # v volume
-  property :volume,        String
-  # n name
-  property :name,          String
-  # q Ex-Dividend Date
-  property :exdividenddate,String
-  # y Dividend Yield
-  property :dividendyield, String
-  # d Dividend/Share
-  property :dpershare,     String
+  property :created_at,    DateTime  # A DateTime, for any date you might like.
+  property :price,         String    # l1 Last Trade (Price Only)
+  property :avolume,       String    # a2 average volume
+  property :volume,        String    # v volume
+  property :name,          String    # n name
+  property :exdividenddate,String    # q Ex-Dividend Date
+  property :dividendyield, String    # y Dividend Yield
+  property :dpershare,     String    # d Dividend/Share
 end
 
+#
+# Holds daily historical prices for a stock
+#
 class StockHistorical 
   include DataMapper::Resource
   property :id,    Serial
+  property :date,  DateTime 
   property :open,  String
   property :high,  String
   property :low,   String

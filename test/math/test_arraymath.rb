@@ -5,7 +5,8 @@ class TestArrayMath  < Test::Unit::TestCase
  
  def test_array_closest
   array = [1,3,8,10,13]
-  puts array.closest 11
+  int = array.closest 11
+  assert_equal(int,10)
  end
  
 end

@@ -1,12 +1,15 @@
 require 'helper'
-require "reports/earnings_report"
+require "reports/earningsreport"
 
 class TestEarnings_Report < Test::Unit::TestCase
 
   def test_Earnings_report
-   
-    Earnings_Report.generate
-    #Earnings_Report.generate
+    begin
+    EarningsReport.new.generateReport
+    rescue => boom
+      print boom
+    flunk('earnigns report failed')
+    end 
   end
   
   

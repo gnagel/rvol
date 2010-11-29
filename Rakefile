@@ -16,6 +16,17 @@ begin
     gem.authors = ["Toni Karhu"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
+    gem.add_dependency "hpricot"
+    gem.add_dependency "dm-core"
+    gem.add_dependency "dm-validations"
+    gem.add_dependency "ruport"
+    gem.add_dependency "typhoeus"
+    gem.add_dependency "dm-sqlite-adapter"
+    gem.add_dependency "dm-migrations"
+    gem.add_dependency "shoulda"
+    gem.add_dependency "ruport-util"
+    gem.add_dependency "rufus-scheduler"
+    
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -25,7 +36,7 @@ end
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test' << 'test/model'
+  test.libs << 'lib' << 'test' 
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
 end
@@ -67,3 +78,5 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+
