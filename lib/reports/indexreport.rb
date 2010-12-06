@@ -11,7 +11,6 @@ class IndexReport
     puts "".ljust(75,"*") << "\n" 
     puts ""  +"index report"+"\n" 
     puts "".ljust(75,"*") << "\n"
-    DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db')
     indexes = Ticker.all(:index=>'index-etf')
     loadData
     ReportPrinter.new.printIndexReport(indexes);
@@ -48,8 +47,6 @@ class IndexReport
          impliedVolatilities = getImpliedVolatilities(frontChains,closestStrike)
          impliedVolatilities2 = getImpliedVolatilities(backChains,closestStrike)
         
-         
-         
          if(impliedVolatilities.mean!='NaN') 
            e.frontMonth = "%0.2f" % (impliedVolatilities.mean*100)
          end

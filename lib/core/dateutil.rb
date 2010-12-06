@@ -106,13 +106,15 @@ class DateUtil
   # Generate the option symbol from the date for  the front month. If the date is past expiry give next month
   #
   def DateUtil.getOptSymbThisMonth(ticker)
-    date1 = DateTime.now
-    expDay = DateUtil.fridayFinder(date1.year,date1.month) + 1
-    date = Date.new(date1.year,date1.month,expDay)
+    date = DateTime.now
+    expDay = DateUtil.fridayFinder(date.year,date.month) + 1
+    date = Date.new(date.year,date.month,expDay)
  
     if(DateUtil.getDaysToExpFriday(date)==0)
-      expDay = DateUtil.fridayFinder(date1.year,date1.month+1) + 1
-      date = Date.new(date.year,date.month+1,expDay)
+      # get next month expiry gone already this month
+      date = date >> 1
+      expDay = DateUtil.fridayFinder(date.year,date.month) + 1
+      date = Date.new(date.year,date.month,expDay)
     end
 
     oticker = ticker+date.strftime("%y%m%d")
@@ -123,14 +125,17 @@ class DateUtil
   #
   def DateUtil.getOptSymbNextMonth(ticker)
     date = DateTime.now
-    # id days to expiry is 0 and month is 11 the next back month is next year   
-    if(date.month==11&&DateUtil.getDaysToExpFriday(date)==0)
-      expDay = DateUtil.fridayFinder(date.year+1,1) + 1
-      date = Date.new(date.year+1,1,expDay)
+
+    if(DateUtil.getDaysToExpFriday(date)==0)
+      # get next month expiry gone already this month
+      date = date >> 2
+      expDay = DateUtil.fridayFinder(date.year,date.month) + 1
+      date = Date.new(date.year,date.month,expDay)
     else
-      # next month is dec or the next
-      expDay = DateUtil.fridayFinder(date.year,date.month+1) + 1
-      date = Date.new(date.year,date.month+1,expDay)
+      # use next 
+      date = date >> 1
+      expDay = DateUtil.fridayFinder(date.year,date.month) + 1
+      date = Date.new(date.year,date.month,expDay)
     end
  
     oticker = ticker+date.strftime("%y%m%d")
@@ -140,23 +145,24 @@ class DateUtil
   # Parse the options expiry month from the opt symbol
   #
   def DateUtil.getDateFromOptSymbol(ticker,optSymbol)
+
     begin
       ## remove ^ from front if exists
       if(ticker.slice(0)==94)
        ticker.slice!(0)
       end
       ##remove ticker from front
-      parsed1 = optSymbol.delete ticker
-      ## get next 4 yymm
-      parsed2 = parsed1[0..5]
-      date = Date.strptime(parsed2,"%y%m%d")
-      return date
-
+      if optSymbol.include? ticker
+        parsed1 = optSymbol.delete ticker
+        ## get next 4 yymm
+        parsed2 = parsed1[0..5]
+        date = Date.strptime(parsed2,"%y%m%d")
+        return date
+      end
     rescue Exception => e
-      puts 'failed date'
+      puts 'failed date for ' + ticker
+   
       puts e
-      puts ticker
-      puts optSymbol
       return 'N/A'
     end
   end

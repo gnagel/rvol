@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'typhoeus'
 require 'rss/2.0'
 require 'hpricot'

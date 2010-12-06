@@ -1,12 +1,13 @@
-require 'rubygems'
 require "scrapers/stockscraper"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
 require 'reports/earningsreport'
+require 'reports/IndexReport'
 require "model/stock"
+require "model/chain"
+require "model/earning"
 require 'dm-core'
 require 'dm-migrations'
-require 'reports/IndexReport'
 
 # This class wraps up all financial data downloads and stores the information into a database.
 # Errors are logged for quality of service
@@ -19,7 +20,7 @@ class Downloader
   def init
     #DataMapper::Logger.new($stdout, :debug)
     DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db')
-    #DataMapper::Model.raise_on_save_failure = true
+    DataMapper::Model.raise_on_save_failure = true
     DataMapper.finalize
     DataMapper.auto_migrate!
 
@@ -59,13 +60,13 @@ class Downloader
   #
   def createIndexEtfs
     indexes = ['^OEX','^XEO','^DJX','^SPX','EEM','FAZ','FAS','IWM','QQQQ','SPY','XLF','TLT','TBT','SLV']
-    equity = ['AAPL','AMZN','BAC','BIDU','BP','C','CSCO','F','GE','GOOG','GS','MSFT','NFLX','INTC','IBM','PCLN','RIMM']
+    #equity = ['AAPL','AMZN','BAC','BIDU','BP','C','CSCO','F','GE','GOOG','GS','MSFT','NFLX','INTC','IBM','PCLN','RIMM']
     oil = ['USO']
     gold = ['GLD','GDX']
     volatility=['^VIX','VXX','VXZ']
-    emergingMarkets=['BRF','EEM']
+    emergingMarkets=['BRF']
     currencies=['UUP']
-    etfs = [indexes,equity,oil,gold,volatility,emergingMarkets,currencies]
+    etfs = [indexes,oil,gold,volatility,emergingMarkets,currencies]
     etfs.flatten!
     etfs.each{|x|
       tick = Ticker.new

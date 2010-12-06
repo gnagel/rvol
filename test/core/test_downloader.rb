@@ -1,5 +1,5 @@
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 require 'helper'
-require 'rubygems'
 require 'core/downloader'
 require "scrapers/stockscraper"
 require "scrapers/optionschainsscraper"
@@ -9,6 +9,7 @@ require 'dm-core'
 require 'dm-migrations'
 require 'reports/earningsreport'
 require 'reports/IndexReport'
+require 'test/unit'
 
 class TestDownloader < Test::Unit::TestCase
 
@@ -33,8 +34,7 @@ class TestDownloader < Test::Unit::TestCase
     self.downloadEarnings
     self.doCalculations
     rescue => boom
-      puts boom
-      flunk('test downloader failed!')
+      flunk('test downloader failed! ' + boom.message)
     end 
 
   end
@@ -46,7 +46,7 @@ class TestDownloader < Test::Unit::TestCase
   #
   def createIndexEtfs
 
-    emergingMarkets=['BRF']
+    emergingMarkets=['BRF','IWM']
     etfs = [emergingMarkets]
     etfs.flatten!
     etfs.each{|x|
@@ -75,7 +75,8 @@ class TestDownloader < Test::Unit::TestCase
   # Chains should be loaded for the next 2 months
   def downloadSP500Chains
     puts 'starting downloadSP500chains'
-    result = Ticker.all()
+    result = Ticker.all(:index => 'index-etf')
+    puts result.size
     OptionChainsScraper.new.loadChains(result.collect{|tic| tic.symbol},true)
   end
 

@@ -1,9 +1,8 @@
-require 'rubygems'
 require 'open-uri'
-require 'hpricot'
 require 'model/chain.rb'
 require 'typhoeus'
 require "core/dateutil"
+require 'nokogiri'
 
 class OptionChainsScraper
   #
@@ -38,33 +37,61 @@ class OptionChainsScraper
 
             if(response.code==200)
               count= count+1
-              puts '******200!****** '+tick + ' count: ' +count.to_s
+              puts 'HTTP RESPONSE: 200 '+tick + ' count: ' +count.to_s
+              doc = Nokogiri::HTML(response.body)
 
-              doc = Hpricot(response.body)
-              table = doc.search("//table[@class=yfnc_datamodoutline1]")
-              values = table.search("//tr")
-              for obj in values
-                if obj.to_html.include? "C00"
+              doc.search("//table[@class='yfnc_datamodoutline1']").each do |tr|
+                i = 0
 
-                  chain = scraper.parseTD(obj,"C",tick)
-                  if chain != nil
-                    chains << chain
-                    if (persist)
-                      chain.save
+                type = ""
+                ticker = tick
+                symbol =""
+                dateS = ""
+                strike =""
+                last=""
+                chg=""
+                bid=""
+                ask=""
+                vol=""
+                open=""
+
+                tr.css('.yfnc_h','.yfnc_tabledata1').each do |td|
+                  i+=1
+                  case i
+                  when 1 then strike = td.inner_text
+                  when 2 then symbol = td.inner_text
+                  when 3 then last   = td.inner_text
+                  when 4 then chg    = td.inner_text
+                  when 5 then bid    = td.inner_text
+                  when 6 then ask    = td.inner_text
+                  when 7 then vol    = td.inner_text
+                  when 8
+                    open = td.inner_text
+                    if(symbol.include?"C00")
+                    type = 'C'
+                    else 
+                      type = 'P'
                     end
+                    i = 0
+                    dateS = DateUtil.getDateFromOptSymbol(ticker,symbol)
+                    chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
+
+                    if(persist)
+                      if chain.save
+                      else
+                        puts 'Error saving chain'
+                        chain.errors.each do |e|
+                          puts e
+                        end
+                      end
+                    end # end persist
+                    
                   end
+
                 end
 
-                if obj.to_html.include? "P00"
-                  chain =  scraper.parseTD(obj,"P",tick)
-                  if chain != nil
-                    chains << chain
-                    if (persist)
-                      chain.save
-                    end
-                  end
-                end
               end
+
             else
               puts 'failed'
               puts response.code
@@ -72,42 +99,12 @@ class OptionChainsScraper
             end
 
           }
-
           hydra.queue(request)
-
         end
-
       end
     }
     hydra.run
     chains
-  end
-
-  #
-  #
-  #
-  def parseTD(td,type,ticker)
-
-    parsed = (td/"//td")
-    if parsed.length==8
-
-      strike  = parsed[0].inner_text
-      symbol  = parsed[1].inner_text
-      last    = parsed[2].inner_text
-      chg     = parsed[3].inner_text
-      bid     = parsed[4].inner_text
-      ask     = parsed[5].inner_text
-      vol     = parsed[6].inner_text
-      open    = parsed[7].inner_text
-
-      # create a chain holder object for the data
-      dateS = DateUtil.getDateFromOptSymbol(ticker,symbol)
-      chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
-
-    end
-
-    return chain
-
   end
 
 end

@@ -1,9 +1,10 @@
-require 'scrapers/stockscraper'
-require "reports/earnings_report"
-require 'optparse'
-require 'dm-core'
+require 'reports/earningsreport'
 
+#
+#
+#
 module Rfinance
-
-
+  def earningsReport
+    EarningsReport.new.generateReport
+  end
 end

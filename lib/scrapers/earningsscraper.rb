@@ -1,5 +1,4 @@
 require 'date'
-require 'rubygems'
 require 'open-uri'
 require 'hpricot'
 require 'model/earning'

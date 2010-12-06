@@ -1,5 +1,7 @@
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 require 'helper'
-require "core/dateutil"
+require 'core/dateutil'
+require 'date'
 
 class TestDateUtil < Test::Unit::TestCase
 
@@ -15,7 +17,7 @@ class TestDateUtil < Test::Unit::TestCase
     puts value
     assert_not_nil value
     
-    date2 = Date.new(date.year,date.month+1,date.day)
+    date2 = date >> 1
     puts "DateUtil.getDaysToExpFriday(date2)  " +date2.to_s
     value = DateUtil.getDaysToExpFriday(date2)
     assert_not_nil value

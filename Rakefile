@@ -26,6 +26,7 @@ begin
     gem.add_dependency "shoulda"
     gem.add_dependency "ruport-util"
     gem.add_dependency "rufus-scheduler"
+    gem.add_dependency "nokogiri"
     
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

@@ -13,7 +13,6 @@ require 'ruport'
 #
 class EarningsReport
   def generateReport
-    DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db')
     ReportPrinter.new.printEarningsReport(Earning.all)
   end
 

@@ -78,9 +78,10 @@ class Array
     self.covariance(other) / Math.sqrt(self.variance * other.variance)
   end
   #
-  # chunks the array into hundreds
+  # chunks the array into  peaces
   #
   def chunk(pieces=2)
+    if(pieces!=0)
     len = self.length;
     mid = (len/pieces)
     chunks = []
@@ -92,6 +93,9 @@ class Array
       start = last+1
     end
     chunks
+    else
+      self
+    end
   end
   
 end

@@ -10,19 +10,19 @@ class Chain
   @@cache = Hash.new
 
   property :id,                          Serial    # An auto-increment integer key
-  property :created_at,                  DateTime  # A DateTime, for any date you might like.
-  property :type,                        String
-  property :ticker,                      String
-  property :date,                        DateTime
-  property :strike,                      String
-  property :symbol,                      String
-  property :last,                        String
-  property :chg,                         String
-  property :bid,                         String
-  property :ask,                         String
-  property :vol,                         String    
-  property :openInt,                     String
-  property :ivolatility,                 String    
+  property :created_at,                  DateTime  , :required => true# A DateTime, for any date you might like.
+  property :type,                        String, :required => true
+  property :ticker,                      String, :required => true
+  property :date,                        Date, :required => true
+  property :strike,                      String, :required => true
+  property :symbol,                      String, :required => true
+  property :last,                        String, :required => true
+  property :chg,                         String, :required => true
+  property :bid,                         String, :required => true
+  property :ask,                         String, :required => true
+  property :vol,                         String, :required => true
+  property :openInt,                     String, :required => true
+  property :ivolatility,                 String, :required => true
 
   def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
     self.created_at = Time.now
@@ -38,7 +38,7 @@ class Chain
     self.vol=vol
     self.openInt=openInt
     self.ivolatility = 0
-    #self.calculateIVol
+    self.calculateIVol
   end
   
   def toString
@@ -52,10 +52,11 @@ class Chain
     begin
     
     lastPrice = @@cache[self.ticker] ||= StockDaily.first(:symbol=>self.ticker)
+
     strike = self.strike
     iv = Ivolatility.new
     expTime =  DateUtil.getDaysToExpFriday(self.date)
-    
+   
     expTimeYear = iv.expireTime(expTime)
     # constantdate
     irate = 0.14 / 100;
