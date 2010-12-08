@@ -20,7 +20,7 @@ class Downloader
   def init
     #DataMapper::Logger.new($stdout, :debug)
     DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db')
-    DataMapper::Model.raise_on_save_failure = true
+    #DataMapper::Model.raise_on_save_failure = true
     DataMapper.finalize
     DataMapper.auto_migrate!
 
@@ -29,8 +29,7 @@ class Downloader
     self.downloadSP500stock
     self.downloadSP500Chains
     self.downloadEarnings
-    self.doCalculations
-
+  
   end
 
   # This will download all S&P 500 data from the internet and
@@ -114,14 +113,6 @@ class Downloader
     # tbd
   end
 
-  #
-  # Preprocess data for reports
-  #
-  def doCalculations
-    ## earnings fron and back month calc
-    EarningsReport.new.loadData
-    IndexReport.new.loadData
-  end
 
   def printErrors(object)
     object.errors.each do |e|

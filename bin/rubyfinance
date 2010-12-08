@@ -1,25 +1,22 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -W0
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'rfinance'
 require 'optparse'
 require 'optparse/time'
 require 'ostruct'
+require 'pp'
 
 #
-# Main emethod for accessing the application. Commands can be entered from here with the option parser.
-# Implementations methods are grouped at the bottom.
-class Optparse 
+# Main memthod for accessing the application. Commands can be entered from
+# here with the option parser. Implementations methods are grouped at the bottom.
+#
+class RubyFinance
   include Rfinance
-  #
-  # EACH OPTION HAS ITS OWN METHODS HERE:
-  #
-  def optEarningsReport(opt)
-    self.earningsReport
-  end
 
-  def optSnapshot
-    puts 'snap'
-  end
+  # This hash will hold all of the options
+  # parsed from the command-line by
+  # OptionParser.
+  options = {}
 
   #
   # Return a structure describing the options.
@@ -29,22 +26,31 @@ class Optparse
     # We set default values here.
     options = OpenStruct.new
     options.encoding = "utf8"
-    options.transfer_type = :auto
-    options.verbose = false
 
     opts = OptionParser.new do |opts|
       opts.banner = "Usage: rubyfinnance [options]"
       opts.separator ""
       opts.separator "Specific options:"
 
-      opts.on("-e","--earnings opt","Generate a table of earnings") do |opt|
-        Optparse.new.optEarningsReport(opt)
-        exit
+      opts.on("-e","--earningsR","Generate a table of earnings") do
+        RubyFinance.new.earningsReport
+      end
+      
+      opts.on("-i","--indexR","Generate an index report") do
+             RubyFinance.new.indexReport
+      end
+      
+      opts.on("-r","--chainR [TICKER]","List chains for ticker report") do |ticker|
+             RubyFinance.new.chainReport(ticker)
+      end
+  
+
+      opts.on("-s","--snapshot","Download market snapshot, will download the current market data") do
+        RubyFinance.new.runSnapShot
       end
 
-      opts.on("-s","--snapshot","Download market snapshot") do
-        Optparse.new.optSnapshot
-        exit
+      opts.on("-c","--downloader","start cron type timer downloader, will run 5:00 PM every weekday") do
+        RubyFinance.new.runCron
       end
 
       opts.separator ""
@@ -55,12 +61,18 @@ class Optparse
         exit
       end
 
+      # Another typical switch to print the version.
+      opts.on_tail("--version", "Show version") do
+        puts OptionParser::Version.join('.')
+        exit
+      end
+
     end
     opts.parse!(args)
     options
   end  # parse()
 
   # RUNS THE APPLICATION
-  options = Optparse.parse(ARGV)
-
-end  # class Optparse
+  options = RubyFinance.parse(ARGV)
+  pp options
+end  # class RubyFinance

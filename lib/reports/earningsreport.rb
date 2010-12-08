@@ -1,6 +1,3 @@
-require 'scrapers/optionschainsscraper'
-require 'scrapers/stockscraper'
-require 'scrapers/earningsscraper'
 require 'reports/reportprinter'
 require 'math/arraymath'
 require 'model/earning'
@@ -15,22 +12,20 @@ class EarningsReport
   def generateReport
     ReportPrinter.new.printEarningsReport(Earning.all)
   end
-
   #
   # Load earnings tickers and attach chains to them
   #
   def loadData
 
     earnings = Earning.all
-
     earnings.each{|e|
 
       ticker      = e.ticker
       osymbol     = DateUtil.getOptSymbThisMonth(ticker)
-      osymbol2     = DateUtil.getOptSymbNextMonth(ticker)
+      osymbol2    = DateUtil.getOptSymbNextMonth(ticker)
 
-      frontChains = Chain.all(:symbol=>osymbol)
-      backChains = Chain.all(:symbol=>osymbol2)
+      frontChains = Chain.all(:symbol.like=>osymbol+'%')
+      backChains = Chain.all(:symbol.like=>osymbol2+'%')
 
       if(frontChains.size!=0&&backChains.size!=0)
 
@@ -51,7 +46,14 @@ class EarningsReport
         end
       end
 
-      e.update
+      if e.save
+        else
+          puts 'Error updating'
+          e.errors.each do |er|
+            puts er
+          end
+      end
+     
     }
 
     return earnings
@@ -69,6 +71,15 @@ class EarningsReport
       end
     }
     array
+  end
+  
+  begin
+   # quick testing
+   # DataMapper::Logger.new($stdout, :debug)  
+   # DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db') 
+   # ea = EarningsReport.new
+   # ea.loadData
+   # ea.generateReport
   end
 
 end

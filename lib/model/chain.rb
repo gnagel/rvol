@@ -50,14 +50,14 @@ class Chain
   #
   def calculateIVol
     begin
-    
-    lastPrice = @@cache[self.ticker] ||= StockDaily.first(:symbol=>self.ticker)
 
+ 
     strike = self.strike
     iv = Ivolatility.new
     expTime =  DateUtil.getDaysToExpFriday(self.date)
    
     expTimeYear = iv.expireTime(expTime)
+    
     # constantdate
     irate = 0.14 / 100;
     yields = 0
@@ -65,7 +65,8 @@ class Chain
     # call 0 put 1
     type=='C'?callOrPut=0:callOrPut=1
 
-    ivol = iv.IV(lastPrice.price.to_f, self.strike.to_f, expTimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
+    stock = @@cache[self.ticker] ||= StockDaily.first(:symbol=>self.ticker)
+    ivol = iv.IV(stock.price.to_f, self.strike.to_f, expTimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
     
     self.ivolatility = ivol.to_f
 

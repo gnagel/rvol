@@ -4,6 +4,7 @@ require 'typhoeus'
 require "core/dateutil"
 require 'nokogiri'
 
+
 class OptionChainsScraper
   #
   # load chains for the next 3 months.
@@ -68,28 +69,28 @@ class OptionChainsScraper
                   when 8
                     open = td.inner_text
                     if(symbol.include?"C00")
-                    type = 'C'
-                    else 
+                      type = 'C'
+                    else
                       type = 'P'
                     end
                     i = 0
-                    dateS = DateUtil.getDateFromOptSymbol(ticker,symbol)
-                    chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
 
-                    if(persist)
-                      if chain.save
-                      else
-                        puts 'Error saving chain'
-                        chain.errors.each do |e|
-                          puts e
+                    if(symbol.include? DateUtil.tickerSlicer(ticker))
+                      dateS = DateUtil.getDateFromOptSymbol(ticker,symbol)
+                      chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
+                      chains << chain
+                      if(persist)
+                        if chain.save
+                        else
+                          puts 'Error saving chain'
+                          chain.errors.each do |e|
+                            puts e
+                          end
                         end
-                      end
-                    end # end persist
-                    
-                  end
-
-                end
-
+                      end # end persist
+                    end # end if include tickers
+                  end # end case
+                end # end if responce code ==
               end
 
             else
@@ -97,7 +98,6 @@ class OptionChainsScraper
               puts response.code
               puts response.body
             end
-
           }
           hydra.queue(request)
         end

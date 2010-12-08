@@ -36,7 +36,7 @@ class EarningsScraper
                 puts obj.inner_text
                 if filter.include?(ticker)
                   earning = Earning.new(date,ticker)
-                  boolea = earning.save
+                  boolean = earning.save
                 end
               end
 

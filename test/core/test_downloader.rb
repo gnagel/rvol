@@ -5,8 +5,7 @@ require "scrapers/stockscraper"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
 require "model/stock"
-require 'dm-core'
-require 'dm-migrations'
+
 require 'reports/earningsreport'
 require 'reports/IndexReport'
 require 'test/unit'
@@ -22,12 +21,7 @@ class TestDownloader < Test::Unit::TestCase
   def test_Init
     
     begin
-    DataMapper::Logger.new($stdout, :debug)
-    DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/test_markettoday.db')
-    #DataMapper::Model.raise_on_save_failure = true
-    DataMapper.finalize
-    DataMapper.auto_migrate!
- 
+
     self.createIndexEtfs
     self.downloadSP500stock
     self.downloadSP500Chains
@@ -46,7 +40,7 @@ class TestDownloader < Test::Unit::TestCase
   #
   def createIndexEtfs
 
-    emergingMarkets=['BRF','IWM']
+    emergingMarkets=['BRF','IWM','^VIX']
     etfs = [emergingMarkets]
     etfs.flatten!
     etfs.each{|x|
@@ -56,6 +50,8 @@ class TestDownloader < Test::Unit::TestCase
       tick.index      = 'index-etf'
       tick.save
     }
+    
+    assert_equal(Ticker.all().size,3)
 
   end
 

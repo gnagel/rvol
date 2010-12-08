@@ -9,7 +9,7 @@ class ReportPrinter
     table = Table(%w[Type Ticker ExpiryIn Strike Symbol Last Chg Bid Ask Vol openInt ImpliedVolatility])
     chains.each { |elem|
       table << [elem.type, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol,elem.last,elem.chg,elem.bid,elem.ask,
-        elem.vol,elem.openInt,"%0.2f" % (elem.ivolatility*100)+'%' ]
+        elem.vol,elem.openInt,elem.ivolatility ]
     }
     print table
   end

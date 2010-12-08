@@ -1,5 +1,5 @@
 #
-# Utility class with date methods for options
+# Utility class with date methods for options. 
 #
 class DateUtil
   #
@@ -63,7 +63,9 @@ class DateUtil
     }
     daysToExpiry
   end
-
+  #
+  # Finds how many days to expity in this month
+  #
   def DateUtil.daysToExpiryThisMonth
     date = DateTime.now
     date2 = Date.new(date.year,date.month,self.fridayFinder(date.year, date.month))
@@ -109,7 +111,7 @@ class DateUtil
     date = DateTime.now
     expDay = DateUtil.fridayFinder(date.year,date.month) + 1
     date = Date.new(date.year,date.month,expDay)
- 
+
     if(DateUtil.getDaysToExpFriday(date)==0)
       # get next month expiry gone already this month
       date = date >> 1
@@ -124,20 +126,23 @@ class DateUtil
   # Generate the option symbol from the date for the back month. If the date is past expiry give next month
   #
   def DateUtil.getOptSymbNextMonth(ticker)
+   
     date = DateTime.now
 
     if(DateUtil.getDaysToExpFriday(date)==0)
       # get next month expiry gone already this month
+     
       date = date >> 2
+   
       expDay = DateUtil.fridayFinder(date.year,date.month) + 1
       date = Date.new(date.year,date.month,expDay)
     else
-      # use next 
+      # use next
       date = date >> 1
       expDay = DateUtil.fridayFinder(date.year,date.month) + 1
       date = Date.new(date.year,date.month,expDay)
     end
- 
+
     oticker = ticker+date.strftime("%y%m%d")
   end
 
@@ -148,12 +153,11 @@ class DateUtil
 
     begin
       ## remove ^ from front if exists
-      if(ticker.slice(0)==94)
-       ticker.slice!(0)
-      end
+      sliced = DateUtil.tickerSlicer(ticker)
+
       ##remove ticker from front
-      if optSymbol.include? ticker
-        parsed1 = optSymbol.delete ticker
+      if optSymbol.include? sliced
+        parsed1 = optSymbol.delete sliced
         ## get next 4 yymm
         parsed2 = parsed1[0..5]
         date = Date.strptime(parsed2,"%y%m%d")
@@ -161,10 +165,19 @@ class DateUtil
       end
     rescue Exception => e
       puts 'failed date for ' + ticker
-   
+
       puts e
       return 'N/A'
     end
+  end
+
+  def DateUtil.tickerSlicer(ticker)
+    if(ticker.slice(0)=='^')
+      sliced  = ticker[1..-1]
+    else
+      sliced = ticker
+    end
+    sliced
   end
 
 end

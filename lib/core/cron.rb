@@ -10,13 +10,14 @@ class Cron
     down = Downloader.new
     down.init
   end
-
-  # starts the scheduler which will run every 1 hour the tasks
-  begin
+  #
+  # starts the scheduler
+  #
+  def run
     puts '**************Daily downloader started***************************'
     scheduler = Rufus::Scheduler.start_new
     # run at 17:00 every day
-    scheduler.cron '*/1 * * * *',:blocking => true do
+    scheduler.cron '* 17 * * 1-5',:blocking => true do
       puts '************running daily download***************************'
       c = Cron.new
       c.runDownloader
@@ -24,4 +25,5 @@ class Cron
     end
     scheduler.join
   end
+
 end
