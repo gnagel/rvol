@@ -9,7 +9,7 @@ class ReportPrinter
     table = Table(%w[Type Ticker ExpiryIn Strike Symbol Last Chg Bid Ask Vol openInt ImpliedVolatility])
     chains.each { |elem|
       table << [elem.type, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol,elem.last,elem.chg,elem.bid,elem.ask,
-        elem.vol,elem.openInt,elem.ivolatility ]
+        elem.vol,elem.openInt,checkIVol(elem.ivolatility) ]
     }
     print table
   end
@@ -18,13 +18,14 @@ class ReportPrinter
   # Prints the earnings report for next month
   #
   def printEarningsReport(earnings)
-    table = Table(%w[Date Ticker impliedVolatility1 impliedvolatility2 difference])
+    table = Table(%w[Date Ticker Company Price ImpliedVolatility1 Impliedvolatility2 Difference avVolume])
     earnings.sort { |a,b| a.date <=> b.date }.each { |elem|
       begin
-        difference = "%0.2f" %(elem.frontMonth-elem.backMonth)
+        difference = elem.frontMonth-elem.backMonth
       rescue
       end
-      table << [elem.date, elem.ticker, checkValue(elem.frontMonth), checkValue(elem.backMonth),difference]
+      stock = StockDaily.first(:symbol=>elem.ticker)
+      table << [elem.date, elem.ticker, stock.name,stock.price, checkIVol(elem.frontMonth), checkIVol(elem.backMonth),checkValue(difference),stock.avolume]
     }
     print table
   end
@@ -33,13 +34,18 @@ class ReportPrinter
   # Prints the  index report
   #
   def printIndexReport(indexes)
-    table = Table(%w[Ticker impliedVolatility1 impliedvolatility2 difference])
+    table = Table(%w[Ticker Index Price impliedVolatility1 impliedvolatility2 difference])
     indexes.each { | elem |
       begin
-        difference = "%0.2f" %(elem.frontMonth-elem.backMonth)
-      rescue
+            difference = elem.frontMonth-elem.backMonth
+          rescue
       end
-      table << [elem.symbol, checkValue(elem.frontMonth), checkValue(elem.backMonth),difference]
+      stock = StockDaily.first(:symbol=>elem.symbol)
+      if(stock!=nil)
+        name = stock.name
+        price = stock.price
+      end
+      table << [elem.symbol,name,price, checkIVol(elem.frontMonth), checkIVol(elem.backMonth),checkValue(difference)]
     }
     print table
   end
@@ -47,11 +53,27 @@ class ReportPrinter
   #
   # return empty value
   #
-  def checkValue(value)
-    if(value=='nan'||value==nil)
-      return ''
+  def checkIVol(value)
+    begin
+      value = value.to_f
+      if(value<0)
+        return 'N/A'
+      end
+      return "%0.2f" % (value*100)
+    rescue 
+      return 'N/A'
     end
-    return value
   end
+  
+#
+# return empty value
+#
+def checkValue(value)
+  begin
+    return "%0.2f" % (value*100)
+  rescue 
+    return 'N/A'
+  end
+end
 
 end

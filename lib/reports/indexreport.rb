@@ -7,9 +7,6 @@ require 'reports/reportprinter'
 class IndexReport
   def generateReport
 
-    puts "".ljust(75,"*") << "\n"
-    puts ""  +"index report"+"\n"
-    puts "".ljust(75,"*") << "\n"
     indexes = Ticker.all(:index=>'index-etf')
     loadData
     ReportPrinter.new.printIndexReport(indexes);
@@ -45,10 +42,10 @@ class IndexReport
         impliedVolatilities2 = getImpliedVolatilities(backChains,closestStrike)
 
         if(impliedVolatilities.mean!='NaN')
-          e.frontMonth = "%0.2f" % (impliedVolatilities.mean*100)
+          e.frontMonth = "%0.2f" % (impliedVolatilities.mean)
         end
         if(impliedVolatilities2.mean!='NaN')
-          e.backMonth = "%0.2f" % (impliedVolatilities2.mean*100)
+          e.backMonth = "%0.2f" % (impliedVolatilities2.mean)
         end
       end
 
@@ -74,15 +71,6 @@ class IndexReport
       end
     }
     array
-  end
-  
-  begin
-   # quick testing
-   # DataMapper::Logger.new($stdout, :debug)  
-   # DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db') 
-   # ir = IndexReport.new
-   # ir.loadData
-   # ir.generateReport
   end
 
 end

@@ -3,7 +3,6 @@ require "core/DateUtil"
 require "math/ivolatility"
 require "scrapers/stockscraper"
 
-
 class Chain 
   include DataMapper::Resource
   
@@ -51,7 +50,6 @@ class Chain
   def calculateIVol
     begin
 
- 
     strike = self.strike
     iv = Ivolatility.new
     expTime =  DateUtil.getDaysToExpFriday(self.date)
@@ -77,6 +75,4 @@ class Chain
  
   end
   
-
-
 end

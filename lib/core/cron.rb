@@ -10,6 +10,7 @@ class Cron
     down = Downloader.new
     down.init
   end
+
   #
   # starts the scheduler
   #

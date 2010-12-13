@@ -35,41 +35,39 @@ class RubyFinance
       opts.on("-e","--earningsR","Generate a table of earnings") do
         RubyFinance.new.earningsReport
       end
-      
       opts.on("-i","--indexR","Generate an index report") do
-             RubyFinance.new.indexReport
+        RubyFinance.new.indexReport
       end
-      
       opts.on("-r","--chainR [TICKER]","List chains for ticker report") do |ticker|
-             RubyFinance.new.chainReport(ticker)
+        RubyFinance.new.chainReport(ticker)
       end
-  
-
+      opts.on("-a","--chains","List all chains") do |ticker|
+        RubyFinance.new.chainReportAll
+      end
       opts.on("-s","--snapshot","Download market snapshot, will download the current market data") do
         RubyFinance.new.runSnapShot
       end
-
       opts.on("-c","--downloader","start cron type timer downloader, will run 5:00 PM every weekday") do
         RubyFinance.new.runCron
       end
-
       opts.separator ""
       opts.separator "Common options:"
-
       opts.on_tail("-h", "--help", "Show this message") do
         puts opts
         exit
       end
-
       # Another typical switch to print the version.
       opts.on_tail("--version", "Show version") do
         puts OptionParser::Version.join('.')
         exit
       end
-
     end
     opts.parse!(args)
-    options
+  rescue => e
+    puts e.message.capitalize + "\n\n"
+    puts opts
+    exit 1
+
   end  # parse()
 
   # RUNS THE APPLICATION

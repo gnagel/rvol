@@ -10,6 +10,7 @@ require 'ruport'
 #
 class EarningsReport
   def generateReport
+    loadData
     ReportPrinter.new.printEarningsReport(Earning.all)
   end
   #
@@ -39,10 +40,10 @@ class EarningsReport
         impliedVolatilities2 = getImpliedVolatilities(backChains,closestStrike)
 
         if(impliedVolatilities.mean!='NaN')
-          e.frontMonth = "%0.2f" % (impliedVolatilities.mean*100)
+          e.frontMonth = "%0.2f" % (impliedVolatilities.mean)
         end
         if(impliedVolatilities2.mean!='NaN')
-          e.backMonth = "%0.2f" % (impliedVolatilities2.mean*100)
+          e.backMonth = "%0.2f" % (impliedVolatilities2.mean)
         end
       end
 

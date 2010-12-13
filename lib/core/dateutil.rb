@@ -108,6 +108,7 @@ class DateUtil
   # Generate the option symbol from the date for  the front month. If the date is past expiry give next month
   #
   def DateUtil.getOptSymbThisMonth(ticker)
+    ticker = DateUtil.tickerSlicer(ticker)
     date = DateTime.now
     expDay = DateUtil.fridayFinder(date.year,date.month) + 1
     date = Date.new(date.year,date.month,expDay)
@@ -126,7 +127,7 @@ class DateUtil
   # Generate the option symbol from the date for the back month. If the date is past expiry give next month
   #
   def DateUtil.getOptSymbNextMonth(ticker)
-   
+    ticker = DateUtil.tickerSlicer(ticker)
     date = DateTime.now
 
     if(DateUtil.getDaysToExpFriday(date)==0)

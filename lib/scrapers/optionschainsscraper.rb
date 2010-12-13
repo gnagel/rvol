@@ -3,7 +3,7 @@ require 'model/chain.rb'
 require 'typhoeus'
 require "core/dateutil"
 require 'nokogiri'
-
+require 'benchmark'
 
 class OptionChainsScraper
   #
@@ -16,34 +16,25 @@ class OptionChainsScraper
 
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
     hydra.disable_memoization
-
     count=0
-
     tickers.each { |tick|
-
       date = DateTime.now
-
       begin
-
         for i in 1 .. 3
           if i > 1
             date = DateUtil.nextMonth(date)
           end
           # this is the date for the url
           parsedDate = date.strftime("%Y-%m")
-
           url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsedDate)
           request = Typhoeus::Request.new(url)
           request.on_complete { | response |
-
             if(response.code==200)
               count= count+1
               puts 'HTTP RESPONSE: 200 '+tick + ' count: ' +count.to_s
               doc = Nokogiri::HTML(response.body)
-
               doc.search("//table[@class='yfnc_datamodoutline1']").each do |tr|
                 i = 0
-
                 type = ""
                 ticker = tick
                 symbol =""
@@ -55,7 +46,6 @@ class OptionChainsScraper
                 ask=""
                 vol=""
                 open=""
-
                 tr.css('.yfnc_h','.yfnc_tabledata1').each do |td|
                   i+=1
                   case i
@@ -74,25 +64,15 @@ class OptionChainsScraper
                       type = 'P'
                     end
                     i = 0
-
                     if(symbol.include? DateUtil.tickerSlicer(ticker))
                       dateS = DateUtil.getDateFromOptSymbol(ticker,symbol)
                       chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
+                      #puts chain.toString
                       chains << chain
-                      if(persist)
-                        if chain.save
-                        else
-                          puts 'Error saving chain'
-                          chain.errors.each do |e|
-                            puts e
-                          end
-                        end
-                      end # end persist
                     end # end if include tickers
                   end # end case
                 end # end if responce code ==
               end
-
             else
               puts 'failed'
               puts response.code
@@ -104,7 +84,36 @@ class OptionChainsScraper
       end
     }
     hydra.run
+    if(persist)
+      persist(chains)
+    end # end persist
     chains
   end
-
+  #
+  # Store into database and benchmark
+  #
+  def persist(chains)
+    Benchmark.bm do |x|
+      x.report{ chains.each{|chain|
+          if chain.save
+          else
+            puts 'Error saving chain'
+            chain.errors.each do |e|
+              puts e
+            end
+          end
+        }}
+    end
+  end
+  
+  #
+  # Store into database and benchmark
+  #
+  def persist2(chains)
+    Benchmark.bm do |x|
+      x.report{ chains.each{|chain|
+        adapter.execute("INSERT INTO chains (id, name) VALUES (1, 'Lion'), (2, 'Elephant')")
+        }}
+    end
+  end
 end

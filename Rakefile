@@ -4,7 +4,7 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "rfinance"
+    gem.name = "rvol"
     gem.summary = "A ruby gem for downloading financial data"
     gem.description = "The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
     Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
