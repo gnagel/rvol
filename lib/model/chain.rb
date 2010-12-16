@@ -64,6 +64,7 @@ class Chain
     type=='C'?callOrPut=0:callOrPut=1
 
     stock = @@cache[self.ticker] ||= StockDaily.first(:symbol=>self.ticker)
+    stock ||= StockScraper.new.downloadStock2([self.ticker],false)[0]
     ivol = iv.IV(stock.price.to_f, self.strike.to_f, expTimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
     
     self.ivolatility = ivol.to_f

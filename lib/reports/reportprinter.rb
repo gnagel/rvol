@@ -1,3 +1,5 @@
+require 'math/arraymath'
+
 #
 # Prints out various reports
 #
@@ -12,6 +14,8 @@ class ReportPrinter
         elem.vol,elem.openInt,checkIVol(elem.ivolatility) ]
     }
     print table
+    puts 'Total Volatility: '+addVol(chains).to_s
+    puts addOpenInt(chains)
   end
 
   #
@@ -37,8 +41,8 @@ class ReportPrinter
     table = Table(%w[Ticker Index Price impliedVolatility1 impliedvolatility2 difference])
     indexes.each { | elem |
       begin
-            difference = elem.frontMonth-elem.backMonth
-          rescue
+        difference = elem.frontMonth-elem.backMonth
+      rescue
       end
       stock = StockDaily.first(:symbol=>elem.symbol)
       if(stock!=nil)
@@ -60,20 +64,49 @@ class ReportPrinter
         return 'N/A'
       end
       return "%0.2f" % (value*100)
-    rescue 
+    rescue
       return 'N/A'
     end
   end
-  
-#
-# return empty value
-#
-def checkValue(value)
-  begin
-    return "%0.2f" % (value*100)
-  rescue 
-    return 'N/A'
+
+  #
+  # return empty value
+  #
+  def checkValue(value)
+    begin
+      return "%0.2f" % (value*100)
+    rescue
+      return 'N/A'
+    end
   end
-end
+
+  #
+  # calculate volume together
+  #
+  def addVol(chains)
+    summable = chains.collect{|x|
+      x.vol.gsub(/\,/,"").to_f
+    }
+    summable.sum
+  end
+
+  #
+  # calculate openInt together = put call ratio
+  #
+  def addOpenInt(chains)
+    valueC = 0
+    valueP = 0
+    summable2 = chains.each{|x|
+      if x.type=='C'
+        valueC += x.openInt.gsub(/\,/,"").to_f
+      else
+        valueP +=  x.openInt.gsub(/\,/,"").to_f
+      end
+
+    }
+    puts 'Total Calls:   ' + valueC.to_s
+    puts 'Total Puts:    ' + valueP.to_s
+    puts 'Put/Call ratio ' + (valueP.to_f/valueC.to_f).to_s
+  end
 
 end

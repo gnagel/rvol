@@ -13,7 +13,6 @@ class ChainsReport
   def generateReport(ticker)
     chains = OptionChainsScraper.new.loadChains(ticker,false)
     filter = DateUtil.getOptSymbThisMonth(ticker[0])
-    puts 'filter' +filter
     chains = chains.find_all{|cha|cha.symbol.include? filter }
     ReportPrinter.new.printChainsReport(chains)
   end

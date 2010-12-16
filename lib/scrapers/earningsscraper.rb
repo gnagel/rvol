@@ -26,11 +26,9 @@ class EarningsScraper
         begin
           if(response.code==200)
             puts 'success 200'
-         
             doc = Hpricot(response.body)
             chains = doc.search("//a[@href]")
             for obj in chains
-
               if obj.to_html.include? "http://finance.yahoo.com/q?"
                 ticker = obj.inner_text
                 puts obj.inner_text
@@ -39,7 +37,6 @@ class EarningsScraper
                   boolean = earning.save
                 end
               end
-
             end
           else
             puts 'failed'

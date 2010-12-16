@@ -63,7 +63,7 @@ class TestDownloader < Test::Unit::TestCase
     puts 'starting downloadSP500Stock'
     result = Ticker.all()
     puts result.size
-    sp = StockScraper.new.downloadStock2(result.collect{|tic| tic.symbol})
+    sp = StockScraper.new.downloadStock2(result.collect{|tic| tic.symbol},true)
   end
 
   # This will download all chains for the S&P500

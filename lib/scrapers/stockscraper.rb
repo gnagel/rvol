@@ -6,9 +6,8 @@ require 'CSV'
 require 'math/arraymath'
 
 class StockScraper
- 
-  def downloadStock2(tickers)
-
+  def downloadStock2(tickers,persist)
+    stocks = Array.new
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
     hydra.disable_memoization
 
@@ -42,27 +41,24 @@ class StockScraper
               stock.exdividenddate= splitted[5]
               stock.dividendyield= splitted[6]
               stock.dpershare= splitted[7]
-              
-              stock.created_at = DateTime.now 
 
-              if stock.save
-              else
-                stock.errors.each do |e|
-                  puts e
+              stock.created_at = DateTime.now
+              stocks << stock
+              if persist
+                if stock.save
+                else
+                  stock.errors.each do |e|
+                    puts e
+                  end
                 end
               end
-
             end
-
-            stock = StockDaily.new
-
           else
             puts 'failed'
             puts response.code
             puts response.body
           end
         }
-
         hydra.queue(request)
       rescue Exception => exp
         puts exp
@@ -71,6 +67,7 @@ class StockScraper
     p 'running download stock'
     hydra.run
     p 'run finished'
+    stocks
   end
 
   def downloadSP500
