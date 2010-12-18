@@ -5,14 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rvol"
-    gem.summary = "A ruby gem for downloading financial data"
-    gem.description = "The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
-    Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
-    these opportunities i need some information. I need information about earnings dates, i need information about options chains, i need information about volatility skews.
-    Also as a long term investor i want to invest in companies that are rated highly by online services like msn money ,
-    fool, yahoo etc."
+    gem.summary = "A ruby gem for downloading and analyzing financial data from the internet mainly volatility"
+    gem.description = "Rvol enables investors to study market volatility from free data on the internet.
+    I trade stocks, options and futures as a hobby.  Often some of the strategies that i have used 
+    include looking at earnings dates for stocks and investing in these dates with complex options
+    strategies. To find these opportunities i need some information. I need information about earnings
+    dates, i need information about options chains,i need information about volatility skews."
     gem.email = "tonikarhu@gmail.com"
-    gem.homepage = "http://github.com/tonik/rfinance"
+    gem.homepage = "http://github.com/tonik/rvol"
     gem.authors = ["Toni Karhu"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
@@ -75,7 +75,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "rfinance #{version}"
+  rdoc.title = "rvol #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

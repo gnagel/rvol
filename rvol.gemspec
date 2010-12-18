@@ -11,11 +11,11 @@ Gem::Specification.new do |s|
   s.authors = ["Toni Karhu"]
   s.date = %q{2010-12-18}
   s.default_executable = %q{rvol}
-  s.description = %q{The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
-    Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
-    these opportunities i need some information. I need information about earnings dates, i need information about options chains, i need information about volatility skews.
-    Also as a long term investor i want to invest in companies that are rated highly by online services like msn money ,
-    fool, yahoo etc.}
+  s.description = %q{Rvol enables investors to study market volatility from free data on the internet.
+    I trade stocks, options and futures as a hobby.  Often some of the strategies that i have used 
+    include looking at earnings dates for stocks and investing in these dates with complex options
+    strategies. To find these opportunities i need some information. I need information about earnings
+    dates, i need information about options chains,i need information about volatility skews.}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
   s.extra_rdoc_files = [
@@ -70,10 +70,10 @@ Gem::Specification.new do |s|
     "test/scratchpad.rb",
     "test/test_rfinance.rb"
   ]
-  s.homepage = %q{http://github.com/tonik/rfinance}
+  s.homepage = %q{http://github.com/tonik/rvol}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{A ruby gem for downloading financial data}
+  s.summary = %q{A ruby gem for downloading and analyzing financial data from the internet mainly volatility}
   s.test_files = [
     "test/core/test_dateutil.rb",
     "test/core/test_downloader.rb",
