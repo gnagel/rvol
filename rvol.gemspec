@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2010-12-14}
+  s.date = %q{2010-12-18}
   s.default_executable = %q{rvol}
   s.description = %q{The purpose of rfinace is to provide financial information for data mining from the internet. I trade stocks, options and futures as a hobby. 
     Often some of the strategies that i have used include looking at earnings dates for stocks and investing in these dates with complex options strategies. To find
