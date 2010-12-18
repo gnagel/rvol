@@ -74,13 +74,6 @@ class EarningsReport
     array
   end
   
-  begin
-   # quick testing
-   # DataMapper::Logger.new($stdout, :debug)  
-   # DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/markettoday.db') 
-   # ea = EarningsReport.new
-   # ea.loadData
-   # ea.generateReport
-  end
+
 
 end

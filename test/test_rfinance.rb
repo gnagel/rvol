@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestRfinance < Test::Unit::TestCase
+class TestRvol < Test::Unit::TestCase
   
   def test_length
     s = "Hello, World!"

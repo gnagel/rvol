@@ -49,7 +49,6 @@ Gem::Specification.new do |s|
     "lib/reports/earningsreport.rb",
     "lib/reports/indexreport.rb",
     "lib/reports/reportprinter.rb",
-    "lib/rfinance.rb",
     "lib/scrapers/earningsscraper.rb",
     "lib/scrapers/optionschainsscraper.rb",
     "lib/scrapers/rssScraper.rb",

@@ -9,7 +9,7 @@ require 'model/earning'
 begin
  puts '** INITIALISING TEST DATABASE **'
 DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rfinance/data/test_markettoday.db')
+DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rvol/data/test_markettoday.db')
 DataMapper::Model.raise_on_save_failure = true
 DataMapper.finalize
 DataMapper.auto_migrate!
