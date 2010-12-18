@@ -33,8 +33,6 @@ Gem::Specification.new do |s|
     "bin/rvol",
     "data/markettoday.db",
     "data/test_markettoday.db",
-    "features/rfinance.feature",
-    "features/step_definitions/rfinance_steps.rb",
     "features/support/env.rb",
     "finance.mm",
     "lib/core/cron.rb",
@@ -67,8 +65,7 @@ Gem::Specification.new do |s|
     "test/reports/test_index_report.rb",
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
-    "test/scratchpad.rb",
-    "test/test_rfinance.rb"
+    "test/scratchpad.rb"
   ]
   s.homepage = %q{http://github.com/tonik/rvol}
   s.require_paths = ["lib"]
@@ -89,7 +86,7 @@ Gem::Specification.new do |s|
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
-    "test/test_rfinance.rb"
+    "test/test_rvol.rb"
   ]
 
   if s.respond_to? :specification_version then
