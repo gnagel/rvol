@@ -18,7 +18,6 @@ class StockScraper
       chunks = tickers.chunk(howmany)
     end
     chunks.each{|chunk|
-      puts 'running for chunk'
       csvTickers = chunk.join(',')
       begin
         url = 'http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(csvTickers+'&f=sl1a2vnqyd&e=.csv')
@@ -64,9 +63,7 @@ class StockScraper
         puts exp
       end
     }
-    p 'running download stock'
     hydra.run
-    p 'run finished'
     stocks
   end
 

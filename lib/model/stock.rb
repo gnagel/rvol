@@ -14,8 +14,6 @@ class Ticker
   property :backMonth,                   Float
 end
 
-
-
 #
 # Holds daily data for a stock 
 #

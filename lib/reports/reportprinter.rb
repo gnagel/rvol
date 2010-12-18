@@ -14,7 +14,7 @@ class ReportPrinter
         elem.vol,elem.openInt,checkIVol(elem.ivolatility) ]
     }
     print table
-    puts 'Total Volatility: '+addVol(chains).to_s
+    puts addVol(chains)
     puts addOpenInt(chains)
   end
 
@@ -84,10 +84,19 @@ class ReportPrinter
   # calculate volume together
   #
   def addVol(chains)
-    summable = chains.collect{|x|
-      x.vol.gsub(/\,/,"").to_f
+    valueC = 0
+    valueP = 0
+    summable = chains.each{|x|
+      if x.type=='C'
+        valueC += x.vol.gsub(/\,/,"").to_f
+      else
+        valueP += x.vol.gsub(/\,/,"").to_f
+      end
     }
-    summable.sum
+    puts 'Total Call Vol: ' + valueC.to_s
+    puts 'Total Put Vol:    ' + valueP.to_s
+    puts 'Put/Call Vol ratio ' + (valueP.to_f/valueC.to_f).to_s
+
   end
 
   #
