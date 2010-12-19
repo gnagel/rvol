@@ -4,6 +4,7 @@ require 'math/arraymath'
 # Prints out various reports
 #
 class ReportPrinter
+  
   #
   # Prints the chains for a single month
   #

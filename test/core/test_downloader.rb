@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
-require 'Rvol'
+
 require 'helper'
 require 'core/downloader'
 require "scrapers/stockscraper"
@@ -22,11 +22,6 @@ class TestDownloader < Test::Unit::TestCase
   def test_Init
     
     begin
-      
-    DataMapper::Logger.new($stdout, :debug)
-    DataMapper.setup(:test,Rvol.config['test'])
-    DataMapper.finalize
-    DataMapper.auto_migrate!
 
     self.createIndexEtfs
     self.downloadSP500stock

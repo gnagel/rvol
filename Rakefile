@@ -10,7 +10,7 @@ begin
     include looking at earnings dates for stocks and investing in these dates with complex options
     strategies. Rvol downloads options chains, calculates implied volatilites for them and has features 
     to list top 10 type of lists for potential investment opportunities. Put call ratios are calculated , 
-    total amount of puts for a particular company etc are available. These can be used to measure market
+    total amount of puts or calls for a particular company etc are available. These can be used to measure market
     sentiment. Different filters can be used to find stocks/options with high volatilities, stocks with 
     high options volume for the day etc which are indicators of forthcoming events. Rvol concentrates on
     the S&P500 at the moment. At anytime rvol can be used to download a snapshot from the market including
@@ -19,7 +19,7 @@ begin
     Install: gem install rvol
     Usage: rvol -? (displays options)
     
-    rvol is under development and at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.
+    rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.
     "
     gem.email = "tonikarhu@gmail.com"
     gem.homepage = "http://github.com/tonik/rvol"

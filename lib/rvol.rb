@@ -11,10 +11,7 @@ module Rvol
   
   # All applcation configurations are in this file
   @@config = YAML.load_file 'lib/config.yml'
-  DataMapper.setup(:default,@@config['default'])
-  #
-  # Returns config for use i all sub classes 
-  #
+  # Returns config for use in all sub classes 
   def Rvol.config
     @@config
   end

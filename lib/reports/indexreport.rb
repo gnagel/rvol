@@ -5,6 +5,7 @@ require 'ruport'
 require 'reports/reportprinter'
 
 class IndexReport
+
   def generateReport
 
     indexes = Ticker.all(:index=>'index-etf')

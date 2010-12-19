@@ -1,4 +1,4 @@
-default:
+snapshot:
  'sqlite:data/marketsnapshot.db'
 test:
  'sqlite::memory:'

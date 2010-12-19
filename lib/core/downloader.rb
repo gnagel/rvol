@@ -20,7 +20,7 @@ class Downloader
   # initialize download
   def init
     #DataMapper::Logger.new($stdout, :debug)
-    DataMapper.setup(:default,Rvol.config['default'])
+    DataMapper.setup(:default,Rvol.config['snapshot'])
     #DataMapper::Model.raise_on_save_failure = true
     DataMapper.finalize
     DataMapper.auto_migrate!

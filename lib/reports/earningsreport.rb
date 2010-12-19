@@ -9,7 +9,7 @@ require 'ruport'
 # The report can be printed on the command line or output as a pdf.
 #
 class EarningsReport
-  def generateReport
+ def generateReport
     loadData
     ReportPrinter.new.printEarningsReport(Earning.all)
   end
