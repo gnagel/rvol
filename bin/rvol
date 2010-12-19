@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby -W0
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-puts $LOAD_PATH
 require 'rvolcmd'
 
 options = Rvolcmd.parse(ARGV)
