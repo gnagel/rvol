@@ -93,8 +93,8 @@ class ReportPrinter
         valueP += x.vol.gsub(/\,/,"").to_f
       end
     }
-    puts 'Total Call Vol: ' + valueC.to_s
-    puts 'Total Put Vol:    ' + valueP.to_s
+    puts 'Total Call Vol:    ' + valueC.to_s
+    puts 'Total Put Vol:     ' + valueP.to_s
     puts 'Put/Call Vol ratio ' + (valueP.to_f/valueC.to_f).to_s
 
   end

@@ -1,3 +1,4 @@
+require 'Rvol'
 require "scrapers/stockscraper"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
@@ -19,7 +20,7 @@ class Downloader
   # initialize download
   def init
     #DataMapper::Logger.new($stdout, :debug)
-    DataMapper.setup(:default, 'sqlite:///Users/tonikarhu/Development/rvol/data/markettoday.db')
+    DataMapper.setup(:default,Rvol.config['default'])
     #DataMapper::Model.raise_on_save_failure = true
     DataMapper.finalize
     DataMapper.auto_migrate!

@@ -2,13 +2,23 @@ require 'reports/earningsreport'
 require 'reports/chainsreport'
 require 'reports/indexreport'
 require 'core/cron.rb'
+require 'yaml'
 
 #
 # Module for all commomns methods used in the system
 #
 module Rvol
-
-  DataMapper.setup(:default, 'sqlite://../data/markettoday.db')
+  
+  # All applcation configurations are in this file
+  @@config = YAML.load_file 'lib/config.yml'
+  DataMapper.setup(:default,@@config['default'])
+  #
+  # Returns config for use i all sub classes 
+  #
+  def Rvol.config
+    @@config
+  end
+  
   def earningsReport
     EarningsReport.new.generateReport
   end
@@ -39,4 +49,5 @@ module Rvol
   def runCron
     Cron.new.run
   end
+  
 end
