@@ -15,6 +15,8 @@ module Rvol
   def Rvol.config
     @@config
   end
+  # default adater for all db action
+  DataMapper.setup(:default,Rvol.config['snapshot'])
   
   def earningsReport
     EarningsReport.new.generateReport

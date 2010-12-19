@@ -9,7 +9,7 @@ require 'ostruct'
 # here with the option parser. Implementations methods are grouped at the bottom.
 #
 class Rvolcmd 
-  include RVol
+  include Rvol
 
   # This hash will hold all of the options
   # parsed from the command-line by
@@ -26,27 +26,27 @@ class Rvolcmd
     options.encoding = "utf8"
 
     opts = OptionParser.new do |opts|
-      opts.banner = "Usage: rubyfinnance [options]"
+      opts.banner = "Usage: rvol [options]"
       opts.separator ""
       opts.separator "Specific options:"
-
+      cmd = Rvolcmd.new
       opts.on("-e","--earningsR","Generate a table of earnings") do
-        RubyFinance.new.earningsReport
+        cmd.earningsReport
       end
       opts.on("-i","--indexR","Generate an index report") do
-        RubyFinance.new.indexReport
+        cmd.indexReport
       end
       opts.on("-r","--chainR [TICKER]","List chains for ticker report") do |ticker|
-        RubyFinance.new.chainReport(ticker)
+        cmd.chainReport(ticker)
       end
       opts.on("-a","--chains","List all chains") do |ticker|
-        RubyFinance.new.chainReportAll
+        cmd.chainReportAll
       end
       opts.on("-s","--snapshot","Download market snapshot, will download the current market data") do
-        RubyFinance.new.runSnapShot
+        cmd.runSnapShot
       end
       opts.on("-c","--downloader","start cron type timer downloader, will run 5:00 PM every weekday") do
-        RubyFinance.new.runCron
+        cmd.runCron
       end
       opts.separator ""
       opts.separator "Common options:"
