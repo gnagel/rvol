@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'rvol'
+require 'rvol.rb'
 require 'optparse'
 require 'optparse/time'
 require 'ostruct'
