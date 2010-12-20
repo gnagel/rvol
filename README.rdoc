@@ -16,6 +16,7 @@
     
     rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.
     
+    Have a look at the current output here: {cmd output}[https://gist.github.com/748840]
 
 == Note on Patches/Pull Requests
  
@@ -30,5 +31,3 @@
 == Copyright
 
 Copyright (c) 2010 Toni Karhu. See LICENSE for details.
-
-
