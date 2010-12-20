@@ -31,7 +31,7 @@
 
 Copyright (c) 2010 Toni Karhu. See LICENSE for details.
 
-
+=begin
 Example earnings report:
 
 +--------------------------------------------------------------------------------------------------------------------+
@@ -238,3 +238,4 @@ Put/Call Vol ratio 0.6610839730169807
 Total Calls:   338076.0
 Total Puts:    246709.0
 Put/Call ratio 0.7297441995291
+=end
