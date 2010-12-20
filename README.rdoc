@@ -31,16 +31,16 @@
 
 Copyright (c) 2010 Toni Karhu. See LICENSE for details.
 
-=begin
+
 Example earnings report:
 
-+--------------------------------------------------------------------------------------------------------------------+
-|   Date   | Ticker |      Company      |  Price  | ImpliedVolatility1 | Impliedvolatility2 | Difference | avVolume  |
-+--------------------------------------------------------------------------------------------------------------------+
-| 20101220 | ADBE   | Adobe Systems Inc | 29.20   | 0.00               | 0.00               | N/A        | 12663700  |
-| 20101220 | CTAS   | Cintas Corporatio | 29.42   | 21.00              | 23.00              | -2.00      | 1214190   |
-| 20101220 | DRI    | Darden Restaurant | 50.15   | 0.00               | 0.00               | N/A        | 1699230   |
-| 20101220 | JBL    | Jabil Circuit, In | 17.56   | 0.00               | 0.00               | N/A        | 4069620   |
+#+--------------------------------------------------------------------------------------------------------------------+
+#|   Date   | Ticker |      Company      |  Price  | ImpliedVolatility1 | Impliedvolatility2 | Difference | avVolume  |
+#+--------------------------------------------------------------------------------------------------------------------+
+#| 20101220 | ADBE   | Adobe Systems Inc | 29.20   | 0.00               | 0.00               | N/A        | 12663700  |
+#| 20101220 | CTAS   | Cintas Corporatio | 29.42   | 21.00              | 23.00              | -2.00      | 1214190   |
+#| 20101220 | DRI    | Darden Restaurant | 50.15   | 0.00               | 0.00               | N/A        | 1699230   |
+#| 20101220 | JBL    | Jabil Circuit, In | 17.56   | 0.00               | 0.00               | N/A        | 4069620   |
 | 20101220 | RHT    | Red Hat, Inc. Com | 47.79   | 0.00               | 0.00               | N/A        | 2782860   |
 | 20101221 | CAG    | ConAgra Foods, In | 22.338  | 0.00               | 0.00               | N/A        | 4104070   |
 | 20101221 | NKE    | Nike, Inc. Common | 90.36   | 0.00               | 0.00               | N/A        | 2620120   |
@@ -238,4 +238,4 @@ Put/Call Vol ratio 0.6610839730169807
 Total Calls:   338076.0
 Total Puts:    246709.0
 Put/Call ratio 0.7297441995291
-=end
+
