@@ -16,7 +16,9 @@
     
     rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.
     
-    Have a look at the current output here: https://gist.github.com/748840
+    Have a look at the current output here: https://gist.github.com/748840. The current implementation uses rupport for 
+    the reporting so the data could be output in different formats like html, pdf, txt etc. I just use thecommand line 
+    for now..
 
 == Note on Patches/Pull Requests
  
