@@ -32,7 +32,7 @@
 Copyright (c) 2010 Toni Karhu. See LICENSE for details.
 
 
-==Example earnings report:
+Example earnings report:
 
 +--------------------------------------------------------------------------------------------------------------------+
 |   Date   | Ticker |      Company      |  Price  | ImpliedVolatility1 | Impliedvolatility2 | Difference | avVolume  |
@@ -105,7 +105,7 @@ Copyright (c) 2010 Toni Karhu. See LICENSE for details.
 +--------------------------------------------------------------------------------------------------------------------+
 
 
-==Example index report:
+Example index report:
 
 +---------------------------------------------------------------------------------------------+
 | Ticker |       Index       |  Price  | impliedVolatility1 | impliedvolatility2 | difference |
@@ -134,7 +134,7 @@ Copyright (c) 2010 Toni Karhu. See LICENSE for details.
 | UUP    | PowerShares DB US | 23.26   | 0.00               | 0.00               | N/A        |
 +---------------------------------------------------------------------------------------------+
 
-==Example chains for individual company (LVS):
+Example chains for individual company (LVS):
 
 +------------------------------------------------------------------------------------------------------------------------------+
 | Type | Ticker | ExpiryIn | Strike |       Symbol       | Last  |  Chg  |  Bid  |  Ask  |  Vol  | openInt | ImpliedVolatility |
