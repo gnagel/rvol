@@ -93,6 +93,7 @@ class OptionChainsScraper
   # Store into database and benchmark
   #
   def persist(chains)
+    puts 'storing this many chains: ' + chains.size.to_s
     Benchmark.bm do |x|
       x.report{ chains.each{|chain|
           if chain.save

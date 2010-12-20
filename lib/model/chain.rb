@@ -63,7 +63,7 @@ class Chain
     type=='C'?callOrPut=0:callOrPut=1
     # get cache if not there get from db if not there get from web
     stock = @@cache[self.ticker] ||= StockDaily.first(:symbol=>self.ticker)
-    stock = @@cache[self.ticker] ||= StockScraper.new.downloadStock2([self.ticker],false)[0]
+    stock ||= @@cache[self.ticker] ||= StockScraper.new.downloadStock2([self.ticker],false)[0]
     ivol = iv.IV(stock.price.to_f, self.strike.to_f, expTimeYear.to_f, irate.to_f, yields.to_f, callOrPut, oprice.to_f)
     self.ivolatility = ivol.to_f
     rescue Exception => boom

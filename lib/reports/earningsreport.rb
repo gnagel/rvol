@@ -46,7 +46,6 @@ class EarningsReport
           e.backMonth = "%0.2f" % (impliedVolatilities2.mean)
         end
       end
-
       if e.save
         else
           puts 'Error updating'
@@ -54,11 +53,8 @@ class EarningsReport
             puts er
           end
       end
-     
     }
-
     return earnings
-
   end
   
   #
