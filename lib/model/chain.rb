@@ -12,7 +12,7 @@ class Chain
   @@cache = Hash.new
 
   property :id,                          Serial    # An auto-increment integer key
-  property :created_at,                  DateTime, :required => true# A DateTime, for any date you might like.
+  property :created_at,                  DateTime, :required => true # A DateTime, for any date you might like.
   property :type,                        String, :required => true
   property :ticker,                      String, :required => true
   property :date,                        Date,   :required => true
@@ -25,6 +25,7 @@ class Chain
   property :vol,                         Integer,:required => true
   property :openInt,                     Integer,:required => true
   property :ivolatility,                 Float,  :required => true
+  
   def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
     self.created_at = Time.now
     self.type=type
@@ -41,11 +42,10 @@ class Chain
     self.ivolatility = 0
     self.calculateIVol
   end
-
+  
   def toString
     puts self.inspect
   end
-
   #
   # calcualtes the implied volatility for the chain
   #
