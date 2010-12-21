@@ -8,16 +8,16 @@ require 'yaml'
 # Module for all commomns methods used in the system
 #
 module Rvol
-  
+
   # All applcation configurations are in this file
   @@config = YAML.load_file 'lib/config.yml'
-  # Returns config for use in all sub classes 
+  # Returns config for use in all sub classes
   def Rvol.config
     @@config
   end
   # default adater for all db action
   DataMapper.setup(:default,Rvol.config['snapshot'])
-  
+
   def earningsReport
     EarningsReport.new.generateReport
   end
@@ -48,5 +48,5 @@ module Rvol
   def runCron
     Cron.new.run
   end
-  
+
 end

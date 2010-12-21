@@ -89,6 +89,7 @@ class OptionChainsScraper
     end # end persist
     chains
   end
+
   #
   # Store into database and benchmark
   #
@@ -100,13 +101,13 @@ class OptionChainsScraper
           else
             puts 'Error saving chain'
             chain.errors.each do |e|
-            puts e
+              puts e
             end
           end
         }}
     end
   end
-  
+
   # Store into database and benchmark
   # depregated no good
   #
@@ -115,14 +116,14 @@ class OptionChainsScraper
     sql=''
     Benchmark.bm do |x|
       x.report{ chains.each{|chain|
-        i +=1
-        sql += "INSERT INTO 'chains' VALUES(#{i},'#{Time.now}','#{chain.type}','#{chain.ticker}','#{chain.date}','#{chain.strike}','#{chain.symbol}','#{chain.last}','#{chain.chg}','#{chain.bid}','#{chain.ask}','#{chain.vol}','#{chain.openInt}','#{chain.ivolatility}');\n"
+          i +=1
+          sql += "INSERT INTO 'chains' VALUES(#{i},'#{Time.now}','#{chain.type}','#{chain.ticker}','#{chain.date}','#{chain.strike}','#{chain.symbol}','#{chain.last}','#{chain.chg}','#{chain.bid}','#{chain.ask}','#{chain.vol}','#{chain.openInt}','#{chain.ivolatility}');\n"
 
         }
-      adapter = DataMapper.repository(:default).adapter
-      adapter.execute(sql)
+        adapter = DataMapper.repository(:default).adapter
+        adapter.execute(sql)
       }
     end
-    
+
   end
 end

@@ -4,7 +4,6 @@ require 'math/arraymath'
 # Prints out various reports
 #
 class ReportPrinter
-  
   #
   # Prints the chains for a single month
   #
@@ -89,9 +88,9 @@ class ReportPrinter
     valueP = 0
     summable = chains.each{|x|
       if x.type=='C'
-        valueC += x.vol.gsub(/\,/,"").to_f
+        valueC += x.vol
       else
-        valueP += x.vol.gsub(/\,/,"").to_f
+        valueP += x.vol
       end
     }
     puts 'Total Call Vol:    ' + valueC.to_s
@@ -108,9 +107,9 @@ class ReportPrinter
     valueP = 0
     summable2 = chains.each{|x|
       if x.type=='C'
-        valueC += x.openInt.gsub(/\,/,"").to_f
+        valueC += x.openInt
       else
-        valueP +=  x.openInt.gsub(/\,/,"").to_f
+        valueP += x.openInt
       end
 
     }

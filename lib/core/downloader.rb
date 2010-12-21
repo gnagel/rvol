@@ -30,7 +30,7 @@ class Downloader
     self.downloadSP500stock
     self.downloadSP500Chains
     self.downloadEarnings
-  
+
   end
 
   # This will download all S&P 500 data from the internet and
@@ -113,7 +113,6 @@ class Downloader
   def downloadEvents
     # tbd
   end
-
 
   def printErrors(object)
     object.errors.each do |e|

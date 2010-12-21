@@ -7,9 +7,8 @@ require "core/dateutil"
 require 'typhoeus'
 
 class EarningsScraper
-
   #
-  # Earnings scraper 
+  # Earnings scraper
   #
   def getEarningsMonth2(filter)
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
@@ -47,7 +46,7 @@ class EarningsScraper
           puts 'failed for date' +date
           puts boom
         end
-      } 
+      }
       hydra.queue(request)
     }
     p 'starting hydra'

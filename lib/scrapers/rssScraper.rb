@@ -8,13 +8,11 @@ require 'ruport'
 # Initial implementation google.
 #
 class RssScraper
+  def loadRSS(ticker)
 
-  
-def loadRSS(ticker)
-  
-  response = Typhoeus::Request.get("www.google.com/finance/company_news?q="+ticker+"&output=rss")
-  rss = RSS::Parser.parse(response.body, false)
-  
+    response = Typhoeus::Request.get("www.google.com/finance/company_news?q="+ticker+"&output=rss")
+    rss = RSS::Parser.parse(response.body, false)
+
     puts "Root values"
     print "RSS title: ", rss.channel.title, "\n"
     print "RSS link: ", rss.channel.link, "\n"
@@ -22,26 +20,26 @@ def loadRSS(ticker)
     print "RSS publication date: ", rss.channel.date, "\n"
 
     print "number of items: ", rss.items.size, "\n"
-      
+
     table = Table(%w[News])
-    
+
     rss.items.each{|item|
       title = item.title
-      description = Hpricot(item.description).to_plain_text 
+      description = Hpricot(item.description).to_plain_text
       table << [wrap_text(description,80)]
       puts wrap_text(description,120)
     }
     #puts table
-    
-end
-  
-def wrap_text(txt, col = 80)
-  txt.gsub(/(.{1,#{col}})( +|$\n?)|(.{1,#{col}})/, "\\1\\3\n") 
-end
 
-begin 
-   srr = RssScraper.new
-   srr.loadRSS('LVS')
-end
+  end
+
+  def wrap_text(txt, col = 80)
+    txt.gsub(/(.{1,#{col}})( +|$\n?)|(.{1,#{col}})/, "\\1\\3\n")
+  end
+
+  begin
+    srr = RssScraper.new
+    srr.loadRSS('LVS')
+  end
 
 end

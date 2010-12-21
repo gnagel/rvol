@@ -22,4 +22,36 @@ class ChainsReport
     ReportPrinter.new.printChainsReport(chains)
   end
 
+  #
+  # report the chains with the most volume today
+  #
+  def generateReportTop10Volume
+    chains = Chain.all(:order => [ :vol.desc ]).first 10
+    ReportPrinter.new.printChainsReport(chains)
+  end
+
+  #
+  # report the chains with the most open interest
+  #
+  def generateReportTop10OpenInt
+    chains = Chain.all(:order => [ :openInt.desc ]).first 10
+    ReportPrinter.new.printChainsReport(chains)
+  end
+
+  #
+  # report the chains with the most open interest
+  #
+  def generateReportTop10ImpliedVolatility
+    chains = Chain.all(:order => [ :ivolatility.desc ]).first 10
+    ReportPrinter.new.printChainsReport(chains)
+  end
+
+  #
+  # report the chains with the most open interest
+  #
+  def generateReportTop10ChangeInOptionPrice
+    chains = Chain.all(:order => [ :chg.desc ]).first 10
+    ReportPrinter.new.printChainsReport(chains)
+  end
+
 end

@@ -1,5 +1,5 @@
 #
-# Utility class with date methods for options. 
+# Utility class with date methods for options.
 #
 class DateUtil
   #
@@ -63,6 +63,7 @@ class DateUtil
     }
     daysToExpiry
   end
+
   #
   # Finds how many days to expity in this month
   #
@@ -132,9 +133,9 @@ class DateUtil
 
     if(DateUtil.getDaysToExpFriday(date)==0)
       # get next month expiry gone already this month
-     
+
       date = date >> 2
-   
+
       expDay = DateUtil.fridayFinder(date.year,date.month) + 1
       date = Date.new(date.year,date.month,expDay)
     else

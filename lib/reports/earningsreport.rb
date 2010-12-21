@@ -9,10 +9,11 @@ require 'ruport'
 # The report can be printed on the command line or output as a pdf.
 #
 class EarningsReport
- def generateReport
+  def generateReport
     loadData
     ReportPrinter.new.printEarningsReport(Earning.all)
   end
+
   #
   # Load earnings tickers and attach chains to them
   #
@@ -47,16 +48,16 @@ class EarningsReport
         end
       end
       if e.save
-        else
-          puts 'Error updating'
-          e.errors.each do |er|
-            puts er
-          end
+      else
+        puts 'Error updating'
+        e.errors.each do |er|
+          puts er
+        end
       end
     }
     return earnings
   end
-  
+
   #
   # Returns an array of impied volatilities
   #
@@ -69,7 +70,5 @@ class EarningsReport
     }
     array
   end
-  
-
 
 end

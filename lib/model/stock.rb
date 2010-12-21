@@ -1,6 +1,6 @@
 require 'dm-core'
 require 'dm-validations'
-  
+
 #
 # Holds Ticker names for different indexes
 #
@@ -15,9 +15,9 @@ class Ticker
 end
 
 #
-# Holds daily data for a stock 
+# Holds daily data for a stock
 #
-class StockDaily 
+class StockDaily
   include DataMapper::Resource
   property :id,            Serial
   property :symbol,        String, :required => true
@@ -34,7 +34,7 @@ end
 #
 # Holds daily historical prices for a stock
 #
-class StockHistorical 
+class StockHistorical
   include DataMapper::Resource
   property :id,    Serial, :required => true
   property :date,  DateTime , :required => true

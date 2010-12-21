@@ -6,13 +6,11 @@ require "scrapers/stockscraper"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
 require "model/stock"
-
 require 'reports/earningsreport'
 require 'reports/IndexReport'
 require 'test/unit'
 
 class TestDownloader < Test::Unit::TestCase
-
   # This class wraps up all financial data downloads and stores the information into a database.
   # Errors are logged for quality of service
   # Author:: Toni Karhu
@@ -20,17 +18,17 @@ class TestDownloader < Test::Unit::TestCase
   # :title:MarketDownloader
   # initialize download
   def test_Init
-    
+
     begin
 
-    self.createIndexEtfs
-    self.downloadSP500stock
-    self.downloadSP500Chains
-    self.downloadEarnings
-    self.doCalculations
+      self.createIndexEtfs
+      self.downloadSP500stock
+      self.downloadSP500Chains
+      self.downloadEarnings
+      self.doCalculations
     rescue => boom
       flunk('test downloader failed! ' + boom.message)
-    end 
+    end
 
   end
 
@@ -51,7 +49,7 @@ class TestDownloader < Test::Unit::TestCase
       tick.index      = 'index-etf'
       tick.save
     }
-    
+
     assert_equal(Ticker.all().size,3)
 
   end

@@ -1,14 +1,14 @@
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'rvol.rb'
 require 'optparse'
 require 'optparse/time'
 require 'ostruct'
+
+autoload :Rvol,'Rvol'
 
 #
 # Main class for accessing the application. Commands can be entered from
 # here with the option parser. Implementations methods are grouped at the bottom.
 #
-class Rvolcmd 
+class Rvolcmd
   include Rvol
 
   # This hash will hold all of the options
