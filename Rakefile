@@ -15,10 +15,10 @@ begin
     high options volume for the day etc which are indicators of forthcoming events. Rvol concentrates on
     the S&P500 at the moment. At anytime rvol can be used to download a snapshot from the market including
     stock prices, options chains, and earnings events for the month ahead.
-    \n
+    \\n
     Install: gem install rvol
     Usage: rvol -h (displays options)
-    \n
+    \\n
     **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.**
     "
     gem.email = "tonikarhu@gmail.com"
