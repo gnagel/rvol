@@ -17,7 +17,7 @@ begin
     stock prices, options chains, and earnings events for the month ahead.
     \n
     Install: gem install rvol
-    Usage: rvol -? (displays options)
+    Usage: rvol -h (displays options)
     \n
     **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.**
     "
