@@ -1,5 +1,3 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
-
 require 'helper'
 require 'core/downloader'
 require "scrapers/stockscraper"

@@ -13,12 +13,12 @@ class OptionChainsScraper
   # load chains for the next 3 months.
   #
   def loadChains(tickers,persist)
+    chains = Array.new
     # measures the time to complete
     Benchmark.bm do |x| x.report{
 
         scraper = OptionChainsScraper.new
-        chains = Array.new
-
+        
         hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
         hydra.disable_memoization
         count=0
