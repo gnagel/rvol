@@ -91,11 +91,7 @@ class DateUtil
   # Returns the next month date
   #
   def DateUtil.nextMonth(date)
-    if(date.month!=12)
-      date = Date.new(date.year,date.month+1,date.day)
-    else
-      date = Date.new(date.year+1,1,date.day)
-    end
+    date >> 1
   end
 
   #
