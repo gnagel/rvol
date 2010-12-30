@@ -10,7 +10,7 @@ require 'yaml'
 module Rvol
 
   # All applcation configurations are in this file
-  @@config = YAML.load_file 'lib/config.yml'
+  @@config = YAML.load_file 'config.yml'
   # Returns config for use in all sub classes
   def Rvol.config
     @@config

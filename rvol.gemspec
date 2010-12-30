@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2010-12-22}
+  s.date = %q{2010-12-30}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -65,7 +65,8 @@ Gem::Specification.new do |s|
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
-    "test/test_rvol.rb"
+    "test/test_rvol.rb",
+    "test/testi.rb"
   ]
   s.homepage = %q{http://github.com/tonik/rvol}
   s.require_paths = ["lib"]
@@ -86,7 +87,8 @@ Gem::Specification.new do |s|
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
-    "test/test_rvol.rb"
+    "test/test_rvol.rb",
+    "test/testi.rb"
   ]
 
   if s.respond_to? :specification_version then
