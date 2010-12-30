@@ -8,9 +8,8 @@ require 'yaml'
 # Module for all commomns methods used in the system
 #
 module Rvol
-
   # All applcation configurations are in this file
-  @@config = YAML.load_file './config.yml'
+  @@config = YAML.load_file File.join(File.dirname(__FILE__),'config.yml')
   # Returns config for use in all sub classes
   def Rvol.config
     @@config
