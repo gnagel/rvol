@@ -26,10 +26,10 @@ class RssScraper
     rss.items.each{|item|
       title = item.title
       description = Hpricot(item.description).to_plain_text
-      table << [wrap_text(description,80)]
-      puts wrap_text(description,120)
+      table << [description]
+      #puts wrap_text(description,120)
     }
-    #puts table
+    pp table
 
   end
 

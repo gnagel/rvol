@@ -4,7 +4,9 @@ require 'hpricot'
 require "model/stock"
 require 'CSV'
 require 'math/arraymath'
-
+#
+# Downloads individual stock data from yahoo.
+#
 class StockScraper
   def downloadStock2(tickers,persist)
     stocks = Array.new
