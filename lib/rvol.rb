@@ -33,6 +33,22 @@ module Rvol
     ChainsReport.new.generateReportAll
   end
 
+  def chainReportTop10Volume
+    ChainsReport.new.generateReportTop10Volume
+  end
+
+  def chainReportTop10OpenInt
+    ChainsReport.new.generateReportTop10OpenInt
+  end
+
+  def chainReportTop10ImpliedVolatility
+    ChainsReport.new.generateReportTop10ImpliedVolatility
+  end
+
+  def chainReportTop10ChangeInOptionPrice
+    ChainsReport.new.generateReportTop10ChangeInOptionPrice
+  end
+
   #
   # Run the downloader. Downloads all daily data
   #

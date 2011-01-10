@@ -69,6 +69,7 @@ class Chain
     rescue Exception => boom
       puts 'ivolatility calculation failed '
       puts boom
+      puts self.ivolatility
     end
   end
 

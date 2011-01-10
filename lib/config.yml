@@ -1,6 +1,6 @@
 snapshot:
- 'sqlite:data/marketsnapshot.db'
+ 'sqlite:///marketsnapshot.db'
 history:
- 'sqlite:data/markethistory.db'
+ 'sqlite:///markethistory.db'
 test:
  'sqlite::memory:'
