@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rvol}
-  s.version = "0.1.10"
+  s.version = "0.1.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2010-12-30}
+  s.date = %q{2011-01-23}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
     "lib/core/cron.rb",
     "lib/core/dateutil.rb",
     "lib/core/downloader.rb",
+    "lib/core/rlog.rb",
     "lib/core/util.rb",
     "lib/math/arraymath.rb",
     "lib/math/ivolatility.rb",
