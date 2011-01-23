@@ -106,6 +106,7 @@ class OptionChainsScraper
       if chain.save
       else
         puts 'Error saving chain'
+        puts chain.ivolatility
         chain.errors.each do |e|
           puts e
         end

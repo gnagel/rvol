@@ -54,4 +54,20 @@ class ChainsReport
     ReportPrinter.new.printChainsReport(chains)
   end
 
+  #
+  # report the chains with the most open interest
+  #
+  def generateReportTop10Calls
+    tickers = Ticker.all(:order => [ :totalCalls.desc ]).first 10
+    ReportPrinter.new.printTop10OptionsVolReport(tickers)
+  end
+
+  #
+  # report the chains with the most open interest
+  #
+  def generateReportTop10Puts
+    tickers = Ticker.all(:order => [ :totalPuts.desc ]).first 10
+    ReportPrinter.new.printTop10OptionsVolReport(tickers)
+  end
+
 end

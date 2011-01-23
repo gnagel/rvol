@@ -29,6 +29,7 @@ class Downloader
     self.createIndexEtfs
     self.downloadSP500stock
     self.downloadSP500Chains
+    self.calculateChains
     self.downloadEarnings
 
   end
@@ -96,6 +97,30 @@ class Downloader
     puts 'starting downloadSP500chains'
     result = Ticker.all()
     OptionChainsScraper.new.loadChains(result.collect{|tic| tic.symbol},true)
+  end
+  #
+  # Calculates the total amount of calls and puts for the front month
+  #
+  def calculateChains
+    tickers = Ticker.all
+    i = 1
+    tickers.each{|ticker|
+      calls = 0
+      putsa = 0
+      osymbol = DateUtil.getOptSymbThisMonth(ticker.symbol)
+      frontChains = Chain.all(:symbol.like=>osymbol+'%')
+      frontChains.each{|chain|
+        if chain.type == 'C'
+          calls += chain.vol
+        end
+        if chain.type == 'P'
+          putsa += chain.vol
+        end
+      }
+      ticker.totalCalls = calls
+      ticker.totalPuts = putsa
+      ticker.save
+    }
   end
 
   ##

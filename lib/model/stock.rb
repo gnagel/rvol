@@ -12,6 +12,8 @@ class Ticker
   property :index,                       String, :required => true
   property :frontMonth,                  Float
   property :backMonth,                   Float
+  property :totalCalls,                  Integer
+  property :totalPuts,                   Integer
 end
 
 #

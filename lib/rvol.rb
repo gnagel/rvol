@@ -49,6 +49,14 @@ module Rvol
     ChainsReport.new.generateReportTop10ChangeInOptionPrice
   end
 
+  def chainReportTop10VolCalls
+    ChainsReport.new.generateReportTop10Calls
+  end
+
+  def chainReportTop10VolPuts
+    ChainsReport.new.generateReportTop10Puts
+  end
+
   #
   # Run the downloader. Downloads all daily data
   #
@@ -63,5 +71,5 @@ module Rvol
   def runCron
     Cron.new.run
   end
-
+  
 end

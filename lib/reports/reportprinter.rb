@@ -19,6 +19,17 @@ class ReportPrinter
   end
 
   #
+  # Prints the top 10 calls or puts volume for today
+  #
+  def printTop10OptionsVolReport(tickers)
+    table = Table(%w[Symbol FrontMonth BackMonth TotalCalls TotalPuts])
+    tickers.each { |ticker|
+      table << [ticker.symbol,checkIVol(ticker.frontMonth),checkIVol(ticker.backMonth),ticker.totalCalls,ticker.totalPuts ]
+    }
+    print table
+  end
+
+  #
   # Prints the earnings report for next month
   #
   def printEarningsReport(earnings)

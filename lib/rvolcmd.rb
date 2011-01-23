@@ -48,16 +48,24 @@ class Rvolcmd
         opts.on("-c","--downloader","start cron type timer downloader, will run 5:00 PM every weekday") do
           cmd.runCron
         end
-
-        opts.on("-top10","--top10 [TYPE]","List top 10 from either Volume , OpenInt, IV or Change") do |type|
+        opts.on("-t","--top10List [TYPE]","List top 10 from either Volume , OpenInt, IV ,Change, Calls, Puts") do |type|
           case type
-          when "Volume" then cmd.generateReportTop10Volume
-          when "OpenInt" then cmd.generateReportTop10OpenInt
-          when "IV" then cmd.generateReportTop10ImpliedVolatility
-          when "Change" then cmd.generateReportTop10ChangeInOptionPrice
+          when "Volume"
+            cmd.chainReportTop10Volume
+          when "OpenInt"
+            cmd.chainReportTop10OpenInt
+          when "IV"
+            cmd.chainReportTop10ImpliedVolatility
+          when "Change"
+            cmd.chainReportTop10ChangeInOptionPrice
+          when "Calls"
+            cmd.chainReportTop10VolCalls
+          when "Puts"
+            cmd.chainReportTop10VolPuts
+          else
+            puts 'you did not specify the type of listing'
           end
         end
-
         opts.separator ""
         opts.separator "Common options:"
         opts.on_tail("-h", "--help", "Show this message") do
