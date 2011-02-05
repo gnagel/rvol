@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'scrapers/optionschainsscraper'
 require 'scrapers/stockscraper'
 require 'ruport'
@@ -14,7 +15,9 @@ class ChainsReport
     chains = OptionChainsScraper.new.loadChains(ticker,false)
     filter = DateUtil.getOptSymbThisMonth(ticker[0])
     chains = chains.find_all{|cha|cha.symbol.include? filter }
-    ReportPrinter.new.printChainsReport(chains)
+    # get the general stock info
+    stock = StockScraper.new.downloadStock2([ticker],true)    
+    ReportPrinter.new.printChainsReportSingle(chains,stock[0])
   end
 
   def generateReportAll

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'reports/earningsreport'
 require 'reports/chainsreport'
 require 'reports/indexreport'
@@ -9,13 +10,21 @@ require 'yaml'
 #
 module Rvol
   # All applcation configurations are in this file
-  @@config = YAML.load_file File.join(File.dirname(__FILE__),'config.yml')
+    @@config = YAML.load_file File.join(File.dirname(__FILE__),'config.yml')
+  
+  # Version 
+    @@version = IO.readlines(File.join(File.dirname(__FILE__),'../VERSION'))
   # Returns config for use in all sub classes
   def Rvol.config
     @@config
   end
-  # default adater for all db action
-  DataMapper.setup(:default,Rvol.config['snapshot'])
+  
+  def version
+     @@version
+  end
+  # default adater for all db action stored in gem home directory
+  snapshot = 'sqlite://' + File.join(ENV['GEM_HOME'],'gems','rvol-'+@@version[0])+'/'+Rvol.config['snapshot']
+  DataMapper.setup(:default,snapshot)
 
   def earningsReport
     EarningsReport.new.generateReport

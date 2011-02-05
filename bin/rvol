@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby -W0
+# encoding: utf-8
 require 'rvolcmd'
 options = Rvolcmd.parse(ARGV)
 puts options

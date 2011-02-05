@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'optparse'
 require 'optparse/time'
 require 'ostruct'
@@ -20,6 +21,8 @@ class Rvolcmd
   # Return a structure describing the options.
   #
   def self.parse(args)
+    # if nothing in input put -h
+    ARGV << "-h" if ARGV.empty?
     # The options specified on the command line will be collected in *options*.
     # We set default values here.
     options = OpenStruct.new
@@ -73,8 +76,8 @@ class Rvolcmd
           exit
         end
         # Another typical switch to print the version.
-        opts.on_tail("--version", "Show version") do
-          puts OptionParser::Version.join('.')
+        opts.on_tail("-v","--version", "Show version") do
+          puts 'VERSION: '+cmd.version[0]
           exit
         end
         options = opts
@@ -85,7 +88,7 @@ class Rvolcmd
       puts opts
       exit 1
     end
-    options
+    
   end  # parse()
 end  # class rvolcmd
 

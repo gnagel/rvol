@@ -30,7 +30,7 @@ begin
     gem.email = "tonikarhu@gmail.com"
     gem.homepage = "http://github.com/tonik/rvol"
     gem.authors = ["Toni Karhu"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    #gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
     gem.add_dependency "hpricot"
     gem.add_dependency "dm-core"
@@ -64,10 +64,11 @@ begin
     test.libs << 'test'
     test.pattern = 'test/**/test_*.rb'
     test.verbose = true
+    test.rcov_opts = ['--exclude', '/gems/']
   end
 rescue LoadError
   task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+    abort "RCov is not available. In order to run rcov, you must: sudo gem install rcov"
   end
 end
 
@@ -75,11 +76,13 @@ task :test => :check_dependencies
 
 begin
   require 'cucumber/rake/task'
-  Cucumber::Rake::Task.new(:features)
-
+  Cucumber::Rake::Task.new(:features) do
+    |feat|
+       feat.rcov = true
   task :features => :check_dependencies
+  end
 rescue LoadError
-  task :features do
+  task :features do 
     abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
   end
 end

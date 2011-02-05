@@ -1,39 +1,23 @@
+# encoding: utf-8
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'yaml'
-require 'dm-core'
-require 'dm-migrations'
-require 'model/stock'
-require 'model/chain'
-require 'model/earning'
-require 'Rvol'
 
+require 'typhoeus'
+require 'nokogiri'
 class Scratchpad
-  #set the test db an in memory db
-  DataMapper.setup(:default,Rvol.config['snapshot'])
-  DataMapper.auto_upgrade!
-  
-  tickers = Ticker.all
-  i = 1
-  tickers.each{|ticker|
-    calls = 0
-    putsa = 0
-    osymbol = DateUtil.getOptSymbThisMonth(ticker.symbol)
-    frontChains = Chain.all(:symbol.like=>osymbol+'%')
-    frontChains.each{|chain|
-      if chain.type == 'C'
-        calls += chain.vol
-      end
-      if chain.type == 'P'
-        putsa += chain.vol
-      end
-    }
-    ticker.totalCalls = calls
-    ticker.totalPuts = putsa
-    ticker.save
-    puts osymbol
-    puts calls
-    puts putsa
-  }
-  
-
+ 
+ # response = Typhoeus::Request.get("http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=50")
+ # doc = Nokogiri::HTML(response.body)
+ # doc.search('//tr').each do |tr|
+ #   if tr.to_s.include? 'http://investing.money.msn.com/investments/'
+ #   puts tr
+ #   end
+ # end  
+ 
+  response = Typhoeus::Request.get("http://en.wikipedia.org/wiki/List_of_S%26P_500_companies")    
+  doc = Nokogiri::HTML(response.body)
+  doc.css('a.external').each do |tick|
+    if tick.to_s.include?('www.nyse.com')
+      puts tick.inner_text
+    end
+  end
 end

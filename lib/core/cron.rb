@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'rufus/scheduler'
 require 'core/downloader'
 

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'typhoeus'
 require 'rss/2.0'
 require 'hpricot'

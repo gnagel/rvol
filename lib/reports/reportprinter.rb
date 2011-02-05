@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'math/arraymath'
 
 #
@@ -8,11 +9,29 @@ class ReportPrinter
   # Prints the chains for a single month
   #
   def printChainsReport(chains)
+
     table = Table(%w[Type Ticker ExpiryIn Strike Symbol Last Chg Bid Ask Vol openInt ImpliedVolatility])
     chains.each { |elem|
       table << [elem.type, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol,elem.last,elem.chg,elem.bid,elem.ask,
         elem.vol,elem.openInt,checkIVol(elem.ivolatility) ]
     }
+    print table
+    puts addVol(chains)
+    puts addOpenInt(chains)
+  end
+
+  #
+  # Prints the chains for a single month and single ticker
+  #
+  def printChainsReportSingle(chains,stock)
+    tableHead = Table(%w[Name Symbol Price AverageVolume Volume DividendsDate])
+    tableHead << [stock.name, stock.symbol, stock.price, stock.avolume, stock.volume, stock.exdividenddate]
+    table = Table(%w[Type Ticker ExpiryIn Strike Symbol Last Chg Bid Ask Vol openInt ImpliedVolatility])
+    chains.each { |elem|
+      table << [elem.type, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol,elem.last,elem.chg,elem.bid,elem.ask,
+        elem.vol,elem.openInt,checkIVol(elem.ivolatility) ]
+    }
+    print tableHead
     print table
     puts addVol(chains)
     puts addOpenInt(chains)

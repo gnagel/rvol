@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'helper'
 require 'core/downloader'
 require "scrapers/stockscraper"

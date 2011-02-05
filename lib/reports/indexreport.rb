@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'math/arraymath'
 require 'model/earning'
 require 'model/chain'

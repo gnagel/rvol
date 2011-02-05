@@ -1,9 +1,30 @@
+# encoding: utf-8
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 require 'helper'
 require 'core/dateutil'
 require 'date'
 
 class TestDateUtil < Test::Unit::TestCase
+  def test_daysToExpiryFriday
+    date = Date.new(2011, 1, 30)
+    days = DateUtil.getDaysToExpFriday(date)
+    puts 'test_daysToExpiryFriday: '
+    puts days
+    assert_same(0,days,'should have been 0! wrong')
+
+    date = Date.new(2010, 4, 20)
+    days = DateUtil.getDaysToExpFriday(date)
+    puts 'test_daysToExpiryFriday: '
+    puts days
+    assert_same(0,days,'should have been 0! wrong')
+
+  end
+  
+  def test_days_in_month
+    days = DateUtil.days_in_month(2010,03)
+    assert_same(31,days,'should been 31')
+  end
+
   #
   # Hard to test as dates change and we use current dates in calculations
   #

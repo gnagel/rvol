@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 #
 # Statistical methods for array
 #

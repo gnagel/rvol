@@ -1,3 +1,4 @@
+# encoding: utf-8
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 require 'helper'
 require 'test/unit'
@@ -13,4 +14,13 @@ class Test_StockScraper < Test::Unit::TestCase
       flunk("TEST FAILED")
     end
   end
+  def test_Stock_Scraper_Single
+    begin
+      ticks = StockScraper.new.downloadStock2(['GOOG'],true)
+    rescue => boom
+      puts boom
+      flunk("TEST FAILED")
+    end
+  end
+
 end

@@ -1,9 +1,10 @@
+# encoding: utf-8
 require 'typhoeus'
-require 'json'
-require 'hpricot'
+require 'nokogiri'
 require "model/stock"
 require 'CSV'
 require 'math/arraymath'
+require 'scraper'
 #
 # Downloads individual stock data from yahoo.
 #
@@ -22,9 +23,8 @@ class StockScraper
     chunks.each{|chunk|
       csvTickers = chunk.join(',')
       begin
-        url = 'http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(csvTickers+'&f=sl1a2vnqyd&e=.csv')
-        puts csvTickers
-        request = Typhoeus::Request.new(url)
+        
+        request = Scraper.downLoadYahooCSV(csvTickers)
 
         request.on_complete { | response |
 
@@ -70,16 +70,25 @@ class StockScraper
   end
 
   def downloadSP500
+    results = Array.new
+    response = Scraper.downLoadSP500WikiPedia
+    doc = Nokogiri::HTML(response.body)
+    doc.css('a.external').each do |tick|
+      if tick.to_s.include?('www.nyse.com') || tick.to_s.include?('www.nasdaq.com')
+        results << tick.inner_text
+      end
+    end
+    return results
+  end
+
+  def downloadSP500Yahoo
 
     results = Array.new
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
-
     for i in 0 .. 9
-
-      url = 'http://finance.yahoo.com/q/cp?s=%5EGSPC&c='+i.to_s
-      request = Typhoeus::Request.new(url)
+     request = Scraper.downLoadSP500Yahoo(i)
       request.on_complete { | response |
-        doc = Hpricot(response.body)
+        doc = Nokogiri::HTML(response.body)
         table = doc.search("//td[@class='yfnc_tabledata1']")
         values = table.search("//a")
         values.each { |value|
@@ -88,10 +97,8 @@ class StockScraper
       }
       hydra.queue(request)
     end
-
     hydra.run();
-
-    results
+    return results
   end
 
   def StockScraper.testInternetConnection?

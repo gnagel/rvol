@@ -21,7 +21,4 @@ Scenario: View news for a particular ticker
   When I want to view news for a ticker 
   Then The system shows the most current news for a ticker with links.
 
-
-
-
   

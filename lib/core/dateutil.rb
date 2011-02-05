@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 #
 # Utility class with date methods for options.
 #
@@ -7,11 +9,9 @@ class DateUtil
   # in the form 2010-07
   #
   def DateUtil.getDaysToExpFriday(date)
-
     daysInMonth = self.days_in_month(date.year,date.month)
     date = Date.new(date.year,date.month,daysInMonth)
     dateNow = DateTime.now
-
     fridays = 0
     daysToExpiry = 0
 
@@ -152,7 +152,6 @@ class DateUtil
     begin
       ## remove ^ from front if exists
       sliced = DateUtil.tickerSlicer(ticker)
-
       ##remove ticker from front
       if optSymbol.include? sliced
         parsed1 = optSymbol.delete sliced
@@ -163,7 +162,6 @@ class DateUtil
       end
     rescue Exception => e
       puts 'failed date for ' + ticker
-
       puts e
       return 'N/A'
     end

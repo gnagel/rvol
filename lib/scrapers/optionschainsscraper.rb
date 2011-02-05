@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'open-uri'
 require 'model/chain.rb'
 require 'typhoeus'
@@ -15,7 +16,7 @@ class OptionChainsScraper
   def loadChains(tickers,persist)
     chains = Array.new
     # measures the time to complete
-    Benchmark.bm do |x| x.report{
+    #Benchmark.bm do |x| x.report{
 
         scraper = OptionChainsScraper.new
         
@@ -36,7 +37,9 @@ class OptionChainsScraper
               request.on_complete { | response |
                 if(response.code==200)
                   count= count+1
-                  puts 'HTTP RESPONSE: 200 '+tick + ' count: ' +count.to_s
+                  if tickers.size > 1
+                    puts 'HTTP RESPONSE: 200 '+tick + ' count: ' +count.to_s
+                  end
                   doc = Nokogiri::HTML(response.body)
                   doc.search("//table[@class='yfnc_datamodoutline1']").each do |tr|
                     i = 0
@@ -92,8 +95,8 @@ class OptionChainsScraper
         if(persist)
           persist(chains)
         end # end persist
-      }
-    end # end bencmark
+      
+    # } end # end bencmark
     chains
   end
 

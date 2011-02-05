@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'reports/reportprinter'
 require 'math/arraymath'
 require 'model/earning'
