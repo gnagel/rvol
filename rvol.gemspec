@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-01-23}
+  s.date = %q{2011-02-05}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -50,6 +50,7 @@ Gem::Specification.new do |s|
     "lib/scrapers/earningsscraper.rb",
     "lib/scrapers/optionschainsscraper.rb",
     "lib/scrapers/rssScraper.rb",
+    "lib/scrapers/scraper.rb",
     "lib/scrapers/stockscraper.rb",
     "rvol.gemspec",
     "test/core/test_dateutil.rb",
@@ -66,12 +67,11 @@ Gem::Specification.new do |s|
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
-    "test/test_rvol.rb",
-    "test/testi.rb"
+    "test/test_rvol.rb"
   ]
   s.homepage = %q{http://github.com/tonik/rvol}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.5.0}
   s.summary = %q{Rvol enables you to study market volatility from free data on the internet. I trade stocks, options and futures as a hobby.  Often some of the strategies that i have used  include looking at earnings dates for stocks and investing in these dates with different options strategies.   Rvol downloads options chains, calculates implied volatilites for them and has features  to list top 10 type of lists for potential investment opportunities.   Put call ratios are calculated , total amount of puts or calls for a particular company etc are available. These can be used to measure market sentiment.   Different filters can be used to find stocks/options with high volatilities, stocks with  high options volume for the day etc which are indicators of forthcoming events.   Rvol concentrates on the S&P500 at the moment. At anytime rvol can be used to download a snapshot from the market including stock prices, options chains, and earnings events for the month ahead.  Install: gem install rvol Usage: rvol -h (displays options)  **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.**}
   s.test_files = [
     "test/core/test_dateutil.rb",
@@ -88,16 +88,13 @@ Gem::Specification.new do |s|
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
-    "test/test_rvol.rb",
-    "test/testi.rb"
+    "test/test_rvol.rb"
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
       s.add_runtime_dependency(%q<hpricot>, [">= 0"])
       s.add_runtime_dependency(%q<dm-core>, [">= 0"])
@@ -111,7 +108,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rufus-scheduler>, [">= 0"])
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
     else
-      s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<hpricot>, [">= 0"])
       s.add_dependency(%q<dm-core>, [">= 0"])
@@ -126,7 +122,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<nokogiri>, [">= 0"])
     end
   else
-    s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
     s.add_dependency(%q<hpricot>, [">= 0"])
     s.add_dependency(%q<dm-core>, [">= 0"])
