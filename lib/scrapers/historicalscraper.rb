@@ -8,11 +8,11 @@ require 'thread'
 #
 class Historicalscraper
   @@queue = Queue.new
-  def downloadHistoricalData(ticker,persist)
+  def downloadHistoricalData(tickers,persist)
     hydra = Typhoeus::Hydra.new
     thread = storingthread
     count=0
-    ticker.each do |ticker|
+    tickers.each do |ticker|
       request = Scraper.downLoadHistory(ticker)
       request.on_complete { | response |
         if(response.code==200)
@@ -20,7 +20,8 @@ class Historicalscraper
           puts 'HTTP RESPONSE: 200 '+ticker + ' count: ' +count.to_s
           begin
             CSV.parse(response.body,:headers => :first_row) do |row|
-              history = StockHistorical.new
+              history = Stockhistorical.new
+              history.symbol = ticker
               history.date = row[0]
               history.open  = row[1]
               history.high = row[2]

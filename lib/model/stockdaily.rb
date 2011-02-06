@@ -8,7 +8,6 @@ require 'model/stockhistorical'
 #
 class Stockdaily
   include DataMapper::Resource
-  has n, :stockhistorical
   property :id,            Serial
   property :symbol,        String, :required => true
   property :created_at,    DateTime, :required => true  # A DateTime, for any date you might like.

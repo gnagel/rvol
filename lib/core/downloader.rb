@@ -135,8 +135,8 @@ class Downloader
   end
   
   def downloadHistorical
-    result = Ticker.all(:index => 'SP500')
-    Historicalscraper.new.downloadHistoricalData(result.collect{|tic| tic.symbol},true)
+    stocks = Stockdaily.all
+    Historicalscraper.new.downloadHistoricalData(stocks,true)
   end
   
   #
