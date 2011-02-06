@@ -17,7 +17,8 @@ class TestDownloader < Test::Unit::TestCase
   # :title:MarketDownloader
   # initialize download
   def test_Init
-
+    # initialise Downloader used to detect errors in conf
+    d = Downloader.new
     begin
 
       self.createIndexEtfs

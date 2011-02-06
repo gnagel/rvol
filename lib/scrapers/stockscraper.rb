@@ -4,7 +4,7 @@ require 'nokogiri'
 require "model/stock"
 require 'CSV'
 require 'math/arraymath'
-require 'scraper'
+require 'scrapers/scraper'
 #
 # Downloads individual stock data from yahoo.
 #

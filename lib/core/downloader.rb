@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'Rvol'
+require "scrapers/historicalscraper"
 require "scrapers/stockscraper"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
@@ -27,6 +28,7 @@ class Downloader
     DataMapper.auto_migrate!
 
     self.downloadSP500Tickers
+    self.downloadHistorical
     self.createIndexEtfs
     self.downloadSP500stock
     self.downloadSP500Chains
@@ -131,7 +133,12 @@ class Downloader
     result = Ticker.all(:index => 'SP500')
     EarningsScraper.new.getEarningsMonth2(result.collect{|tic| tic.symbol})
   end
-
+  
+  def downloadHistorical
+    result = Ticker.all(:index => 'SP500')
+    Historicalscraper.downloadHistoricalData(result.collect{|tic| tic.symbol})
+  end
+  
   #
   # Download economic events: Downloads goverment events which will
   # have an effect on the markets
