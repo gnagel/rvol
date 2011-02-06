@@ -5,6 +5,7 @@ require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
 require "model/stock"
+require "model/stockdaily"
 require 'reports/earningsreport'
 require 'reports/IndexReport'
 require 'test/unit'

@@ -33,7 +33,7 @@ class Stocks
             CSV.parse(response.body) do|row|
 
               splitted = row
-              stock = StockDaily.new
+              stock = Stockdaily.new
               stock.symbol=splitted[0]
               stock.price = splitted[1]
               stock.avolume = splitted[2]

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 require 'helper'
 require "model/earning"
 require "reports/chainsreport"
-
+require "model/stockdaily"
 class Test_Chains_Report < Test::Unit::TestCase
   @@once = false
   def setup

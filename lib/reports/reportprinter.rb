@@ -58,7 +58,7 @@ class ReportPrinter
         difference = elem.frontMonth-elem.backMonth
       rescue
       end
-      stock = StockDaily.first(:symbol=>elem.ticker)
+      stock = Stockdaily.first(:symbol=>elem.ticker)
       table << [elem.date, elem.ticker, stock.name,stock.price, checkIVol(elem.frontMonth), checkIVol(elem.backMonth),checkValue(difference),stock.avolume]
     }
     print table
@@ -74,7 +74,7 @@ class ReportPrinter
         difference = elem.frontMonth-elem.backMonth
       rescue
       end
-      stock = StockDaily.first(:symbol=>elem.symbol)
+      stock = Stockdaily.first(:symbol=>elem.symbol)
       if(stock!=nil)
         name = stock.name
         price = stock.price

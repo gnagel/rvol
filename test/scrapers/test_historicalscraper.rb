@@ -4,7 +4,7 @@ require 'scrapers/historicalscraper'
 require 'test/unit'
 class Test_historicalscraper < Test::Unit::TestCase
    def test_historicalData
-     Historicalscraper.downloadHistoricalData(['IBM','IWM'],false)
-     Historicalscraper.downloadHistoricalData(['IBM','IWM'],true)
+     Historicalscraper.new.downloadHistoricalData(['IBM','IWM'],false)
+     Historicalscraper.new.downloadHistoricalData(['IBM','IWM'],true)
    end
 end

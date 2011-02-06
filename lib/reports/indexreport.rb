@@ -36,7 +36,7 @@ class IndexReport
         # load all chain strikes
         arrayFront = frontChains.collect{|chain|chain.strike.to_f}
         # gets the closest strike to the price
-        stock  = StockDaily.first(:symbol=>e.symbol)
+        stock  = Stockdaily.first(:symbol=>e.symbol)
         closestStrike = arrayFront.closest stock.price.to_f
 
         impliedVolatilities = getImpliedVolatilities(frontChains,closestStrike)

@@ -6,27 +6,20 @@ require "core/dateutil"
 require 'nokogiri'
 require 'benchmark'
 require 'thread'
+
 #
 # Downloads chains from yahoo and parses them to objects
 # Downloads concurrently improving performance
 # TODO refactor into smaller maintainable pieces
 #
 class OptionChainsScraper
-  @@queue = Queue.new
- 
   #
   # Load chains for the next 3 months.
   #
   def loadChains(tickers,persist)
     chains = Array.new
-    if persist
-      storingthread
-    end
     # measures the time to complete
     #Benchmark.bm do |x| x.report{
-
-    scraper = OptionChainsScraper.new
-
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
     hydra.disable_memoization
     count=0
@@ -84,7 +77,7 @@ class OptionChainsScraper
                       chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
                       #puts chain.toString
                       chains << chain
-                      @@queue << chain
+                      persistSingle(chain,persist)
                     end # end if include tickers
                   end # end case
                 end # end if responce code ==
@@ -100,7 +93,7 @@ class OptionChainsScraper
       end
     }
     hydra.run
-    # } end # end bencmark
+
     chains
   end
 
@@ -133,23 +126,24 @@ class OptionChainsScraper
       end
     end
   end
-  
+
   #
-  # A thread that monitors storage stuff
+  # A thread that stores storage stuff
   #
   def storingthread
-  Thread.new do
-    loop do
-      # pop will block until there are queue items available
-      chain << @@queue.pop
-      if chain.save
-      else
-        puts 'Error saving chain'
-        chain.errors.each do |e|
-          puts e
+    thread = Thread.new do
+      loop do
+        # pop will block until there are queue items available
+        chain << @@queue.pop
+        if chain.save
+        else
+          puts 'Error saving chain'
+          chain.errors.each do |e|
+            puts e
+          end
         end
       end
     end
-  end
+    return thread
   end
 end

@@ -7,7 +7,7 @@ require "model/stock"
 class Test_Stock < Test::Unit::TestCase
   def test_stock
 
-    stock = StockDaily.new
+    stock = Stockdaily.new
 
     stock.symbol = 'AAPL'
     stock.send('symbol' + '=' , 'GOOG')
