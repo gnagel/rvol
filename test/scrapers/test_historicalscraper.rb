@@ -5,5 +5,6 @@ require 'test/unit'
 class Test_historicalscraper < Test::Unit::TestCase
    def test_historicalData
      Historicalscraper.downloadHistoricalData(['IBM','IWM'],false)
+     Historicalscraper.downloadHistoricalData(['IBM','IWM'],true)
    end
 end

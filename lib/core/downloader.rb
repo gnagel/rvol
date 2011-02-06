@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'Rvol'
 require "scrapers/historicalscraper"
-require "scrapers/stockscraper"
+require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
 require 'reports/earningsreport'
@@ -42,7 +42,7 @@ class Downloader
   # later processing
   def downloadSP500Tickers
     puts 'starting downloadSP500Tickers'
-    result = StockScraper.new.downloadSP500
+    result = Stocks.new.downloadSP500
     result.each{|ticker|
       begin
         tick = Ticker.new
@@ -90,7 +90,7 @@ class Downloader
     puts 'starting downloadSP500Stock'
     result = Ticker.all()
     puts result.size
-    sp = StockScraper.new.downloadStock2(result.collect{|tic| tic.symbol},true)
+    sp = Stocks.new.downloadStock2(result.collect{|tic| tic.symbol},true)
   end
 
   # This will download all chains for the S&P500
@@ -136,7 +136,7 @@ class Downloader
   
   def downloadHistorical
     result = Ticker.all(:index => 'SP500')
-    Historicalscraper.downloadHistoricalData(result.collect{|tic| tic.symbol})
+    Historicalscraper.downloadHistoricalData(result.collect{|tic| tic.symbol},true)
   end
   
   #

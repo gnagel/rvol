@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-02-05}
+  s.date = %q{2011-02-06}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -48,10 +48,10 @@ Gem::Specification.new do |s|
     "lib/rvol.rb",
     "lib/rvolcmd.rb",
     "lib/scrapers/earningsscraper.rb",
+    "lib/scrapers/historicalscraper.rb",
     "lib/scrapers/optionschainsscraper.rb",
     "lib/scrapers/rssScraper.rb",
     "lib/scrapers/scraper.rb",
-    "lib/scrapers/stockscraper.rb",
     "rvol.gemspec",
     "test/core/test_dateutil.rb",
     "test/core/test_downloader.rb",
@@ -64,7 +64,9 @@ Gem::Specification.new do |s|
     "test/reports/test_chains_report.rb",
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
+    "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
+    "test/scrapers/test_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
     "test/test_rvol.rb"
@@ -85,7 +87,9 @@ Gem::Specification.new do |s|
     "test/reports/test_chains_report.rb",
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
+    "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
+    "test/scrapers/test_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
     "test/test_rvol.rb"

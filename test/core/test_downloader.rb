@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'helper'
 require 'core/downloader'
-require "scrapers/stockscraper"
+require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
 require "model/stock"
@@ -62,7 +62,7 @@ class TestDownloader < Test::Unit::TestCase
     puts 'starting downloadSP500Stock'
     result = Ticker.all()
     puts result.size
-    sp = StockScraper.new.downloadStock2(result.collect{|tic| tic.symbol},true)
+    sp = Stocks.new.downloadStock2(result.collect{|tic| tic.symbol},true)
   end
 
   # This will download all chains for the S&P500

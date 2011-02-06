@@ -3,12 +3,12 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 require 'helper'
 require 'test/unit'
 require 'model/stock'
-require 'scrapers/stockscraper'
+require 'scrapers/stocks'
 
-class Test_StockScraper < Test::Unit::TestCase
+class Test_Stocks < Test::Unit::TestCase
   def test_Stock_Scraper
     begin
-      ticks = StockScraper.new.downloadStock2(['GOOG','IBM','AAPL'],true)
+      ticks = Stocks.new.downloadStock2(['GOOG','IBM','AAPL'],true)
     rescue => boom
       puts boom
       flunk("TEST FAILED")
@@ -16,7 +16,7 @@ class Test_StockScraper < Test::Unit::TestCase
   end
   def test_Stock_Scraper_Single
     begin
-      ticks = StockScraper.new.downloadStock2(['GOOG'],true)
+      ticks = Stocks.new.downloadStock2(['GOOG'],true)
     rescue => boom
       puts boom
       flunk("TEST FAILED")
