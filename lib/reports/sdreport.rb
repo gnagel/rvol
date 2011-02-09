@@ -1,5 +1,4 @@
 require 'math/arraymath'
-
 #
 # A report with different standard deviation spikes.
 #
@@ -20,5 +19,5 @@ class Sdreport
       stock.std20 = arrayPrices.stdev
       puts arrayPrices.stdev
       stock.save
-    end
+  end
 end

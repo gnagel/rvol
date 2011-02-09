@@ -44,6 +44,11 @@ class Test_scraper  < Test::Unit::TestCase
     response = Scraper.downLoadStockScouter10
     debugResponse(response)
   end
+  
+  def test_downLoadETF100
+    response = Scraper.down100VolETF
+    debugResponse(response)
+  end
 
   def debugResponse(response)
     assert_equal(200,response.code,"Didnt return 200 failed")

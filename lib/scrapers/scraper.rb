@@ -1,8 +1,7 @@
 # encoding: utf-8
 require 'typhoeus'
-
 #
-#Connect to the internet and downloads pages from various sites
+# Connect to the internet and downloads pages from various sites
 #
 class Scraper
   
@@ -38,5 +37,11 @@ class Scraper
     response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=10')
   end
   
+  #
+  # Single call only to get list of top 100 volume etfs
+  #
+  def self.down100VolETF
+    response = Typhoeus::Request.get('http://finance.yahoo.com/etf/browser/tv?c=0&k=5&f=0&o=d&cs=0&ce=100')
+  end
   
 end

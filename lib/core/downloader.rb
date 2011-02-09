@@ -11,6 +11,7 @@ require "model/chain"
 require "model/earning"
 require 'dm-core'
 require 'dm-migrations'
+require 'scrapers/etf'
 
 # This class wraps up all financial data downloads and stores the information into a database.
 # Errors are logged for quality of service
@@ -101,6 +102,7 @@ class Downloader
     result = Ticker.all()
     OptionChainsScraper.new.loadChains(result.collect{|tic| tic.symbol},true)
   end
+
   #
   # Calculates the total amount of calls and puts for the front month
   #
@@ -133,12 +135,16 @@ class Downloader
     result = Ticker.all(:index => 'SP500')
     EarningsScraper.new.getEarningsMonth2(result.collect{|tic| tic.symbol})
   end
-  
+
   def downloadHistorical
     stocks = Stockdaily.all
     Historicalscraper.new.downloadHistoricalData(stocks,true)
   end
-  
+
+  def downloadEtfTopVol100
+   Etf.new.parse100TopVolEtf
+  end
+
   #
   # Download economic events: Downloads goverment events which will
   # have an effect on the markets
