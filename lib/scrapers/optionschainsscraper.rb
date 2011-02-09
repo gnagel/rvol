@@ -2,7 +2,7 @@
 require 'open-uri'
 require 'model/chain.rb'
 require 'typhoeus'
-require "core/dateutil"
+require 'core/dateutil'
 require 'nokogiri'
 require 'benchmark'
 require 'thread'

@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'date'
 require 'open-uri'
-require 'hpricot'
+require 'nokogiri'
 require 'model/earning'
 require "scrapers/optionschainsscraper"
 require "core/dateutil"
@@ -27,7 +27,7 @@ class EarningsScraper
         begin
           if(response.code==200)
             puts 'HTTP RESPONSE: 200 for Date: '+date
-            doc = Hpricot(response.body)
+            doc = Nokogiri::HTML(response.body)
             chains = doc.search("//a[@href]")
             for obj in chains
               if obj.to_html.include? "http://finance.yahoo.com/q?"

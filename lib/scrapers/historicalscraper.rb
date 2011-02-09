@@ -2,15 +2,12 @@
 require 'CSV'
 require 'typhoeus'
 require 'thread'
-
 #
 # Downloads 1 year of historical data for given ticker
 #
 class Historicalscraper
-  @@queue = Queue.new
   def downloadHistoricalData(tickers,persist)
     hydra = Typhoeus::Hydra.new
-    thread = storingthread
     count=0
     tickers.each do |ticker|
       request = Scraper.downLoadHistory(ticker)
@@ -29,7 +26,13 @@ class Historicalscraper
               history.close = row[4]
               history.volume = row[5]
               if persist
-                @@queue << history
+                if history.save
+                else
+                  puts 'Error saving history'
+                  history.errors.each do |e|
+                    puts e
+                  end
+                end
               end
             end
           rescue => boom
@@ -40,29 +43,5 @@ class Historicalscraper
       hydra.queue(request)
     end
     hydra.run
-    if(@@queue.empty?)
-      thread.exit
-    end
   end
-
-  #
-  # A thread that monitors storage stuff
-  #
-  def storingthread
-    thread = Thread.new do
-      loop do
-        # pop will block until there are queue items available
-        history = @@queue.pop
-        if history.save
-        else
-          puts 'Error saving history'
-          history.errors.each do |e|
-            puts e
-          end
-        end
-      end
-    end
-    return thread
-  end
-
 end

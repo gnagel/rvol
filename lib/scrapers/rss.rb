@@ -1,8 +1,8 @@
 # encoding: utf-8
 require 'typhoeus'
 require 'rss/2.0'
-require 'hpricot'
 require 'ruport'
+require 'nokogiri'
 
 #
 # Rss scraper download market data for a particular ticker from a news rss.
@@ -26,7 +26,7 @@ class RssScraper
 
     rss.items.each{|item|
       title = item.title
-      description = Hpricot(item.description).to_plain_text
+      description = Nokogiri::HTML(item.description).to_plain_text
       table << [description]
       #puts wrap_text(description,120)
     }

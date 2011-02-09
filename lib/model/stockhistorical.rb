@@ -16,4 +16,6 @@ class Stockhistorical
   property :low,   String, :required => true
   property :close, String, :required => true
   property :volume,String, :required => true
+ 
+       
 end

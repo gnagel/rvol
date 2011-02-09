@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-02-06}
+  s.date = %q{2011-02-07}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -41,6 +41,8 @@ Gem::Specification.new do |s|
     "lib/model/chain.rb",
     "lib/model/earning.rb",
     "lib/model/stock.rb",
+    "lib/model/stockdaily.rb",
+    "lib/model/stockhistorical.rb",
     "lib/reports/chainsreport.rb",
     "lib/reports/earningsreport.rb",
     "lib/reports/indexreport.rb",
@@ -50,8 +52,9 @@ Gem::Specification.new do |s|
     "lib/scrapers/earningsscraper.rb",
     "lib/scrapers/historicalscraper.rb",
     "lib/scrapers/optionschainsscraper.rb",
-    "lib/scrapers/rssScraper.rb",
+    "lib/scrapers/rss.rb",
     "lib/scrapers/scraper.rb",
+    "lib/scrapers/stocks.rb",
     "rvol.gemspec",
     "test/core/test_dateutil.rb",
     "test/core/test_downloader.rb",

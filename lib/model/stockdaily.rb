@@ -18,4 +18,8 @@ class Stockdaily
   property :exdividenddate,String    # q Ex-Dividend Date
   property :dividendyield, String    # y Dividend Yield
   property :dpershare,     String    # d Dividend/Share
+  
+  property :std20, Float, :required => false
+  property :std10, Float, :required => false
+  property :std5,  Float, :required => false
 end
