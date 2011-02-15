@@ -30,9 +30,7 @@ begin
     gem.email = "tonikarhu@gmail.com"
     gem.homepage = "http://github.com/tonik/rvol"
     gem.authors = ["Toni Karhu"]
-    #gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
-    gem.add_dependency "hpricot"
     gem.add_dependency "dm-core"
     gem.add_dependency "dm-validations"
     gem.add_dependency "ruport"

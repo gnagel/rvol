@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-02-07}
+  s.date = %q{2011-02-16}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -47,9 +47,11 @@ Gem::Specification.new do |s|
     "lib/reports/earningsreport.rb",
     "lib/reports/indexreport.rb",
     "lib/reports/reportprinter.rb",
+    "lib/reports/sdreport.rb",
     "lib/rvol.rb",
     "lib/rvolcmd.rb",
     "lib/scrapers/earningsscraper.rb",
+    "lib/scrapers/etf.rb",
     "lib/scrapers/historicalscraper.rb",
     "lib/scrapers/optionschainsscraper.rb",
     "lib/scrapers/rss.rb",
@@ -67,8 +69,10 @@ Gem::Specification.new do |s|
     "test/reports/test_chains_report.rb",
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
+    "test/reports/test_sdreport.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
+    "test/scrapers/test_parsing.rb",
     "test/scrapers/test_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
@@ -90,8 +94,10 @@ Gem::Specification.new do |s|
     "test/reports/test_chains_report.rb",
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
+    "test/reports/test_sdreport.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
+    "test/scrapers/test_parsing.rb",
     "test/scrapers/test_scraper.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
@@ -103,7 +109,6 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<cucumber>, [">= 0"])
-      s.add_runtime_dependency(%q<hpricot>, [">= 0"])
       s.add_runtime_dependency(%q<dm-core>, [">= 0"])
       s.add_runtime_dependency(%q<dm-validations>, [">= 0"])
       s.add_runtime_dependency(%q<ruport>, [">= 0"])
@@ -116,7 +121,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
     else
       s.add_dependency(%q<cucumber>, [">= 0"])
-      s.add_dependency(%q<hpricot>, [">= 0"])
       s.add_dependency(%q<dm-core>, [">= 0"])
       s.add_dependency(%q<dm-validations>, [">= 0"])
       s.add_dependency(%q<ruport>, [">= 0"])
@@ -130,7 +134,6 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<cucumber>, [">= 0"])
-    s.add_dependency(%q<hpricot>, [">= 0"])
     s.add_dependency(%q<dm-core>, [">= 0"])
     s.add_dependency(%q<dm-validations>, [">= 0"])
     s.add_dependency(%q<ruport>, [">= 0"])

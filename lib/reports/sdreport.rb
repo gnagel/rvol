@@ -9,6 +9,7 @@ class Sdreport
   def loadTickers
     puts 'loading report'
     date = Time.now
+    # 60s * 60  * 24 * 30  = 30 days
     past = 60*60*24*30
     twentyago = date - past
       stock = Stockdaily.new

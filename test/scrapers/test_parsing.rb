@@ -6,7 +6,7 @@ require 'test/unit'
 require 'typhoeus'
 require 'nokogiri'
 
-class Test_parsing  < Test::Unit::TestCase
+class Test_parsing < Test::Unit::TestCase
   def test_parseetf100
    response = Scraper.down100VolETF
    doc = Nokogiri::HTML(response.body)
@@ -25,6 +25,5 @@ class Test_parsing  < Test::Unit::TestCase
    rescue => boom
      flunk(boom.to_s)
    end
-   
   end
 end

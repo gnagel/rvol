@@ -29,6 +29,7 @@ class Downloader
     DataMapper.auto_migrate!
 
     self.downloadSP500Tickers
+    self.downloadEtfTopVol100
     self.downloadHistorical
     self.createIndexEtfs
     self.downloadSP500stock
@@ -142,6 +143,7 @@ class Downloader
   end
 
   def downloadEtfTopVol100
+   puts 'starting download top Vol ETF:s' 
    Etf.new.parse100TopVolEtf
   end
 

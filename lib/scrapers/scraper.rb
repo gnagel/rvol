@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'typhoeus'
 #
-# Connect to the internet and downloads pages from various sites
+# Connect to the internet and downloads stock info from various sites
 #
 class Scraper
   
