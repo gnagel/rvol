@@ -4,15 +4,21 @@ require 'typhoeus'
 # Connect to the internet and downloads stock info from various sites
 #
 class Scraper
-  
+  #
+  # Download stock info  from yahoo
+  #
   def self.downLoadYahooCSV(csvTickers)
     request = Typhoeus::Request.new('http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(csvTickers+'&f=sl1a2vnqyd&e=.csv'))
   end
-  
+  #
+  # Download S&P500 list from wikipedia
+  #
   def self.downLoadSP500WikiPedia
    response = Typhoeus::Request.get('http://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
   end
-  
+  #
+  # Download S&P 500 list from yahoo
+  #
   def self.downLoadSP500Yahoo(i)
      request = Typhoeus::Request.new('http://finance.yahoo.com/q/cp?s=%5EGSPC&c='+i.to_s)
   end 
@@ -38,7 +44,7 @@ class Scraper
   end
   
   #
-  # Single call only to get list of top 100 volume etfs
+  # Single call only to get list of etfs with top volume
   #
   def self.down100VolETF
     response = Typhoeus::Request.get('http://finance.yahoo.com/etf/browser/tv?c=0&k=5&f=0&o=d&cs=0&ce=100')

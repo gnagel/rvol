@@ -22,6 +22,7 @@ class Stocks
     end
     chunks.each{|chunk|
       csvTickers = chunk.join(',')
+      puts csvTickers
       begin
         
         request = Scraper.downLoadYahooCSV(csvTickers)
@@ -75,7 +76,9 @@ class Stocks
     doc = Nokogiri::HTML(response.body)
     doc.css('a.external').each do |tick|
       if tick.to_s.include?('www.nyse.com') || tick.to_s.include?('www.nasdaq.com')
-        results << tick.inner_text
+        tick = tick.inner_text
+        results << tick
+        puts tick
       end
     end
     return results

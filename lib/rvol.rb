@@ -2,6 +2,7 @@
 require 'reports/earningsreport'
 require 'reports/chainsreport'
 require 'reports/indexreport'
+require 'reports/sdreport'
 require 'core/cron.rb'
 require 'yaml'
 
@@ -64,6 +65,10 @@ module Rvol
 
   def chainReportTop10VolPuts
     ChainsReport.new.generateReportTop10Puts
+  end
+  
+  def reportsdev20
+    Sdreport.new.generateReportTop50StandardDeviation
   end
 
   #

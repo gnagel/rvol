@@ -51,7 +51,10 @@ class Rvolcmd
         opts.on("-c","--downloader","start cron type timer downloader, will run 5:00 PM every weekday") do
           cmd.runCron
         end
-        opts.on("-t","--top10List [TYPE]","List top 10 from either Volume , OpenInt, IV ,Change, Calls, Puts") do |type|
+        opts.on("-d","--sdeviation20","List highest 20 day standard deviation movers today") do
+          cmd.reportsdev20
+        end
+        opts.on("-t","--top10List [TYPE]","List top 10 options with highest Volume , OpenInt, IV ,Change, total calls, or total puts") do |type|
           case type
           when "Volume"
             cmd.chainReportTop10Volume

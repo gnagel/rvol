@@ -6,19 +6,20 @@ require 'thread'
 # Downloads 1 year of historical data for given ticker
 #
 class Historicalscraper
-  def downloadHistoricalData(tickers,persist)
-    hydra = Typhoeus::Hydra.new
+  def downloadHistoricalData(stocks,persist)
+    hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
+    hydra.disable_memoization
     count=0
-    tickers.each do |ticker|
-      request = Scraper.downLoadHistory(ticker)
+    stocks.each do |ticker|
+      request = Scraper.downLoadHistory(ticker.symbol)
       request.on_complete { | response |
         if(response.code==200)
           count+=1
-          puts 'HTTP RESPONSE: 200 '+ticker + ' count: ' +count.to_s
+          puts 'HTTP RESPONSE: 200 Historical  '+ticker.symbol + ' count: ' +count.to_s
           begin
             CSV.parse(response.body,:headers => :first_row) do |row|
               history = Stockhistorical.new
-              history.symbol = ticker
+              history.symbol = ticker.symbol
               history.date = row[0]
               history.open  = row[1]
               history.high = row[2]

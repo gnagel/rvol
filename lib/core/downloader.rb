@@ -6,6 +6,7 @@ require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
 require 'reports/earningsreport'
 require 'reports/IndexReport'
+require 'reports/Sdreport'
 require "model/stock"
 require "model/chain"
 require "model/earning"
@@ -30,11 +31,11 @@ class Downloader
 
     self.downloadSP500Tickers
     self.downloadEtfTopVol100
-    self.downloadHistorical
-    self.createIndexEtfs
     self.downloadSP500stock
     self.downloadSP500Chains
+    self.downloadHistorical
     self.calculateChains
+    self.calculateStd
     self.downloadEarnings
 
   end
@@ -43,7 +44,7 @@ class Downloader
   # store it in a database. Failed reads should be logged for
   # later processing
   def downloadSP500Tickers
-    puts 'starting downloadSP500Tickers'
+    puts 'starting download SP500 tickers'
     result = Stocks.new.downloadSP500
     result.each{|ticker|
       begin
@@ -59,37 +60,13 @@ class Downloader
     }
   end
 
-  # Download index data and chains
-  # SPY, DIA, IWM, USO , GLD ,QQQQ,
-  # Also download volaitlity: VIX , VXX , VXZ
-  # Download equities with weeklies
-  #
-  def createIndexEtfs
-    indexes = ['^OEX','^XEO','^DJX','^SPX','EEM','FAZ','FAS','IWM','QQQQ','SPY','XLF','TLT','TBT','SLV']
-    #equity = ['AAPL','AMZN','BAC','BIDU','BP','C','CSCO','F','GE','GOOG','GS','MSFT','NFLX','INTC','IBM','PCLN','RIMM']
-    oil = ['USO']
-    gold = ['GLD','GDX']
-    volatility=['^VIX','VXX','VXZ']
-    emergingMarkets=['BRF']
-    currencies=['UUP']
-    etfs = [indexes,oil,gold,volatility,emergingMarkets,currencies]
-    etfs.flatten!
-    etfs.each{|x|
-      tick = Ticker.new
-      tick.created_at = Time.now
-      tick.symbol     = x
-      tick.index      = 'index-etf'
-      tick.save
-    }
-
-  end
 
   # This will download all S&P 500 data from the internet and
   # store it in a database. Failed reads should be logged for
   # later processing
   #
   def downloadSP500stock
-    puts 'starting downloadSP500Stock'
+    puts 'starting download SP500 stock details'
     result = Ticker.all()
     puts result.size
     sp = Stocks.new.downloadStock2(result.collect{|tic| tic.symbol},true)
@@ -99,7 +76,7 @@ class Downloader
   # Names taken from last download
   # Chains should be loaded for the next 2 months
   def downloadSP500Chains
-    puts 'starting downloadSP500chains'
+    puts 'starting download SP500 chains'
     result = Ticker.all()
     OptionChainsScraper.new.loadChains(result.collect{|tic| tic.symbol},true)
   end
@@ -128,6 +105,12 @@ class Downloader
       ticker.save
     }
   end
+  #
+  # Calculate standard deviations
+  #
+  def calculateStd
+    Sdreport.new.calculateStd
+  end 
 
   ##
   # This will download all earnings for the next month
@@ -136,7 +119,8 @@ class Downloader
     result = Ticker.all(:index => 'SP500')
     EarningsScraper.new.getEarningsMonth2(result.collect{|tic| tic.symbol})
   end
-
+  
+  
   def downloadHistorical
     stocks = Stockdaily.all
     Historicalscraper.new.downloadHistoricalData(stocks,true)
