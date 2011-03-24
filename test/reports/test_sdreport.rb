@@ -7,6 +7,8 @@ require 'model/stockdaily'
 class Test_sdreport < Test::Unit::TestCase
   def test_sdreport
     puts 'running test'
+    #clean up
+    Stockdaily.all.destroy
     stock =  Stockdaily.new
     stock.symbol = "IBM"
     stock.created_at = DateTime.now

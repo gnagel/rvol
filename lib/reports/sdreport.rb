@@ -1,5 +1,4 @@
 require 'math/arraymath'
-
 #
 # A report with different standard deviation spikes.
 #

@@ -4,6 +4,7 @@ require "scrapers/historicalscraper"
 require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsscraper"
+require "scrapers/stockscouter"
 require 'reports/earningsreport'
 require 'reports/IndexReport'
 require 'reports/Sdreport'
@@ -31,6 +32,7 @@ class Downloader
 
     self.downloadSP500Tickers
     self.downloadEtfTopVol100
+    self.downloadStockscouterStocks
     self.downloadSP500stock
     self.downloadSP500Chains
     self.downloadHistorical
@@ -126,6 +128,14 @@ class Downloader
     Historicalscraper.new.downloadHistoricalData(stocks,true)
   end
 
+
+  
+  def downloadStockscouterStocks
+   puts 'starting download best and worst stockscouter tickers' 
+   Stockscouter.new.parseScouterTop10
+   Stockscouter.new.parseScouterTop1
+  end
+  
   def downloadEtfTopVol100
    puts 'starting download top Vol ETF:s' 
    Etf.new.parse100TopVolEtf

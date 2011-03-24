@@ -41,6 +41,8 @@ begin
     gem.add_dependency "ruport-util"
     gem.add_dependency "rufus-scheduler"
     gem.add_dependency "nokogiri"
+    gem.add_dependency "sinatra"
+    gem.add_dependency "launchy"
     
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

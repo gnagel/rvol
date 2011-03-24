@@ -33,14 +33,14 @@ class Rvolcmd
         opts.separator ""
         opts.separator "Specific options:"
         cmd = Rvolcmd.new
+        opts.on("-r","--chainR [TICKER]","List chains for ticker report") do |ticker|
+          cmd.chainReport(ticker)
+        end
         opts.on("-e","--earningsR","Generate a table of earnings") do
           cmd.earningsReport
         end
         opts.on("-i","--indexR","Generate an index report") do
           cmd.indexReport
-        end
-        opts.on("-r","--chainR [TICKER]","List chains for ticker report") do |ticker|
-          cmd.chainReport(ticker)
         end
         opts.on("-a","--chains","List all chains") do |ticker|
           cmd.chainReportAll
@@ -91,7 +91,7 @@ class Rvolcmd
       puts opts
       exit 1
     end
-    
+
   end  # parse()
 end  # class rvolcmd
 

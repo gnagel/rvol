@@ -35,15 +35,43 @@ class Scraper
   def self.downLoadStockScouterTop50
     response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=50')
   end
-
+  
   #
+  # Single call to get top 50 with rating 10 from stock scouter
+  #
+  def self.downLoadStockScouterTop1050
+    response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=10')
+  end
+  #
+  # Single call to get top 50-100 with rating 10 from stock scouter
+  #
+  def self.downLoadStockScouterTop10100
+    response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=10&page=2&col=13')
+  end
+  
+  
+  #
+  # Single call to get top 50 with rating 1 from stock scouter
+  #
+  def self.downLoadStockScouterTop150
+    response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=1')
+  end  
+ 
+  #
+  # Single call to get top 50-100 with rating 1 from stock scouter
+  #
+  def self.downLoadStockScouterTop1100
+    response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=1&page=2&col=13')
+  end
+  
+  ##
   # Single call only to get list of stockscouter rated 10
   #
   def self.downLoadStockScouter10
     response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=10')
   end
   
-  #
+  ##
   # Single call only to get list of etfs with top volume
   #
   def self.down100VolETF
