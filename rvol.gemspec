@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rvol}
-  s.version = "0.1.13"
+  s.version = "0.1.14"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-02-23}
+  s.date = %q{2011-03-24}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -57,6 +57,15 @@ Gem::Specification.new do |s|
     "lib/scrapers/rss.rb",
     "lib/scrapers/scraper.rb",
     "lib/scrapers/stocks.rb",
+    "lib/scrapers/stockscouter.rb",
+    "lib/server/public/css/style.css",
+    "lib/server/public/table-images/botleft.png",
+    "lib/server/public/table-images/botright.png",
+    "lib/server/public/table-images/left.png",
+    "lib/server/public/table-images/right.png",
+    "lib/server/server.rb",
+    "lib/server/views/index.haml",
+    "lib/server/views/index.html",
     "rvol.gemspec",
     "test/core/test_dateutil.rb",
     "test/core/test_downloader.rb",
@@ -74,6 +83,7 @@ Gem::Specification.new do |s|
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_parsing.rb",
     "test/scrapers/test_scraper.rb",
+    "test/scrapers/test_stockscouter.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
     "test/test_rvol.rb"
@@ -99,6 +109,7 @@ Gem::Specification.new do |s|
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_parsing.rb",
     "test/scrapers/test_scraper.rb",
+    "test/scrapers/test_stockscouter.rb",
     "test/scrapers/test_stockscraper.rb",
     "test/scratchpad.rb",
     "test/test_rvol.rb"
@@ -119,6 +130,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<ruport-util>, [">= 0"])
       s.add_runtime_dependency(%q<rufus-scheduler>, [">= 0"])
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
+      s.add_runtime_dependency(%q<sinatra>, [">= 0"])
+      s.add_runtime_dependency(%q<launchy>, [">= 0"])
     else
       s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<dm-core>, [">= 0"])
@@ -131,6 +144,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ruport-util>, [">= 0"])
       s.add_dependency(%q<rufus-scheduler>, [">= 0"])
       s.add_dependency(%q<nokogiri>, [">= 0"])
+      s.add_dependency(%q<sinatra>, [">= 0"])
+      s.add_dependency(%q<launchy>, [">= 0"])
     end
   else
     s.add_dependency(%q<cucumber>, [">= 0"])
@@ -144,6 +159,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<ruport-util>, [">= 0"])
     s.add_dependency(%q<rufus-scheduler>, [">= 0"])
     s.add_dependency(%q<nokogiri>, [">= 0"])
+    s.add_dependency(%q<sinatra>, [">= 0"])
+    s.add_dependency(%q<launchy>, [">= 0"])
   end
 end
 
