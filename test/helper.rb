@@ -7,6 +7,7 @@ require 'dm-migrations'
 require 'model/stock'
 require 'model/chain'
 require 'model/earning'
+require 'model/stockcorrelation'
 
 #set the test db an in memory db
 DataMapper::Logger.new($stdout, :debug)

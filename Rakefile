@@ -23,9 +23,13 @@ begin
     market including stock prices, options chains, and earnings events for the month ahead.
   
     Install: gem install rvol
-    Usage: rvol -h (displays options)
+    Usage: rvol -h (displays options), 
+    To check info for a particular stock use: rvol -r AAPL. 
+    All other features require the market snapshot to be taken use rvol -s to take a snapshot (20-30 minutes). 
+    Then for instance rvol -e (earnings report with front month and backmonth volatilities) 
     
-    **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on Mac os x.**
+    **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on MAC OS X. **
+    (Linux should work, windows will need special libraries installed )
     "
     gem.email = "tonikarhu@gmail.com"
     gem.homepage = "http://github.com/tonik/rvol"

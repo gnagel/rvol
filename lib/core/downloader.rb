@@ -8,12 +8,15 @@ require "scrapers/stockscouter"
 require 'reports/earningsreport'
 require 'reports/IndexReport'
 require 'reports/Sdreport'
+require 'reports/correlationSTDreport'
 require "model/stock"
 require "model/chain"
 require "model/earning"
+require "model/stockcorrelation"
 require 'dm-core'
 require 'dm-migrations'
 require 'scrapers/etf'
+
 
 # This class wraps up all financial data downloads and stores the information into a database.
 # Errors are logged for quality of service
@@ -38,6 +41,7 @@ class Downloader
     self.downloadHistorical
     self.calculateChains
     self.calculateStd
+    self.caclulateCorrelations
     self.downloadEarnings
 
   end
@@ -141,6 +145,10 @@ class Downloader
    Etf.new.parse100TopVolEtf
   end
 
+  def caclulateCorrelations
+    puts 'starting calculate corrrelations' 
+    CorrelationSTDreport.new.calculateStdFfromCorrelations
+  end
   #
   # Download economic events: Downloads goverment events which will
   # have an effect on the markets

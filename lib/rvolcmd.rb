@@ -29,7 +29,17 @@ class Rvolcmd
     options.encoding = "utf8"
     begin
       opts = OptionParser.new do |opts|
-        opts.banner = "Usage: rvol [options]"
+        opts.banner = "Usage: rvol [options]
+        
+        run rvol -s to download a market snapshot after this you can view all of the reports (download 20-30 minutes do only once). 
+        
+        Some Examples:
+         
+          1. rvol -r AAPL , for an instant report (realtime not from snapshot)
+          2. rvol -s , rvol -e , for coming earnings report with volatilities 
+          3. rvol -s (if not done already), rvol -d , for 20 largest standard deviation spikes
+          4. rvol -s (if not done already), rvol -t IV , for top 10 Implied volatilities in the S&P500"
+          
         opts.separator ""
         opts.separator "Specific options:"
         cmd = Rvolcmd.new

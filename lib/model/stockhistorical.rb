@@ -1,7 +1,6 @@
 # encoding: utf-8
 require 'dm-core'
 require 'dm-validations'
-require 'model/stockdaily'
 
 #
 # Holds daily historical prices for a stock

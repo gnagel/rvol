@@ -22,13 +22,12 @@ class Stocks
     end
     chunks.each{|chunk|
       csvTickers = chunk.join(',')
-      puts csvTickers
       begin
-        
+     
         request = Scraper.downLoadYahooCSV(csvTickers)
 
         request.on_complete { | response |
-
+         
           if(response.code==200)
 
             CSV.parse(response.body) do|row|
