@@ -10,12 +10,16 @@ class Test_CorrelationSTDreport < Test::Unit::TestCase
   def test_correlationsreport
    testdata
     # run test
-    CorrelationSTDreport.new.calculateStdFfromCorrelations()
+    CorrelationSTDreport.new.calculateCorrelations()
+    puts 'loading all correlations'
+    CorrelationSTDreport.new.loadAllCorrelations()
   end
   
   
   private 
   def testdata
+    Ticker.all.destroy
+    Stockdaily.all.destroy
     # default adater for all db action stored in gem home directory
      # Make this into a test dataaset for all
      # 1. Save tickers

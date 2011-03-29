@@ -16,7 +16,7 @@ require "model/stockcorrelation"
 require 'dm-core'
 require 'dm-migrations'
 require 'scrapers/etf'
-
+require 'benchmark'
 
 # This class wraps up all financial data downloads and stores the information into a database.
 # Errors are logged for quality of service
@@ -27,23 +27,26 @@ require 'scrapers/etf'
 class Downloader
   # initialize download
   def init
-    #DataMapper::Logger.new($stdout, :debug)
-    #DataMapper.setup(:default,Rvol.config['snapshot'])
-    #DataMapper::Model.raise_on_save_failure = true
+    
     DataMapper.finalize
     DataMapper.auto_migrate!
 
-    self.downloadSP500Tickers
-    self.downloadEtfTopVol100
-    self.downloadStockscouterStocks
-    self.downloadSP500stock
-    self.downloadSP500Chains
-    self.downloadHistorical
-    self.calculateChains
-    self.calculateStd
-    self.caclulateCorrelations
-    self.downloadEarnings
-
+    Benchmark.bm do |x|
+      x.report('Download: '){
+        self.downloadSP500Tickers
+        self.downloadEtfTopVol100
+        self.downloadStockscouterStocks
+        self.downloadSP500stock
+        self.downloadSP500Chains
+        self.downloadHistorical
+        self.downloadEarnings
+      }
+      x.report('Calculations: '){
+        self.calculateChains
+        self.calculateStd
+        self.caclulateCorrelations
+      }
+    end
   end
 
   # This will download all S&P 500 data from the internet and
@@ -65,7 +68,6 @@ class Downloader
       end
     }
   end
-
 
   # This will download all S&P 500 data from the internet and
   # store it in a database. Failed reads should be logged for
@@ -111,44 +113,45 @@ class Downloader
       ticker.save
     }
   end
+
   #
   # Calculate standard deviations
   #
   def calculateStd
     Sdreport.new.calculateStd
-  end 
+  end
 
   ##
   # This will download all earnings for the next month
   ##
   def downloadEarnings
+    puts 'starting download earnings'
     result = Ticker.all(:index => 'SP500')
     EarningsScraper.new.getEarningsMonth2(result.collect{|tic| tic.symbol})
   end
-  
-  
+
   def downloadHistorical
+    puts 'starting download historical'
     stocks = Stockdaily.all
     Historicalscraper.new.downloadHistoricalData(stocks,true)
   end
 
-
-  
   def downloadStockscouterStocks
-   puts 'starting download best and worst stockscouter tickers' 
-   Stockscouter.new.parseScouterTop10
-   Stockscouter.new.parseScouterTop1
+    puts 'starting download best and worst stockscouter tickers'
+    Stockscouter.new.parseScouterTop10
+    Stockscouter.new.parseScouterTop1
   end
-  
+
   def downloadEtfTopVol100
-   puts 'starting download top Vol ETF:s' 
-   Etf.new.parse100TopVolEtf
+    puts 'starting download top Vol ETF:s'
+    Etf.new.parse100TopVolEtf
   end
 
   def caclulateCorrelations
-    puts 'starting calculate corrrelations' 
-    CorrelationSTDreport.new.calculateStdFfromCorrelations
+    puts 'starting calculate corrrelations'
+    CorrelationSTDreport.new.calculateCorrelations
   end
+
   #
   # Download economic events: Downloads goverment events which will
   # have an effect on the markets
