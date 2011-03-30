@@ -37,9 +37,9 @@ class Downloader
         self.downloadEtfTopVol100
         self.downloadStockscouterStocks
         self.downloadSP500stock
+        self.downloadEarnings
         self.downloadSP500Chains
         self.downloadHistorical
-        self.downloadEarnings
       }
       x.report('Calculations: '){
         self.calculateChains
@@ -118,6 +118,7 @@ class Downloader
   # Calculate standard deviations
   #
   def calculateStd
+    puts 'starting calculate standard deviations'
     Sdreport.new.calculateStd
   end
 
