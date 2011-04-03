@@ -6,21 +6,19 @@ require 'ruport'
 require 'reports/reportprinter'
 
 class IndexReport
-  def generateReport
-
-    indexes = Ticker.all(:index=>'index-etf')
-    loadData
-    ReportPrinter.new.printIndexReport(indexes);
-
+  def generateReport(index)
+    data = loadData(index)
+    puts 'EBUGGING!'
+    puts data
+    ReportPrinter.new.printIndexReport(data);
   end
 
   #
-  # Load index etfs and calcualte chains
-  # Load earnings tickers and attach chains to them
+  # Load index stocks and calcualte chains
   #
-  def loadData
+  def loadData(index)
 
-    indexes = Ticker.all(:index=>'index-etf')
+    indexes = Ticker.all(:index=>index)
 
     indexes.each{|e|
 
@@ -58,7 +56,7 @@ class IndexReport
       end
 
     }
-
+   indexes
   end
 
   #

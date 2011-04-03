@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'model/stockcorrelation'
 
 #
@@ -5,6 +6,15 @@ require 'model/stockcorrelation'
 # correlation to find instruments where correlation has changed
 #
 class CorrelationSTDreport
+  #
+  # Calculate the largest std change in correlations. Take into acccount only pairs that 
+  # are higly correlated or highly anticorrelated (move in opposite directions)
+  #
+  def caclulateStdCorrelation
+  
+  end 
+  
+    
   def calculateCorrelations
     puts 'loading report'
     date = Time.now

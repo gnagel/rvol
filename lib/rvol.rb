@@ -3,6 +3,7 @@ require 'reports/earningsreport'
 require 'reports/chainsreport'
 require 'reports/indexreport'
 require 'reports/sdreport'
+require 'reports/ivolatilityreport'
 require 'core/cron.rb'
 require 'yaml'
 
@@ -38,7 +39,7 @@ module Rvol
   end
 
   def indexReport
-    IndexReport.new.generateReport
+    IndexReport.new.generateReport('etf')
   end
 
   def chainReport(ticker)
@@ -77,12 +78,15 @@ module Rvol
     Sdreport.new.generateReportTop50StandardDeviation
   end
 
+  def reportScouter
+     IvolatilityReport.new.loadStockScouter
+  end
+
   #
   # Run the downloader. Downloads all daily data
   #
   def runSnapShot
-    down = Downloader.new
-    down.init
+    down = Downloader.new.init
   end
 
   #

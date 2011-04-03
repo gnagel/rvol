@@ -7,7 +7,7 @@ require "reports/indexReport"
 class Test_Index_Report < Test::Unit::TestCase
   def test_Earnings_report
     begin
-      IndexReport.new.generateReport
+      IndexReport.new.generateReport('etf')
     rescue => boom
       print boom
       flunk("indexreport failed  ")

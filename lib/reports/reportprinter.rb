@@ -83,7 +83,7 @@ class ReportPrinter
     }
     print table
   end
-  
+
   def printTop50SdevReport(tickers)
     table = Table(%w[Symbol Name Price AverageVolume Volume StandardDeviation20])
     tickers.each {|stock|
@@ -91,6 +91,7 @@ class ReportPrinter
     }
     print table
   end
+
 
   #
   # return empty value

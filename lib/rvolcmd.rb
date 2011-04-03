@@ -64,6 +64,9 @@ class Rvolcmd
         opts.on("-d","--sdeviation20","List highest 20 day standard deviation movers today") do
           cmd.reportsdev20
         end
+        opts.on("-sc","--scouter10","List highest implied volatilities in stocks rated 10 ") do
+          cmd.reportScouter
+        end
         opts.on("-t","--top10List [TYPE]","List top 10 options with highest Volume , OpenInt, IV ,Change, total calls, or total puts") do |type|
           case type
           when "Volume"

@@ -98,7 +98,7 @@ class TestDownloader < Test::Unit::TestCase
   def doCalculations
     ## earnings fron and back month calc
     EarningsReport.new.loadData
-    IndexReport.new.loadData
+    IndexReport.new.loadData('index-etf')
   end
 
   def printErrors(object)
