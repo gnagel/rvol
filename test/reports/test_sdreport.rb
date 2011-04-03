@@ -27,8 +27,8 @@ class Test_sdreport < Test::Unit::TestCase
     stock.save
     stock = Stockdaily.all
     Historicalscraper.new.downloadHistoricalData(stock,true)
+    CalculateStd.new.calculateStd
     report = Sdreport.new
-    report.calculateStd
     report.generateReportTop50StandardDeviation
   end
 end

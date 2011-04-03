@@ -17,6 +17,8 @@ require 'dm-core'
 require 'dm-migrations'
 require 'scrapers/etf'
 require 'benchmark'
+require 'math/calculatestd'
+require 'math/calculatechains'
 
 # This class wraps up all financial data downloads and stores the information into a database.
 # Errors are logged for quality of service
@@ -42,7 +44,8 @@ class Downloader
         self.downloadHistorical
       }
       x.report('Calculations: '){
-        self.calculateChains
+        self.calculateFronAndBackMonth
+        self.calculateTotalChains
         self.calculateStd
         self.caclulateCorrelations
       }
@@ -92,26 +95,16 @@ class Downloader
   #
   # Calculates the total amount of calls and puts for the front month
   #
-  def calculateChains
-    tickers = Ticker.all
-    i = 1
-    tickers.each{|ticker|
-      calls = 0
-      putsa = 0
-      osymbol = DateUtil.getOptSymbThisMonth(ticker.symbol)
-      frontChains = Chain.all(:symbol.like=>osymbol+'%')
-      frontChains.each{|chain|
-        if chain.type == 'C'
-          calls += chain.vol
-        end
-        if chain.type == 'P'
-          putsa += chain.vol
-        end
-      }
-      ticker.totalCalls = calls
-      ticker.totalPuts = putsa
-      ticker.save
-    }
+  def calculateFronAndBackMonth
+    puts 'starting calculate front and back month for tickers'
+     CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
+  end
+  #
+  # Calculates the total amount of calls and puts for the front month
+  #
+  def calculateTotalChains
+    puts 'starting calculate total chains for all'
+     CalculateChains.new.calculateTotalChains
   end
 
   #
@@ -119,7 +112,7 @@ class Downloader
   #
   def calculateStd
     puts 'starting calculate standard deviations'
-    Sdreport.new.calculateStd
+    CalculateStd.new.calculateStd
   end
 
   ##

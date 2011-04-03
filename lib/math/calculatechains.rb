@@ -1,28 +1,24 @@
 # encoding: utf-8
-require 'math/arraymath'
-require 'model/earning'
 require 'model/chain'
-require 'ruport'
-require 'reports/reportprinter'
 
-class IndexReport
-  def generateReport(index)
-    data = loadData(index)
-    ReportPrinter.new.printIndexReport(data);
-  end
+# encoding: utf-8
+#
+#  Calculations for options chains
+#
+class CalculateChains
+
 
   #
-  # Load index stocks and calcualte chains
+  # Load all tickers and calculate mean implied volatilities to near ITM options
   #
-  def loadData(index)
+  def calculateFrontAndBackMonthsMeanIVITM
 
-    indexes = Ticker.all(:index=>index)
+    tickers = Ticker.all
+    tickers.each{|tick|
 
-    indexes.each{|e|
-
-      ticker      = e.symbol
+      ticker      = tick.ticker
       osymbol     = DateUtil.getOptSymbThisMonth(ticker)
-      osymbol2     = DateUtil.getOptSymbNextMonth(ticker)
+      osymbol2    = DateUtil.getOptSymbNextMonth(ticker)
 
       frontChains = Chain.all(:symbol.like=>osymbol+'%')
       backChains = Chain.all(:symbol.like=>osymbol2+'%')
@@ -32,7 +28,7 @@ class IndexReport
         # load all chain strikes
         arrayFront = frontChains.collect{|chain|chain.strike.to_f}
         # gets the closest strike to the price
-        stock  = Stockdaily.first(:symbol=>e.symbol)
+        stock  = Stockdaily.first(:symbol=>e.ticker)
         closestStrike = arrayFront.closest stock.price.to_f
 
         impliedVolatilities = getImpliedVolatilities(frontChains,closestStrike)
@@ -46,15 +42,8 @@ class IndexReport
         end
       end
 
-      if e.save
-      else
-        e.errors.each do |es|
-          puts es
-        end
-      end
-
     }
-   indexes
+    return earnings
   end
 
   #
@@ -70,4 +59,29 @@ class IndexReport
     array
   end
 
+
+  #
+  # Calculate total chain call put volume for all tickers
+  #
+  def calculateTotalChains
+    tickers = Ticker.all
+    i = 1
+    tickers.each { |ticker|
+      calls = 0
+      putsa = 0
+      osymbol = DateUtil.getOptSymbThisMonth(ticker.symbol)
+      frontChains = Chain.all(:symbol.like=>osymbol+'%')
+      frontChains.each { |chain|
+        if chain.type == 'C'
+          calls += chain.vol
+        end
+        if chain.type == 'P'
+          putsa += chain.vol
+        end
+      }
+      ticker.totalCalls = calls
+      ticker.totalPuts = putsa
+      ticker.save
+    }
+  end
 end
