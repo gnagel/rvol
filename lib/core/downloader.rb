@@ -28,25 +28,36 @@ require 'math/calculatechains'
 
 class Downloader
   # initialize download
-  def init
-    
+  def initEarningsAndChains
+
     DataMapper.finalize
     DataMapper.auto_migrate!
 
     Benchmark.bm do |x|
-      x.report('Download: '){
+      x.report('Download: ') {
         self.downloadSP500Tickers
         self.downloadEtfTopVol100
         self.downloadStockscouterStocks
         self.downloadSP500stock
         self.downloadEarnings
         self.downloadSP500Chains
-        self.downloadHistorical
       }
-      x.report('Calculations: '){
+      x.report('Calculations: ') {
         self.calculateFronAndBackMonth
         self.calculateTotalChains
-        self.calculateStd
+
+      }
+    end
+  end
+
+  def initHistoricalAndCorrelations
+    Benchmark.bm do |x|
+      x.report('Download Historical: ') {
+        self.downloadHistorical
+      }
+      x.report('Calculate standard deviations: ') {
+        self.calculateStd }
+      x.report('Calculate correlations: ') {
         self.caclulateCorrelations
       }
     end
@@ -58,12 +69,12 @@ class Downloader
   def downloadSP500Tickers
     puts 'starting download SP500 tickers'
     result = Stocks.new.downloadSP500
-    result.each{|ticker|
+    result.each { |ticker|
       begin
         tick = Ticker.new
         tick.created_at = Time.now
-        tick.symbol     = ticker
-        tick.index      = 'SP500'
+        tick.symbol = ticker
+        tick.index = 'SP500'
         tick.save
       rescue => boom
         puts 'error  ' + ticker
@@ -80,7 +91,7 @@ class Downloader
     puts 'starting download SP500 stock details'
     result = Ticker.all()
     puts result.size
-    sp = Stocks.new.downloadStock2(result.collect{|tic| tic.symbol},true)
+    sp = Stocks.new.downloadStock2(result.collect { |tic| tic.symbol }, true)
   end
 
   # This will download all chains for the S&P500
@@ -89,7 +100,7 @@ class Downloader
   def downloadSP500Chains
     puts 'starting download SP500 chains'
     result = Ticker.all()
-    OptionChainsScraper.new.loadChains(result.collect{|tic| tic.symbol},true)
+    OptionChainsScraper.new.loadChains(result.collect { |tic| tic.symbol }, true)
   end
 
   #
@@ -97,14 +108,15 @@ class Downloader
   #
   def calculateFronAndBackMonth
     puts 'starting calculate front and back month for tickers'
-     CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
+    CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
   end
+
   #
   # Calculates the total amount of calls and puts for the front month
   #
   def calculateTotalChains
     puts 'starting calculate total chains for all'
-     CalculateChains.new.calculateTotalChains
+    CalculateChains.new.calculateTotalChains
   end
 
   #
@@ -121,13 +133,13 @@ class Downloader
   def downloadEarnings
     puts 'starting download earnings'
     result = Ticker.all(:index => 'SP500')
-    EarningsScraper.new.getEarningsMonth2(result.collect{|tic| tic.symbol})
+    EarningsScraper.new.getEarningsMonth2(result.collect { |tic| tic.symbol })
   end
 
   def downloadHistorical
     puts 'starting download historical'
     stocks = Stockdaily.all
-    Historicalscraper.new.downloadHistoricalData(stocks,true)
+    Historicalscraper.new.downloadHistoricalData(stocks, true)
   end
 
   def downloadStockscouterStocks

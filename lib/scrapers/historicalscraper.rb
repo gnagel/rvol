@@ -2,6 +2,7 @@
 require 'CSV'
 require 'typhoeus'
 require 'thread'
+require 'scrapers/scraper'
 #
 # Downloads 1 year of historical data for given ticker
 #

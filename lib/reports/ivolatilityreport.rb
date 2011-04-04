@@ -11,9 +11,7 @@ class IvolatilityReport
   #
   #
   def loadStockScouter
-    scouter = Array.new       
-    index = Ticker.all(:index=>'stockscouter-10')
-    IndexReport.new.generateReport(index)
+    IndexReport.new.generateReport('stockscouter-10')
   end
   
 end

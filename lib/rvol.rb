@@ -86,7 +86,14 @@ module Rvol
   # Run the downloader. Downloads all daily data
   #
   def runSnapShot
-    down = Downloader.new.init
+    down = Downloader.new.initEarningsAndChains
+  end
+
+    #
+  # Run the downloader. Downloads all daily data
+  #
+  def runSnapShotHistorical
+    down = Downloader.new.initHistoricalAndCorrelations
   end
 
   #

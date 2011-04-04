@@ -43,7 +43,6 @@ class Stockscouter
           symbol = sym.sub('/detail/stock_quote?symbol=','').chomp
           save(symbol,1)
           puts symbol
-          puts i
         end
       end
     end

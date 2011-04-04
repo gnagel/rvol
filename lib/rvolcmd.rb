@@ -3,7 +3,7 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 
-autoload :Rvol,'Rvol'
+autoload :Rvol, 'Rvol'
 
 #
 # Main class for accessing the application. Commands can be entered from
@@ -39,50 +39,59 @@ class Rvolcmd
           2. rvol -s , rvol -e , for coming earnings report with volatilities 
           3. rvol -s (if not done already), rvol -d , for 20 largest standard deviation spikes
           4. rvol -s (if not done already), rvol -t IV , for top 10 Implied volatilities in the S&P500"
-          
+
         opts.separator ""
         opts.separator "Specific options:"
         cmd = Rvolcmd.new
-        opts.on("-r","--chainR [TICKER]","List chains for ticker report") do |ticker|
+        opts.on("-r", "--chainR [TICKER]", "List chains for ticker report") do |ticker|
           cmd.chainReport(ticker)
         end
-        opts.on("-e","--earningsR","Generate a table of earnings") do
+        opts.on("-e", "--earningsR", "Generate a table of earnings") do
           cmd.earningsReport
         end
-        opts.on("-i","--indexR","Generate an index report") do
+        opts.on("-i", "--indexR", "Generate an index report") do
           cmd.indexReport
         end
-        opts.on("-a","--chains","List all chains") do |ticker|
+        opts.on("-a", "--chains", "List all chains") do
           cmd.chainReportAll
         end
-        opts.on("-s","--snapshot","Download market snapshot, will download the current market data") do
-          cmd.runSnapShot
+        opts.on("-s", "--snapshot [type]", "Download market snapshot type [snapshot, historical],
+                will download the current market data") do |type|
+          case type
+            when 'snapshot'
+              cmd.runSnapShot
+            when 'historical'
+              cmd.runSnapShotHistorical
+            else
+              cmd.runSnapShot
+          end
+
         end
-        opts.on("-c","--downloader","start cron type timer downloader, will run 5:00 PM every weekday") do
+        opts.on("-c", "--downloader", "start cron type timer downloader, will run 5:00 PM every weekday") do
           cmd.runCron
         end
-        opts.on("-d","--sdeviation20","List highest 20 day standard deviation movers today") do
+        opts.on("-d", "--sdeviation20", "List highest 20 day standard deviation movers today") do
           cmd.reportsdev20
         end
-        opts.on("--scouter10IV","List highest implied volatilities in stocks rated 10 ") do
+        opts.on("--scouter10IV", "List highest implied volatilities in stocks rated 10 ") do
           cmd.reportScouter
         end
-        opts.on("-t","--top10List [TYPE]","List top 10 options with highest Volume , OpenInt, IV ,Change, total calls, or total puts") do |type|
+        opts.on("-t", "--top10List [TYPE]", "List top 10 options with highest Volume , OpenInt, IV ,Change, total calls, or total puts") do |type|
           case type
-          when "Volume"
-            cmd.chainReportTop10Volume
-          when "OpenInt"
-            cmd.chainReportTop10OpenInt
-          when "IV"
-            cmd.chainReportTop10ImpliedVolatility
-          when "Change"
-            cmd.chainReportTop10ChangeInOptionPrice
-          when "Calls"
-            cmd.chainReportTop10VolCalls
-          when "Puts"
-            cmd.chainReportTop10VolPuts
-          else
-            puts 'you did not specify the type of listing'
+            when "Volume"
+              cmd.chainReportTop10Volume
+            when "OpenInt"
+              cmd.chainReportTop10OpenInt
+            when "IV"
+              cmd.chainReportTop10ImpliedVolatility
+            when "Change"
+              cmd.chainReportTop10ChangeInOptionPrice
+            when "Calls"
+              cmd.chainReportTop10VolCalls
+            when "Puts"
+              cmd.chainReportTop10VolPuts
+            else
+              puts 'you did not specify the type of listing'
           end
         end
         opts.separator ""
@@ -92,7 +101,7 @@ class Rvolcmd
           exit
         end
         # Another typical switch to print the version.
-        opts.on_tail("-v","--version", "Show version") do
+        opts.on_tail("-v", "--version", "Show version") do
           puts 'VERSION: '+cmd.version[0]
           exit
         end
@@ -105,6 +114,6 @@ class Rvolcmd
       exit 1
     end
 
-  end  # parse()
-end  # class rvolcmd
+  end # parse()
+end # class rvolcmd
 

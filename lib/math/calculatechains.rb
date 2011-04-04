@@ -14,51 +14,36 @@ class CalculateChains
   def calculateFrontAndBackMonthsMeanIVITM
 
     tickers = Ticker.all
-    tickers.each{|tick|
-
-      ticker      = tick.ticker
-      osymbol     = DateUtil.getOptSymbThisMonth(ticker)
-      osymbol2    = DateUtil.getOptSymbNextMonth(ticker)
+    tickers.each { |tick|
+      ticker = tick.symbol
+      osymbol = DateUtil.getOptSymbThisMonth(ticker)
+      osymbol2 = DateUtil.getOptSymbNextMonth(ticker)
 
       frontChains = Chain.all(:symbol.like=>osymbol+'%')
       backChains = Chain.all(:symbol.like=>osymbol2+'%')
 
-      if(frontChains.size!=0&&backChains.size!=0)
+      if (frontChains.size!=0&&backChains.size!=0)
 
         # load all chain strikes
-        arrayFront = frontChains.collect{|chain|chain.strike.to_f}
+        arrayFront = frontChains.collect { |chain| chain.strike.to_f }
         # gets the closest strike to the price
-        stock  = Stockdaily.first(:symbol=>e.ticker)
+        stock = Stockdaily.first(:symbol=>tick.symbol)
         closestStrike = arrayFront.closest stock.price.to_f
 
-        impliedVolatilities = getImpliedVolatilities(frontChains,closestStrike)
-        impliedVolatilities2 = getImpliedVolatilities(backChains,closestStrike)
+        impliedVolatilities = getImpliedVolatilities(frontChains, closestStrike)
+        impliedVolatilities2 = getImpliedVolatilities(backChains, closestStrike)
 
-        if(impliedVolatilities.mean!='NaN')
-          e.frontMonth = "%0.2f" % (impliedVolatilities.mean)
+        if (impliedVolatilities.mean!='NaN')
+          tick.frontMonth = "%0.2f" % (impliedVolatilities.mean)
         end
-        if(impliedVolatilities2.mean!='NaN')
-          e.backMonth = "%0.2f" % (impliedVolatilities2.mean)
+        if (impliedVolatilities2.mean!='NaN')
+          tick.backMonth = "%0.2f" % (impliedVolatilities2.mean)
         end
       end
 
     }
-    return earnings
+    return tickers
   end
-
-  #
-  # Returns an array of impied volatilities
-  #
-  def getImpliedVolatilities(chains,closestStrike)
-    array = Array.new
-    chains.each{|chain|
-      if(chain.strike.to_f==closestStrike.to_f)
-        array << chain.ivolatility.to_f
-      end
-    }
-    array
-  end
-
 
   #
   # Calculate total chain call put volume for all tickers
@@ -84,4 +69,20 @@ class CalculateChains
       ticker.save
     }
   end
+
+  private
+  #
+  # Returns an array of impied volatilities
+  #
+  def getImpliedVolatilities(chains, closestStrike)
+    array = Array.new
+    chains.each { |chain|
+      if (chain.strike.to_f==closestStrike.to_f)
+        array << chain.ivolatility.to_f
+      end
+    }
+    array
+  end
+
+
 end
