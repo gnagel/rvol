@@ -31,16 +31,19 @@ class Downloader
   def initEarningsAndChains
 
     DataMapper.finalize
-    DataMapper.auto_migrate!
+    #DataMapper.auto_migrate!
+    DataMapper.auto_upgrade!
+
 
     Benchmark.bm do |x|
       x.report('Download: ') {
+        self.cleanup
         self.downloadSP500Tickers
         self.downloadEtfTopVol100
         self.downloadStockscouterStocks
-        self.downloadSP500stock
+        self.downloadstockdetails
         self.downloadEarnings
-        self.downloadSP500Chains
+        self.downloadSChains
       }
       x.report('Calculations: ') {
         self.calculateFronAndBackMonth
@@ -61,6 +64,17 @@ class Downloader
         self.caclulateCorrelations
       }
     end
+  end
+
+  #
+  # Cleanup the datase
+  #
+  def cleanup
+     Ticker.destroy
+     Stockdaily.destroy
+     Chain.destroy
+     Earning.destroy
+     Stockcorrelation.destroy
   end
 
   # This will download all S&P 500 data from the internet and
@@ -87,7 +101,7 @@ class Downloader
   # store it in a database. Failed reads should be logged for
   # later processing
   #
-  def downloadSP500stock
+  def downloadstockdetails
     puts 'starting download SP500 stock details'
     result = Ticker.all()
     puts result.size
@@ -97,8 +111,8 @@ class Downloader
   # This will download all chains for the S&P500
   # Names taken from last download
   # Chains should be loaded for the next 2 months
-  def downloadSP500Chains
-    puts 'starting download SP500 chains'
+  def downloadSChains
+    puts 'starting download chains'
     result = Ticker.all()
     OptionChainsScraper.new.loadChains(result.collect { |tic| tic.symbol }, true)
   end

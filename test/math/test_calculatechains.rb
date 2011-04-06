@@ -9,13 +9,17 @@ class MyTest < Test::Unit::TestCase
     Stocks.new.downloadStock2(result.collect{|tic| tic.symbol},true)
     OptionChainsScraper.new.loadChains(result.collect{|tic| tic.symbol},true)
     CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
+    tick = Ticker.all(:symbol=>'IBM')
+    puts 'debug'
+    puts tick[0].symbol
+    puts tick[0].frontMonth
+    puts tick[0].backMonth
   end
 
   def createTestTickers
     Ticker.create(:symbol=>'IBM',:created_at=>Time.now,:index=>'testdata')
     Ticker.create(:symbol=>'IWM',:created_at=>Time.now,:index=>'testdata')
     Ticker.create(:symbol=>'AAPL',:created_at=>Time.now,:index=>'testdata')
-    Ticker.create(:symbol=>'GOOG',:created_at=>Time.now,:index=>'testdata')
-    Ticker.create(:symbol=>'LVS',:created_at=>Time.now,:index=>'testdata')
+
   end
 end

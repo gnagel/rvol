@@ -11,7 +11,10 @@ class Historicalscraper
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
     hydra.disable_memoization
     count=0
+
     stocks.each do |ticker|
+
+      dates = Stockhistorical.all(:symbol=>ticker.symbol).collect { |tic| tic.date }
       request = Scraper.downLoadHistory(ticker.symbol)
       request.on_complete { | response |
         if(response.code==200)
@@ -27,7 +30,7 @@ class Historicalscraper
               history.low = row[3]
               history.close = row[4]
               history.volume = row[5]
-              if persist
+              if persist && !dates.include?(history.date)
                 if history.save
                 else
                   puts 'Error saving history'

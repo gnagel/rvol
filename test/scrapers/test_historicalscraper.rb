@@ -13,5 +13,9 @@ class Test_historicalscraper < Test::Unit::TestCase
      stocks << ticker2
      Historicalscraper.new.downloadHistoricalData(stocks,false)
      Historicalscraper.new.downloadHistoricalData(stocks,true)
+     puts '*************************************************************'
+     puts 'running 2 times to test that only dates not stored are saved'
+     puts '*************************************************************'
+     Historicalscraper.new.downloadHistoricalData(stocks,true)
    end
 end

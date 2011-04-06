@@ -81,7 +81,7 @@ class ReportPrinter
       end
       table << [elem.symbol,name,price, checkIVol(elem.frontMonth), checkIVol(elem.backMonth),checkValue(difference)]
     }
-    print table
+    print table.sort_rows_by('impliedVolatility1',:order => :descending)
   end
 
   def printTop50SdevReport(tickers)

@@ -40,7 +40,7 @@ class CalculateChains
           tick.backMonth = "%0.2f" % (impliedVolatilities2.mean)
         end
       end
-
+     tick.save
     }
     return tickers
   end

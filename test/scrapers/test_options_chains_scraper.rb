@@ -6,7 +6,7 @@ require 'test/unit'
 
 class Test_Options_Scraper < Test::Unit::TestCase
   def test_chainsscraper
-    chains = OptionChainsScraper.new.loadChains(['NOK','GOOG'],true)
+    chains = OptionChainsScraper.new.loadChains(['NOK','GOOG','BGZ'],true)
     puts chains.size
   end
 end

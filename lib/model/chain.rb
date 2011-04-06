@@ -26,7 +26,7 @@ class Chain
   property :ask,                         String, :required => true
   property :vol,                         Integer,:required => true
   property :openInt,                     Integer,:required => true
-  property :ivolatility,                 String,  :required => true
+  property :ivolatility,                 String, :required => true
   
   def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
     self.created_at = Time.now

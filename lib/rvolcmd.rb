@@ -55,8 +55,7 @@ class Rvolcmd
         opts.on("-a", "--chains", "List all chains") do
           cmd.chainReportAll
         end
-        opts.on("-s", "--snapshot [type]", "Download market snapshot type [snapshot, historical],
-                will download the current market data") do |type|
+        opts.on("-s", "--snapshot [type]", "Download market snapshot type [snapshot, historical], will download the current market data") do |type|
           case type
             when 'snapshot'
               cmd.runSnapShot
