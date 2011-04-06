@@ -7,7 +7,7 @@ require 'reports/reportprinter'
 
 class IndexReport
   def generateReport(index)
-    data = Ticker.all(:index=>index)
+    data = Ticker.all(:index=>index,:order => [ :frontMonth.desc ])
     ReportPrinter.new.printIndexReport(data);
   end
 

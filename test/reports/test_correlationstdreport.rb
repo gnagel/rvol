@@ -5,12 +5,13 @@ require 'helper'
 require "model/earning"
 require "reports/correlationSTDreport"
 require "model/stockdaily"
+require 'math/calculatecorrelations'
 
 class Test_CorrelationSTDreport < Test::Unit::TestCase
   def test_correlationsreport
    testdata
     # run test
-    CorrelationSTDreport.new.calculateCorrelations()
+    Calculatecorrelations.new.calculateCorrelations
     puts 'loading all correlations'
     CorrelationSTDreport.new.loadAllCorrelations()
   end

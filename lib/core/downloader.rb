@@ -19,6 +19,7 @@ require 'scrapers/etf'
 require 'benchmark'
 require 'math/calculatestd'
 require 'math/calculatechains'
+require 'math/calculatecorrelations'
 
 # This class wraps up all financial data downloads and stores the information into a database.
 # Errors are logged for quality of service
@@ -169,7 +170,7 @@ class Downloader
 
   def caclulateCorrelations
     puts 'starting calculate corrrelations'
-    CorrelationSTDreport.new.calculateCorrelations
+    Calculatecorrelations.new.calculateCorrelations
   end
 
   #

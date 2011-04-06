@@ -14,10 +14,10 @@ class Historicalscraper
 
     stocks.each do |ticker|
 
-      dates = Stockhistorical.all(:symbol=>ticker.symbol).collect { |tic| tic.date }
       request = Scraper.downLoadHistory(ticker.symbol)
       request.on_complete { | response |
         if(response.code==200)
+          dates = Stockhistorical.all(:symbol=>ticker.symbol).collect { |tic| tic.date }
           count+=1
           puts 'HTTP RESPONSE: 200 Historical  '+ticker.symbol + ' count: ' +count.to_s
           begin

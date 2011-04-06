@@ -78,6 +78,10 @@ module Rvol
     Sdreport.new.generateReportTop50StandardDeviation
   end
 
+  def reportsdev20Scouter
+    Sdreport.new.generateReportTop20StandardDeviationScouter
+  end
+
   def reportScouter
      IvolatilityReport.new.loadStockScouter
   end

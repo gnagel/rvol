@@ -55,7 +55,8 @@ class Rvolcmd
         opts.on("-a", "--chains", "List all chains") do
           cmd.chainReportAll
         end
-        opts.on("-s", "--snapshot [type]", "Download market snapshot type [snapshot, historical], will download the current market data") do |type|
+        opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
+          puts 'this will take 2 hours the first time because the historical db is build about 30 minutes after that'
           case type
             when 'snapshot'
               cmd.runSnapShot
@@ -63,6 +64,7 @@ class Rvolcmd
               cmd.runSnapShotHistorical
             else
               cmd.runSnapShot
+              cmd.runSnapShotHistorical
           end
 
         end
@@ -74,6 +76,9 @@ class Rvolcmd
         end
         opts.on("--scouter10IV", "List highest implied volatilities in stocks rated 10 ") do
           cmd.reportScouter
+        end
+        opts.on("--scouter10STD", "List highest implied volatilities in stocks rated 10 ") do
+          cmd.reportsdev20Scouter
         end
         opts.on("-t", "--top10List [TYPE]", "List top 10 options with highest Volume , OpenInt, IV ,Change, total calls, or total puts") do |type|
           case type

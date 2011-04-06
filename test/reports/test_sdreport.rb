@@ -9,6 +9,8 @@ class Test_sdreport < Test::Unit::TestCase
     puts 'running test'
     #clean up
     Stockdaily.all.destroy
+    Ticker.create(:index=>'stockscouter-10',:symbol=>'IBM',:created_at=>Time.now)
+    Ticker.create(:index=>'stockscouter-10',:symbol=>'IWM',:created_at=>Time.now)
     stock =  Stockdaily.new
     stock.symbol = "IBM"
     stock.created_at = DateTime.now
@@ -30,5 +32,6 @@ class Test_sdreport < Test::Unit::TestCase
     CalculateStd.new.calculateStd
     report = Sdreport.new
     report.generateReportTop50StandardDeviation
+    report.generateReportTop20StandardDeviationScouter
   end
 end
