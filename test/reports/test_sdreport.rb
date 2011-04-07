@@ -9,6 +9,8 @@ class Test_sdreport < Test::Unit::TestCase
     puts 'running test'
     #clean up
     Stockdaily.all.destroy
+    Ticker.all.destroy
+
     Ticker.create(:index=>'stockscouter-10',:symbol=>'IBM',:created_at=>Time.now)
     Ticker.create(:index=>'stockscouter-10',:symbol=>'IWM',:created_at=>Time.now)
     stock =  Stockdaily.new

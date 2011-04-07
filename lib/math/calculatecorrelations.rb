@@ -12,18 +12,17 @@ class Calculatecorrelations
     twentyago = date - past
     # load all etfs
     tickers = Ticker.all(:index=>'etf')
-    puts tickers.size
     tickers2 = Array.new(tickers)
     for i in 0..19 do
       days = oneday*i
       tickers.each do |ticker|
         # TODO sort by date
         history = Stockhistorical.all(:symbol => ticker.symbol ,:date.gt=>twentyago-days,:date.lt=>date-days)
-        puts history
+
         arrayPrices = history.collect{|tic| tic.close.to_f }
         tickers2.each do |ticker2|
           history2 = Stockhistorical.all(:symbol => ticker2.symbol ,:date.gt=>twentyago-days,:date.lt=>date-days)
-          puts history2
+
           arrayPrices2 = history2.collect{|tic| tic.close.to_f }
           correlation = arrayPrices.correlation(arrayPrices2)
           if ticker.symbol != ticker2.symbol

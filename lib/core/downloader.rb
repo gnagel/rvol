@@ -37,7 +37,7 @@ class Downloader
 
 
     Benchmark.bm do |x|
-      x.report('Download: ') {
+      x.report('Downloading: ') {
         self.cleanup
         self.downloadSP500Tickers
         self.downloadEtfTopVol100
@@ -46,7 +46,7 @@ class Downloader
         self.downloadEarnings
         self.downloadSChains
       }
-      x.report('Calculations: ') {
+      x.report('Calculating: ') {
         self.calculateFronAndBackMonth
         self.calculateTotalChains
 
@@ -71,6 +71,7 @@ class Downloader
   # Cleanup the datase
   #
   def cleanup
+    puts 'Cleaning up database'
      Ticker.destroy
      Stockdaily.destroy
      Chain.destroy

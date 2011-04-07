@@ -39,7 +39,7 @@ class TestDownloader < Test::Unit::TestCase
   # Download equities with weeklies
   #
   def createIndexEtfs
-
+    Ticker.destroy
     emergingMarkets=['BRF','IWM','^VIX']
     etfs = [emergingMarkets]
     etfs.flatten!
@@ -51,7 +51,7 @@ class TestDownloader < Test::Unit::TestCase
       tick.save
     }
 
-    assert_equal(Ticker.all().size,3)
+    assert_equal(3,Ticker.all().size)
 
   end
 

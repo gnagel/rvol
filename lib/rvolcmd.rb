@@ -56,7 +56,7 @@ class Rvolcmd
           cmd.chainReportAll
         end
         opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
-          puts 'this will take 2 hours the first time because the historical db is build about 30 minutes after that'
+          puts 'this will take 2 hours the first time about 30 minutes after that'
           case type
             when 'snapshot'
               cmd.runSnapShot

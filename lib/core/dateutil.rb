@@ -1,5 +1,5 @@
 # encoding: utf-8
-
+require 'date'
 #
 # Utility class with date methods for options.
 #
@@ -161,7 +161,7 @@ class DateUtil
         return date
       end
     rescue Exception => e
-      puts 'failed date for ' + ticker
+      puts 'failed date for ' + ticker + ' ' +optSymbol
       puts e
       return 'N/A'
     end
