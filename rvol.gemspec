@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rvol}
-  s.version = "0.1.16"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-03-30}
+  s.date = %q{2011-04-07}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -37,6 +37,9 @@ Gem::Specification.new do |s|
     "lib/core/rlog.rb",
     "lib/core/util.rb",
     "lib/math/arraymath.rb",
+    "lib/math/calculatechains.rb",
+    "lib/math/calculatecorrelations.rb",
+    "lib/math/calculatestd.rb",
     "lib/math/ivolatility.rb",
     "lib/model/chain.rb",
     "lib/model/earning.rb",
@@ -48,6 +51,7 @@ Gem::Specification.new do |s|
     "lib/reports/correlationSTDreport.rb",
     "lib/reports/earningsreport.rb",
     "lib/reports/indexreport.rb",
+    "lib/reports/ivolatilityreport.rb",
     "lib/reports/reportprinter.rb",
     "lib/reports/sdreport.rb",
     "lib/rvol.rb",
@@ -68,10 +72,12 @@ Gem::Specification.new do |s|
     "lib/server/server.rb",
     "lib/server/views/index.haml",
     "rvol.gemspec",
+    "test/core/test_dateErrors.rb",
     "test/core/test_dateutil.rb",
     "test/core/test_downloader.rb",
     "test/helper.rb",
     "test/math/test_arraymath.rb",
+    "test/math/test_calculatechains.rb",
     "test/math/test_ivolatility.rb",
     "test/model/test_chain.rb",
     "test/model/test_earnings.rb",
@@ -80,6 +86,7 @@ Gem::Specification.new do |s|
     "test/reports/test_correlationstdreport.rb",
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
+    "test/reports/test_ivolatilityreport.rb",
     "test/reports/test_sdreport.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
@@ -95,10 +102,12 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.6.2}
   s.summary = %q{Rvol enables you to study market volatility from free data on the internet. I trade stocks, options and futures as a hobby.  Often some of the strategies that i have used  include looking at earnings dates for stocks and investing in these dates with different options strategies.   Rvol downloads options chains, calculates implied volatilites for them and has features  to list top 10 type of lists for potential investment opportunities.   Put call ratios are calculated , total amount of puts or calls for a particular company etc are available. These can be used to measure market sentiment.   Different filters can be used to find stocks/options with high volatilities, stocks with  high options volume for the day etc which are indicators of forthcoming events.   Rvol concentrates on the S&P500 at the moment. At anytime rvol can be used to download a snapshot from the market including stock prices, options chains, and earnings events for the month ahead.  Install: gem install rvol Usage: rvol -h (displays options),  To check info for a particular stock use: rvol -r AAPL.  All other features require the market snapshot to be taken use rvol -s to take a snapshot (20-30 minutes).  Then for instance rvol -e (earnings report with front month and backmonth volatilities)   **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on MAC OS X. ** (Linux should work, windows will need special libraries installed )}
   s.test_files = [
+    "test/core/test_dateErrors.rb",
     "test/core/test_dateutil.rb",
     "test/core/test_downloader.rb",
     "test/helper.rb",
     "test/math/test_arraymath.rb",
+    "test/math/test_calculatechains.rb",
     "test/math/test_ivolatility.rb",
     "test/model/test_chain.rb",
     "test/model/test_earnings.rb",
@@ -107,6 +116,7 @@ Gem::Specification.new do |s|
     "test/reports/test_correlationstdreport.rb",
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
+    "test/reports/test_ivolatilityreport.rb",
     "test/reports/test_sdreport.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
