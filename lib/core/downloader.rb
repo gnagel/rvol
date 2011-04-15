@@ -3,7 +3,7 @@ require 'Rvol'
 require "scrapers/historicalscraper"
 require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
-require "scrapers/earningsscraper"
+require "scrapers/earningsparser"
 require "scrapers/stockscouter"
 require 'reports/earningsreport'
 require 'reports/IndexReport'
@@ -34,11 +34,12 @@ class Downloader
     DataMapper.finalize
     #DataMapper.auto_migrate!
     DataMapper.auto_upgrade!
-
+    # cleanup database
+    self.cleanup
 
     Benchmark.bm do |x|
       x.report('Downloading: ') {
-        self.cleanup
+
         self.downloadSP500Tickers
         self.downloadEtfTopVol100
         self.downloadStockscouterStocks

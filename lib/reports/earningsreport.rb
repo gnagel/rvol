@@ -5,12 +5,12 @@ require 'model/earning'
 require 'model/chain'
 require 'model/stockdaily'
 require 'ruport'
-
+require 'reports/report'
 #
 # This class holds the items needed for the earnings report
 # The report can be printed on the command line or output as a pdf.
 #
-class EarningsReport
+class EarningsReport < Report
   def generateReport
     ReportPrinter.new.printEarningsReport(loadData)
   end

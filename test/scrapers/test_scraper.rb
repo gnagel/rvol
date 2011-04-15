@@ -71,6 +71,13 @@ class Test_scraper  < Test::Unit::TestCase
     debugResponse(response)
   end
 
+  def test_downLoadCapsFool
+    responses = Scraper.downloadFoolTop510
+    responses.each do |response|
+      debugResponse(response)
+    end
+  end
+
   def debugResponse(response)
     assert_equal(200,response.code,"Didnt return 200 failed")
     puts response.code    # http status code

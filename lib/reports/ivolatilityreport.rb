@@ -2,15 +2,16 @@
 require 'model/stock'
 require 'model/stockdaily'
 require 'reports/indexreport'
+require 'reports/report'
 #
 # Load stocks with high implied volatilities from a group of stocks
 #
-class IvolatilityReport
+class IvolatilityReport < Report
   
   #
   #
   #
-  def loadStockScouter
+  def generateReport
     IndexReport.new.generateReport('stockscouter-10')
   end
   

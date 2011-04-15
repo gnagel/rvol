@@ -3,7 +3,7 @@ require 'helper'
 require 'core/downloader'
 require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
-require "scrapers/earningsscraper"
+require "scrapers/earningsparser"
 require "model/stock"
 require "model/stockdaily"
 require 'reports/earningsreport'
@@ -96,9 +96,7 @@ class TestDownloader < Test::Unit::TestCase
   # Preprocess data for reports
   #
   def doCalculations
-    ## earnings fron and back month calc
-    EarningsReport.new.loadData
-    IndexReport.new.loadData('index-etf')
+
   end
 
   def printErrors(object)

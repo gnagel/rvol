@@ -4,11 +4,11 @@ require 'model/earning'
 require 'model/chain'
 require 'ruport'
 require 'reports/reportprinter'
+require 'reports/report'
 
-class IndexReport
+class IndexReport < Report
   def generateReport(index)
     data = Ticker.all(:index=>index,:order => [ :frontMonth.desc ])
     ReportPrinter.new.printIndexReport(data);
   end
-
 end

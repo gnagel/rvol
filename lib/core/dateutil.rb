@@ -9,8 +9,8 @@ class DateUtil
   # in the form 2010-07
   #
   def DateUtil.getDaysToExpFriday(date)
-    daysInMonth = self.days_in_month(date.year,date.month)
-    date = Date.new(date.year,date.month,daysInMonth)
+    daysInMonth = self.days_in_month(date.year, date.month)
+    date = Date.new(date.year, date.month, daysInMonth)
     dateNow = DateTime.now
     fridays = 0
     daysToExpiry = 0
@@ -43,8 +43,8 @@ class DateUtil
   # finds the expiry date in this month
   #
   def DateUtil.fridayFinder(year, month)
-    date = Date.new(year,month,1)
-    date2 = Date.new(date.year,date.month,days_in_month(date.year,date.month))
+    date = Date.new(year, month, 1)
+    date2 = Date.new(date.year, date.month, days_in_month(date.year, date.month))
     # iterate from today to the 3rd week of the month
     fridays = 0
     daysToExpiry = 0
@@ -69,7 +69,7 @@ class DateUtil
   #
   def DateUtil.daysToExpiryThisMonth
     date = DateTime.now
-    date2 = Date.new(date.year,date.month,self.fridayFinder(date.year, date.month))
+    date2 = Date.new(date.year, date.month, self.fridayFinder(date.year, date.month))
     # iterate from today to the 3rd week of the month
     fridays = 0
     daysToExpiry = 0
@@ -107,14 +107,14 @@ class DateUtil
   def DateUtil.getOptSymbThisMonth(ticker)
     ticker = DateUtil.tickerSlicer(ticker)
     date = DateTime.now
-    expDay = DateUtil.fridayFinder(date.year,date.month) + 1
-    date = Date.new(date.year,date.month,expDay)
+    expDay = DateUtil.fridayFinder(date.year, date.month) + 1
+    date = Date.new(date.year, date.month, expDay)
 
-    if(DateUtil.getDaysToExpFriday(date)==0)
+    if (DateUtil.getDaysToExpFriday(date)==0)
       # get next month expiry gone already this month
       date = date >> 1
-      expDay = DateUtil.fridayFinder(date.year,date.month) + 1
-      date = Date.new(date.year,date.month,expDay)
+      expDay = DateUtil.fridayFinder(date.year, date.month) + 1
+      date = Date.new(date.year, date.month, expDay)
     end
 
     oticker = ticker+date.strftime("%y%m%d")
@@ -127,18 +127,18 @@ class DateUtil
     ticker = DateUtil.tickerSlicer(ticker)
     date = DateTime.now
 
-    if(DateUtil.getDaysToExpFriday(date)==0)
+    if (DateUtil.getDaysToExpFriday(date)==0)
       # get next month expiry gone already this month
 
       date = date >> 2
 
-      expDay = DateUtil.fridayFinder(date.year,date.month) + 1
-      date = Date.new(date.year,date.month,expDay)
+      expDay = DateUtil.fridayFinder(date.year, date.month) + 1
+      date = Date.new(date.year, date.month, expDay)
     else
       # use next
       date = date >> 1
-      expDay = DateUtil.fridayFinder(date.year,date.month) + 1
-      date = Date.new(date.year,date.month,expDay)
+      expDay = DateUtil.fridayFinder(date.year, date.month) + 1
+      date = Date.new(date.year, date.month, expDay)
     end
 
     oticker = ticker+date.strftime("%y%m%d")
@@ -147,7 +147,7 @@ class DateUtil
   #
   # Parse the options expiry month from the opt symbol
   #
-  def DateUtil.getDateFromOptSymbol(ticker,optSymbol)
+  def DateUtil.getDateFromOptSymbol(ticker, optSymbol)
 
     begin
       ## remove ^ from front if exists
@@ -157,7 +157,7 @@ class DateUtil
         parsed1 = optSymbol.delete sliced
         ## get next 4 yymm
         parsed2 = parsed1[0..5]
-        date = Date.strptime(parsed2,"%y%m%d")
+        date = Date.strptime(parsed2, "%y%m%d")
         return date
       end
     rescue Exception => e
@@ -168,12 +168,24 @@ class DateUtil
   end
 
   def DateUtil.tickerSlicer(ticker)
-    if(ticker.slice(0)=='^')
-      sliced  = ticker[1..-1]
+    if (ticker.slice(0)=='^')
+      sliced = ticker[1..-1]
     else
       sliced = ticker
     end
     sliced
+  end
+
+  #
+  # Get the string for next frifay in the for yymmdd
+  #
+  def self.getFridayDateStr
+    date = Time.now
+    one_day = 60 * 60 * 24 # in Rails just say 1.day
+    while date.wday!=5 do
+      date += one_day
+    end
+    date.strftime("%y%m%d")
   end
 
 end

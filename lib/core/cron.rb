@@ -8,20 +8,20 @@ require 'core/downloader'
 class Cron
   def runDownloader
     down = Downloader.new
-    down.init
+    down.initEarningsAndChains
+    down.initHistoricalAndCorrelations
   end
 
   #
   # starts the scheduler
   #
   def run
-    puts '**************Daily downloader started***************************'
+    puts '***Daily downloader started next download will start at 17:00****'
     scheduler = Rufus::Scheduler.start_new
     # run at 17:00 every day
-    scheduler.cron '* 17 * * 1-5',:blocking => true do
+    scheduler.cron '* 17 * * 1-5', :blocking => true do
       puts '************running daily download***************************'
-      c = Cron.new
-      c.runDownloader
+      Cron.new.runDownloader
       puts '************done running daily download**********************'
     end
     scheduler.join

@@ -13,10 +13,11 @@ require 'thread'
 # TODO refactor into smaller maintainable pieces
 #
 class OptionChainsScraper
+  @@queue = Queue.new
   #
   # Load chains for the next 3 months.
   #
-  def loadChains(tickers,persist)
+  def loadChains(tickers, persist)
     chains = Array.new
     # measures the time to complete
     #Benchmark.bm do |x| x.report{
@@ -27,6 +28,7 @@ class OptionChainsScraper
       date = DateTime.now
       begin
         for i in 1 .. 2
+          #storingthread.join
           if i > 1
             date = DateUtil.nextMonth(date)
           end
@@ -34,8 +36,8 @@ class OptionChainsScraper
           parsedDate = date.strftime("%Y-%m")
           url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsedDate)
           request = Typhoeus::Request.new(url)
-          request.on_complete { | response |
-            if(response.code==200)
+          request.on_complete { |response|
+            if (response.code==200)
               count= count+1
               if tickers.size > 1
                 puts 'HTTP RESPONSE: 200 '+tick + ' count: ' +count.to_s
@@ -54,31 +56,40 @@ class OptionChainsScraper
                 ask=""
                 vol=""
                 open=""
-                tr.css('.yfnc_h','.yfnc_tabledata1').each do |td|
+                tr.css('.yfnc_h', '.yfnc_tabledata1').each do |td|
                   i+=1
                   case i
-                  when 1 then strike = td.inner_text
-                  when 2 then symbol = td.inner_text
-                  when 3 then last   = td.inner_text
-                  when 4 then chg    = td.inner_text
-                  when 5 then bid    = td.inner_text
-                  when 6 then ask    = td.inner_text
-                  when 7 then vol    = td.inner_text
-                  when 8
-                    open = td.inner_text
-                    if(symbol.include?"C00")
-                      type = 'C'
-                    else
-                      type = 'P'
-                    end
-                    i = 0
-                    if(symbol.include? DateUtil.tickerSlicer(ticker))
-                      dateS = DateUtil.getDateFromOptSymbol(ticker,symbol)
-                      chain = Chain.new(type,ticker,dateS,strike,symbol,last,chg,bid,ask,vol,open)
-                      #puts chain.toString
-                      chains << chain
-                      persistSingle(chain,persist)
-                    end # end if include tickers
+                    when 1 then
+                      strike = td.inner_text
+                    when 2 then
+                      symbol = td.inner_text
+                    when 3 then
+                      last = td.inner_text
+                    when 4 then
+                      chg = td.inner_text
+                    when 5 then
+                      bid = td.inner_text
+                    when 6 then
+                      ask = td.inner_text
+                    when 7 then
+                      vol = td.inner_text
+                    when 8
+                      open = td.inner_text
+                      if (symbol.include? "C00")
+                        type = 'C'
+                      else
+                        type = 'P'
+                      end
+                      i = 0
+                      if (symbol.include? DateUtil.tickerSlicer(ticker))
+                        dateS = DateUtil.getDateFromOptSymbol(ticker, symbol)
+                        if dateS!='N/A'
+                          chain = Chain.new(type, ticker, dateS, strike, symbol, last, chg, bid, ask, vol, open)
+                          #puts chain.toString
+                          chains << chain
+                          persistSingle(chain, persist)
+                        end
+                      end # end if include tickers
                   end # end case
                 end # end if responce code ==
               end
@@ -102,7 +113,7 @@ class OptionChainsScraper
   #
   def persistAll(chains)
     puts 'storing this many chains: ' + chains.size.to_s
-    chains.each{|chain|
+    chains.each { |chain|
       if chain.save
       else
         puts 'Error saving chain'
@@ -114,8 +125,8 @@ class OptionChainsScraper
     }
   end
 
-  def persistSingle(chain,persist)
-    if(persist)
+  def persistSingle(chain, persist)
+    if (persist)
       if chain.save
       else
         puts 'Error saving chain'
@@ -127,6 +138,12 @@ class OptionChainsScraper
     end
   end
 
+  def persistSingle2(chain, persist)
+    if (persist)
+       @@queue << chain
+    end
+  end
+
   #
   # A thread that stores storage stuff
   #
@@ -134,7 +151,7 @@ class OptionChainsScraper
     thread = Thread.new do
       loop do
         # pop will block until there are queue items available
-        chain << @@queue.pop
+        chain = @@queue.pop
         if chain.save
         else
           puts 'Error saving chain'
