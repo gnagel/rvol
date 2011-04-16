@@ -3,8 +3,7 @@
 #
 class Report
   # require all reports in the folder
-  Dir.foreach(".") do |file|
-    puts File.join(File.dirname(__FILE__), file)
+  Dir.foreach('lib/reports') do |file|
     if file =~ /.rb$/
       puts File.join(File.dirname(__FILE__), file)
       require File.join(File.dirname(__FILE__), file)
