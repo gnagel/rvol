@@ -2,10 +2,11 @@
 #Base class for reports
 #
 class Report
-  # require all reports in the folder
-  Dir.foreach('lib/reports') do |file|
+  # require all reports in the folder so they can be listed
+  Dir.foreach(File.dirname(__FILE__)) do |file|
+
     if file =~ /.rb$/
-      puts File.join(File.dirname(__FILE__), file)
+      #puts File.join(File.dirname(__FILE__), file)
       require File.join(File.dirname(__FILE__), file)
     end
   end
@@ -14,7 +15,12 @@ class Report
   # Print all reports available
   #
   def printAllReports
-    puts ObjectSpace.each_object(Class).select { |klass| klass.superclass == Report}
+    puts '*************** Printing all reports ***************'
+    reports = ObjectSpace.each_object(Class).select { |klass| klass.superclass == Report}
+    reports.each do |report|
+      puts 'Report: '+report.to_s
+      end
+    puts '****************************************************'
   end
 
   #

@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 require 'reports/report'
 require 'core/cron.rb'
 require 'yaml'
@@ -20,6 +19,10 @@ module Rvol
 
   def version
     @@version
+  end
+
+  def appHome
+    File.join(ENV['GEM_HOME'],'gems','rvol-'+@@version[0])
   end
 
   # default adater for all db action stored in gem home directory
