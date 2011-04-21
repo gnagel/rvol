@@ -20,7 +20,7 @@ class Report
     reports.each do |report|
       puts 'Report: '+report.to_s
       end
-    puts '****************************************************'
+
   end
 
   #

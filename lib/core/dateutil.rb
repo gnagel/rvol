@@ -181,8 +181,19 @@ class DateUtil
   #
   def self.getFridayDateStr
     date = Time.now
-    one_day = 60 * 60 * 24 # in Rails just say 1.day
+    one_day = 60 * 60 * 24
     while date.wday!=5 do
+      date += one_day
+    end
+    date.strftime("%y%m%d")
+  end
+    #
+  # Get the string for next frifay in the for yymmdd
+  #
+  def self.getFridayDateStr2
+    date = Time.now
+    one_day = 60 * 60 * 24
+    while date.wday!=4 do
       date += one_day
     end
     date.strftime("%y%m%d")

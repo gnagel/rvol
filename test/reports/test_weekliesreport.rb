@@ -16,6 +16,6 @@ class Test_weekliesreport < Test::Unit::TestCase
 
   def test_weekliesload
 
-    Weekliesreport.new.findAllWeeklies
+    Weekliesreport.new.generateReport
   end
 end

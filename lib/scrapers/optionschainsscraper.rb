@@ -27,7 +27,7 @@ class OptionChainsScraper
     tickers.each { |tick|
       date = DateTime.now
       begin
-        for i in 1 .. 2
+        for i in 1 .. 3
           #storingthread.join
           if i > 1
             date = DateUtil.nextMonth(date)

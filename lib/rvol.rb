@@ -55,7 +55,7 @@ module Rvol
   end
 
   def chainReport(ticker)
-    ChainsReport.new.generateReportArgs([ticker])
+    ChainsReport.new.generateReportArgs(ticker)
   end
 
   #
