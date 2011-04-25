@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-04-07}
+  s.date = %q{2011-04-23}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
     "features/step_definitions/rvol_steps.rb",
     "features/support/env.rb",
     "finance.mm",
+    "gpl.txt",
     "lib/config.yml",
     "lib/core/cron.rb",
     "lib/core/dateutil.rb",
@@ -52,11 +53,14 @@ Gem::Specification.new do |s|
     "lib/reports/earningsreport.rb",
     "lib/reports/indexreport.rb",
     "lib/reports/ivolatilityreport.rb",
+    "lib/reports/report.rb",
     "lib/reports/reportprinter.rb",
     "lib/reports/sdreport.rb",
+    "lib/reports/weekliesreport.rb",
     "lib/rvol.rb",
     "lib/rvolcmd.rb",
-    "lib/scrapers/earningsscraper.rb",
+    "lib/scrapers/capsparser.rb",
+    "lib/scrapers/earningsparser.rb",
     "lib/scrapers/etf.rb",
     "lib/scrapers/historicalscraper.rb",
     "lib/scrapers/optionschainsscraper.rb",
@@ -87,7 +91,10 @@ Gem::Specification.new do |s|
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
     "test/reports/test_ivolatilityreport.rb",
+    "test/reports/test_report.rb",
     "test/reports/test_sdreport.rb",
+    "test/reports/test_weekliesreport.rb",
+    "test/scrapers/test_capsparser.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_parsing.rb",
@@ -117,7 +124,10 @@ Gem::Specification.new do |s|
     "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
     "test/reports/test_ivolatilityreport.rb",
+    "test/reports/test_report.rb",
     "test/reports/test_sdreport.rb",
+    "test/reports/test_weekliesreport.rb",
+    "test/scrapers/test_capsparser.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_parsing.rb",

@@ -12,6 +12,9 @@ class Sdreport < Report
     tickers = Stockdaily.all(:order => [:std20.desc]).first 20
     ReportPrinter.new.printTop50SdevReport(tickers)
   end
+  def printInfo
+    puts 'Prints the top 50 standard deviations from the whole universe of stock (S&P500, Stock scouter, top 100 ETF:s)'
+  end
 end
 
 #
@@ -26,6 +29,9 @@ class Stdreporttop20scouter < Report
     end
     ReportPrinter.new.printScouterStd(scouterArray)
   end
+  def printInfo
+    puts 'A report that shows the top Standard deviations in the Stock scouter top rated stocks look for drops in price for entering a position'
+  end
 end
 
 #
@@ -39,5 +45,8 @@ class Stdreportshit20scouter < Report
       scouterArray << Stockdaily.first(:symbol=>tick.symbol)
     end
     ReportPrinter.new.printScouterStd(scouterArray)
+  end
+   def printInfo
+    puts 'A report that shows the top Standard deviations in the Stock scouter worst rated stocks look for tops in price for entering a short position'
   end
 end

@@ -15,11 +15,13 @@ class EarningsReport < Report
     ReportPrinter.new.printEarningsReport(loadData)
   end
 
+  def printInfo
+    puts 'A report with the coming earnings for the next month with front and back month implied volatilities '
+  end
   #
   # Load earnings tickers and attach chains to them
   #
   def loadData
-    puts 'STAAAAAAAAAAAAAAAARTINGGGGGGGG'
     earnings = Earning.all
     earnings.each{|e|
 

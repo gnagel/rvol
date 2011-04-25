@@ -8,7 +8,7 @@ autoload :Rvol, 'Rvol'
 #
 # Main class for accessing the application. Commands can be entered from
 # here with the option parser. Implementations methods are grouped at the bottom.
-#
+
 class Rvolcmd
   include Rvol
 
@@ -38,7 +38,7 @@ class Rvolcmd
 
           1. rvol -p , print all reports available
           2. rvol -s , rvol -r EarningsReport , for coming earnings report with volatilities
-          3. rvol -r ChainsReport AAPL , for an instant report (realtime not from snapshot)"
+          3. rvol -c AAPL , for an instant report on a stock (realtime not from snapshot)"
 
         opts.separator ""
         opts.separator "Specific options:"
@@ -47,18 +47,16 @@ class Rvolcmd
           cmd.printReports
         end
 
-        #new report fucktionality
-        opts.on("-r", "--report [rep]", Array, "Run report with name and arguments for instance rvol -r stockReport AAPL") do |rep|
-          if rep.size >= 1
-          puts rep
-            cmd.runReport(rep)
-          else
-            puts 'Report name missing'
-          end
+        opts.on("-r", "--report [REPORT]", "Print the given report use rvol -p to get a list of reports") do |report|
+          cmd.runReport(report)
         end
 
-        opts.on("-c", "--chainR [TICKER]", "List chains for ticker report") do |ticker|
+        opts.on("-c", "--chainReport [TICKER]", "Show basic into and list chains for ticker report") do |ticker|
           cmd.chainReport(ticker)
+        end
+
+        opts.on("-i", "--indexReport [INDEX]", "Show basic into and list chains for ticker report") do |index|
+          cmd.indexReport(index)
         end
 
         opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
@@ -87,15 +85,15 @@ class Rvolcmd
           puts 'VERSION: '+cmd.version[0]
           exit
         end
-        options = opts
       end
-      opts.parse!(args)
+
+      opts.parse(args)
     rescue => e
       puts e.message.capitalize + "\n\n"
       puts opts
       exit 1
     end
-
+    options
   end # parse()
 end # class rvolcmd
 

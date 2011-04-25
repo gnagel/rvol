@@ -22,7 +22,7 @@ module Rvol
   end
 
   def appHome
-    File.join(ENV['GEM_HOME'],'gems','rvol-'+@@version[0])
+    File.join(ENV['GEM_HOME'], 'gems', 'rvol-'+@@version[0])
   end
 
   # default adater for all db action stored in gem home directory
@@ -36,18 +36,17 @@ module Rvol
   DataMapper.auto_upgrade!
 
 
-  def runReport(reportInfo)
-    puts 'report name: '+ reportInfo[0]
-    puts reportInfo
-
+  def runReport(arg)
+    puts 'Report name: '+ arg
     begin
-      report = Kernel.const_get(reportInfo[0]).new
+      report = Kernel.const_get(arg).new
     rescue => e
-      puts 'report generation failed!'
-      puts e
+      puts 'report generation failed check the name with rvol -p'
+      #puts e
     end
     report.printInfo
     report.generateReport
+
   end
 
   def printReports
@@ -56,6 +55,10 @@ module Rvol
 
   def chainReport(ticker)
     ChainsReport.new.generateReportArgs(ticker)
+  end
+
+  def indexReport(index)
+    IndexReport.new.generateReport(index)
   end
 
   #

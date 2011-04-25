@@ -21,7 +21,7 @@ class Weekliesreport < Report
   end
 
   #
-  # Report the chains with the most open interest
+  # Generate a report of weeklies
   #
   def generateReport
     scouterArray = Array.new

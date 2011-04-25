@@ -14,7 +14,7 @@ class RssScraper
     response = Typhoeus::Request.get("www.google.com/finance/company_news?q="+ticker+"&output=rss")
     rss = RSS::Parser.parse(response.body, false)
 
-    puts "Root values"
+    puts  "Root values"
     print "RSS title: ", rss.channel.title, "\n"
     print "RSS link: ", rss.channel.link, "\n"
     print "RSS description: ", rss.channel.description, "\n"

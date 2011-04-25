@@ -6,7 +6,6 @@ class Report
   Dir.foreach(File.dirname(__FILE__)) do |file|
 
     if file =~ /.rb$/
-      #puts File.join(File.dirname(__FILE__), file)
       require File.join(File.dirname(__FILE__), file)
     end
   end
@@ -15,11 +14,20 @@ class Report
   # Print all reports available
   #
   def printAllReports
-    puts '*************** Printing all reports ***************'
+    puts '********************************** Printing all reports ****************************************'
     reports = ObjectSpace.each_object(Class).select { |klass| klass.superclass == Report}
     reports.each do |report|
       puts 'Report: '+report.to_s
+
+      begin
+        reportti = Kernel.const_get(report.to_s).new
+      rescue => e
+        puts e
       end
+      reportti.printInfo
+      puts ''
+
+    end
 
   end
 
@@ -31,7 +39,7 @@ class Report
   end
 
    #
-  # this method needs to be overriden. It will generate the report on screen.
+  # this method needs to be overriden. It will generate the report on screen.With args
   #
   def generateReportArgs(args)
     puts 'printing report with vars im not implemented'
