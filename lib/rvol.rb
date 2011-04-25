@@ -68,6 +68,10 @@ module Rvol
     down = Downloader.new.initEarningsAndChains
   end
 
+  def test
+    DividendsReport.new.parseDate
+  end
+
   #
   # Run the downloader. Downloads all daily data
   #

@@ -1,4 +1,4 @@
-require 'math/arraymath'
+ require 'math/arraymath'
 require 'reports/reportprinter'
 require 'reports/report'
 #

@@ -59,6 +59,10 @@ class Rvolcmd
           cmd.indexReport(index)
         end
 
+        opts.on("-t", "--test", "Used for testing") do
+          cmd.test
+        end
+
         opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
           puts 'this will take 2 hours the first time about 30 minutes after that'
           case type
