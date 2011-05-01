@@ -68,6 +68,10 @@ module Rvol
     down = Downloader.new.initEarningsAndChains
   end
 
+  def evaluate(tickers)
+    aticks = tickers.split(',')
+  end
+
   def test
     DividendsReport.new.parseDate
   end

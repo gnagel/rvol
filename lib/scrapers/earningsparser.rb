@@ -32,10 +32,11 @@ class EarningsScraper
             for obj in chains
               if obj.to_html.include? "http://finance.yahoo.com/q?"
                 ticker = obj.inner_text
-                if filter.include?(ticker)
+                # no filtering
+                #if filter.include?(ticker)
                   earning = Earning.new(date,ticker)
                   boolean = earning.save
-                end
+                #end
               end
             end
           else

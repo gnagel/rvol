@@ -22,4 +22,24 @@ class Stockdaily
   property :std20, Float, :required => false
   property :std10, Float, :required => false
   property :std5,  Float, :required => false
+  #
+  #
+  #
+  def parseDate(date)
+      dateO = "N/A"
+      if date.length == 6
+        month = date[0..2]
+        day = date[4..6]
+        year = DateTime.now.year
+        dateS = month+','+day.to_s+','+year.to_s
+        dateO = Date.strptime(dateS, '%b,%d,%Y')
+      end
+      if date.length == 9
+        dateO = Date.strptime(date, '%d-%b-%y')
+      end
+      if date.length == 3
+        # this is the N/A
+      end
+    self.exdividenddate = dateO;
+  end
 end

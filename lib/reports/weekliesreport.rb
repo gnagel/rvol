@@ -11,9 +11,9 @@ class Weekliesreport < Report
   #
   def findAllWeeklies
     weeklyTickers = Set.new
-    thursday = DateUtil.getFridayDateStr
-    friday = DateUtil.getFridayDateStr2
-    weeklies = Chain.all(:symbol.like=>'%'+thursday+'%',:symbol.like=>'%'+friday+'%')
+    friday = DateUtil.getFridayDateStr
+    thursday = DateUtil.getFridayDateStr2
+    weeklies = Chain.all(:symbol.like=>'%'+friday+'%')
     weeklies.each do |weekly|
       weeklyTickers << weekly.ticker
     end
@@ -26,7 +26,8 @@ class Weekliesreport < Report
   def generateReport
     scouterArray = Array.new
     findAllWeeklies.each do |tick|
-      scouterArray << Stockdaily.first(:symbol=>tick)
+      sdaily =  Stockdaily.first(:symbol=>tick)
+      scouterArray << sdaily
     end
     ReportPrinter.new.printScouterStd(scouterArray)
   end

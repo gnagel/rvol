@@ -39,7 +39,7 @@ class Stocks
               stock.avolume = splitted[2]
               stock.volume = splitted[3]
               stock.name = splitted[4]
-              stock.exdividenddate= splitted[5]
+              stock.parseDate(splitted[5])
               stock.dividendyield= splitted[6]
               stock.dpershare= splitted[7]
 

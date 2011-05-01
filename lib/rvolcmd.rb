@@ -51,12 +51,16 @@ class Rvolcmd
           cmd.runReport(report)
         end
 
-        opts.on("-c", "--chainReport [TICKER]", "Show basic into and list chains for ticker report") do |ticker|
+        opts.on("-c", "--chainReport [TICKER]", "Show basic into and list chains for ticker") do |ticker|
           cmd.chainReport(ticker)
         end
 
-        opts.on("-i", "--indexReport [INDEX]", "Show basic into and list chains for ticker report") do |index|
+        opts.on("-i", "--indexReport [INDEX]", "Show basic into and list chains for index (-i SP500)") do |index|
           cmd.indexReport(index)
+        end
+
+        opts.on("-e", "--eval [tickers]", "Evaluate tickers separated by , (-e AAPL,GOOG)") do
+          cmd.evaluate
         end
 
         opts.on("-t", "--test", "Used for testing") do
@@ -64,7 +68,7 @@ class Rvolcmd
         end
 
         opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
-          puts 'this will take 2 hours the first time about 30 minutes after that'
+          puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
           case type
             when 'snapshot'
               cmd.runSnapShot

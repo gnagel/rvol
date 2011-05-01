@@ -31,8 +31,7 @@ class EarningsReport < Report
 
       frontChains = Chain.all(:symbol.like=>osymbol+'%')
       backChains = Chain.all(:symbol.like=>osymbol2+'%')
-      puts frontChains
-      puts backChains
+
       if(frontChains.size!=0&&backChains.size!=0)
 
         # load all chain strikes

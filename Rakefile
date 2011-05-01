@@ -47,6 +47,8 @@ begin
     gem.add_dependency "nokogiri"
     gem.add_dependency "sinatra"
     gem.add_dependency "launchy"
+    gem.add_dependency "choice"
+    gem.add_dependency "highline"
     
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
