@@ -72,9 +72,7 @@ module Rvol
     aticks = tickers.split(',')
   end
 
-  def test
-    DividendsReport.new.parseDate
-  end
+
 
   #
   # Run the downloader. Downloads all daily data

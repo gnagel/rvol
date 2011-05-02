@@ -17,7 +17,7 @@ class Test_Chains_Report < Test::Unit::TestCase
 
   def test_Chains_report
     begin
-      ChainsReport.new.generateReport(['ADBE'])
+      ChainsReport.new.generateReport()
     rescue => boom
       flunk('chainreport failed '+ boom.to_s)
     end

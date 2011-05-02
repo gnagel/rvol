@@ -21,7 +21,7 @@ class TestRvol < Test::Unit::TestCase
     begin
      cmd = Rvolcmd.new
      cmd.earningsReport
-     cmd.indexReport
+     cmd.indexReport('scouter-10')
      cmd.chainReport('AAPL')
      cmd.chainReportAll
      cmd.chainReportTop10Volume
