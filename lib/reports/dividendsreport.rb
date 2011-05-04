@@ -10,7 +10,12 @@ class DividendsReport < Report
   #
   #
   def generateReport
-
+    # get all the stocks with a dividend in the coming month
+      # 60s * 60  * 24 * 30  = 30 days = 20 trading days
+    date = DateTime.now
+    onemonth = date + (60*60*24*30)
+    dividends = Stockdaily.all(:exdividenddate.lt=>onemonth,:exdividenddate.gt=>date)
+    ReportPrinter.new.printDividendsReport(dividends)
   end
 
   #
@@ -18,6 +23,15 @@ class DividendsReport < Report
   #
   def printInfo
 
+  end
+
+  def checkHasDividendts(symbol)
+    dividends = Stockdaily.all(:exdividenddate.lt=>onemonth,:exdividenddate.gt=>date)
+    dividends.each do |stock|
+      puts 'This stock has dividends on: '+stock.symbol.to_s
+      return true
+    end
+    return false
   end
 
 

@@ -15,7 +15,7 @@ class Stockdaily
   property :avolume,       String, :required => true    # a2 average volume
   property :volume,        String, :required => true    # v volume
   property :name,          String    # n name
-  property :exdividenddate,String    # q Ex-Dividend Date
+  property :exdividenddate,DateTime  # q Ex-Dividend Date
   property :dividendyield, String    # y Dividend Yield
   property :dpershare,     String    # d Dividend/Share
   
@@ -26,7 +26,7 @@ class Stockdaily
   #
   #
   def parseDate(date)
-      dateO = "N/A"
+      dateO = nil
       if date.length == 6
         month = date[0..2]
         day = date[4..6]

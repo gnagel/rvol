@@ -63,9 +63,6 @@ class Rvolcmd
           cmd.evaluate(tickers)
         end
 
-        opts.on("-t", "--test", "Used for testing") do
-          cmd.test
-        end
 
         opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
           puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'

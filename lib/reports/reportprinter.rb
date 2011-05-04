@@ -64,6 +64,21 @@ class ReportPrinter
     print table
   end
 
+    #
+  # Prints the earnings report for next month
+  #
+  def printDividendsReport(dividends)
+    table = Table(%w[DivDate Ticker Company Price avVolume])
+    dividends.sort { |a, b| a.exdividenddate <=> b.exdividenddate }.each { |elem|
+      begin
+        difference = elem.frontMonth-elem.backMonth
+      rescue
+      end
+      table << [elem.exdividenddate, elem.symbol, elem.name, elem.price, elem.avolume]
+    }
+    print table
+  end
+
   #
   # Prints the  index report
   #

@@ -5,20 +5,14 @@ require 'helper'
 require "model/earning"
 require "reports/report"
 require "model/stockdaily"
-require 'reports/earningsreport'
+require 'reports/DividendsReport'
 class Test_Report < Test::Unit::TestCase
 
-  #
-  #
-  #
-  def test_report_base
-    report = Report.new
-    report.generateReport
-    report.generateReportArgs('aapl')
-    report.printAllReports
-  end
 
+  #
+  #
+  #
   def test_earnings_report
-      EarningsReport.new.generateReport
+      DividendsReport.new.generateReport
   end
 end

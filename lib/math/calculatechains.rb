@@ -7,7 +7,6 @@ require 'model/chain'
 #
 class CalculateChains
 
-
   #
   # Load all tickers and calculate mean implied volatilities to near ITM options
   #

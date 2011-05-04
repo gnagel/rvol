@@ -18,7 +18,7 @@ DataMapper.auto_migrate!
 # GENERATE THE TEST DATABASE FROMINTERNETDATA
 puts 'GENERATING TEST DATABASE'
 
-    EarningsScraper.new.getEarningsMonth2
+    EarningsScraper.new.getEarningsMonth2(true)
     ticker = ['AAPL','LVS','GOOG','IBM','SPY']
     ticker.each { |ticker|
       begin

@@ -19,53 +19,30 @@ class EarningsReport < Report
     puts 'A report with the coming earnings for the next month with front and back month implied volatilities '
   end
   #
-  # Load earnings tickers and attach chains to them
+  # Load earnings only for sp500
   #
   def loadData
     earnings = Earning.all
+    sp500 = Ticker.all(:index=>'SP500').collect{|tick|tick.symbol}
+    earray = Array.new
     earnings.each{|e|
-
-      ticker      = e.ticker
-      osymbol     = DateUtil.getOptSymbThisMonth(ticker)
-      osymbol2    = DateUtil.getOptSymbNextMonth(ticker)
-
-      frontChains = Chain.all(:symbol.like=>osymbol+'%')
-      backChains = Chain.all(:symbol.like=>osymbol2+'%')
-
-      if(frontChains.size!=0&&backChains.size!=0)
-
-        # load all chain strikes
-        arrayFront = frontChains.collect{|chain|chain.strike.to_f}
-        # gets the closest strike to the price
-        stock  = Stockdaily.first(:symbol=>e.ticker)
-        closestStrike = arrayFront.closest stock.price.to_f
-
-        impliedVolatilities = getImpliedVolatilities(frontChains,closestStrike)
-        impliedVolatilities2 = getImpliedVolatilities(backChains,closestStrike)
-
-        if(impliedVolatilities.mean!='NaN')
-          e.frontMonth = "%0.2f" % (impliedVolatilities.mean)
-        end
-        if(impliedVolatilities2.mean!='NaN')
-          e.backMonth = "%0.2f" % (impliedVolatilities2.mean)
-        end
-      end
-
-    }
-    return earnings
-  end
-
-  #
-  # Returns an array of impied volatilities
-  #
-  def getImpliedVolatilities(chains,closestStrike)
-    array = Array.new
-    chains.each{|chain|
-      if(chain.strike.to_f==closestStrike.to_f)
-        array << chain.ivolatility.to_f
+      if sp500.include?(e.ticker)
+        earray << e
       end
     }
-    array
+    return earray
   end
+
+  def checkHasEarnings(ticker)
+       Earning.all.each do |earning|
+        if ticker == earning.ticker
+         puts 'This stock has earnings on: '+ earning.date
+         return true
+        end
+       end
+    return false
+  end
+
+
 
 end
