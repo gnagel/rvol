@@ -70,6 +70,7 @@ module Rvol
 
   def evaluate(tickers)
     aticks = tickers.split(',')
+
   end
 
 

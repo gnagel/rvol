@@ -149,8 +149,7 @@ class Downloader
   ##
   def downloadEarnings
     puts 'starting download earnings'
-    result = Ticker.all(:index => 'SP500')
-    EarningsScraper.new.getEarningsMonth2(result.collect { |tic| tic.symbol })
+    EarningsScraper.new.getEarningsMonth2
   end
 
   def downloadHistorical

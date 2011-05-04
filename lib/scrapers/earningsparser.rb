@@ -14,7 +14,7 @@ class EarningsScraper
   #
   # Load all earnings , store only the ones in the filter
   #
-  def getEarningsMonth2(filter)
+  def getEarningsMonth2
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
 
     t = DateTime.now
@@ -32,11 +32,11 @@ class EarningsScraper
             for obj in chains
               if obj.to_html.include? "http://finance.yahoo.com/q?"
                 ticker = obj.inner_text
-                # no filtering
-                #if filter.include?(ticker)
+
                   earning = Earning.new(date,ticker)
                   boolean = earning.save
-                #end
+
+
               end
             end
           else

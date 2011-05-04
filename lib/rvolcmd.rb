@@ -60,7 +60,7 @@ class Rvolcmd
         end
 
         opts.on("-e", "--eval [tickers]", "Evaluate tickers separated by , (-e AAPL,GOOG)") do
-          cmd.evaluate
+          cmd.evaluate(tickers)
         end
 
         opts.on("-t", "--test", "Used for testing") do
