@@ -13,7 +13,6 @@ class Historicalscraper
     count=0
 
     stocks.each do |ticker|
-
       request = Scraper.downLoadHistory(ticker.symbol)
       request.on_complete { | response |
         if(response.code==200)

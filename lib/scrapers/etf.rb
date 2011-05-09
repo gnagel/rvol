@@ -13,12 +13,12 @@ class Etf
       if td.content.length <= 4 && regex =~ td.content
         ticker = Ticker.new
         ticker.symbol = td.content
+        next if ticker.symbol == 'ETFs'
         puts ticker.symbol
         ticker.index = 'etf'
         ticker.created_at = Time.now
-        ticker.save
-        if ticker.save
-        else
+
+        if !ticker.save
           puts 'Error saving chain'
           ticker.errors.each do |e|
             puts e
