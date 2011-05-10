@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rvol}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-04-23}
+  s.date = %q{2011-05-10}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -44,21 +44,25 @@ Gem::Specification.new do |s|
     "lib/math/ivolatility.rb",
     "lib/model/chain.rb",
     "lib/model/earning.rb",
+    "lib/model/portfolio.rb",
     "lib/model/stock.rb",
     "lib/model/stockcorrelation.rb",
     "lib/model/stockdaily.rb",
     "lib/model/stockhistorical.rb",
     "lib/reports/chainsreport.rb",
     "lib/reports/correlationSTDreport.rb",
+    "lib/reports/dividendsreport.rb",
     "lib/reports/earningsreport.rb",
     "lib/reports/indexreport.rb",
     "lib/reports/ivolatilityreport.rb",
+    "lib/reports/portfolioreport.rb",
     "lib/reports/report.rb",
     "lib/reports/reportprinter.rb",
     "lib/reports/sdreport.rb",
     "lib/reports/weekliesreport.rb",
     "lib/rvol.rb",
     "lib/rvolcmd.rb",
+    "lib/rvolcmd2.rb",
     "lib/scrapers/capsparser.rb",
     "lib/scrapers/earningsparser.rb",
     "lib/scrapers/etf.rb",
@@ -78,7 +82,6 @@ Gem::Specification.new do |s|
     "rvol.gemspec",
     "test/core/test_dateErrors.rb",
     "test/core/test_dateutil.rb",
-    "test/core/test_downloader.rb",
     "test/helper.rb",
     "test/math/test_arraymath.rb",
     "test/math/test_calculatechains.rb",
@@ -88,9 +91,10 @@ Gem::Specification.new do |s|
     "test/model/test_stock.rb",
     "test/reports/test_chains_report.rb",
     "test/reports/test_correlationstdreport.rb",
-    "test/reports/test_earnings_report.rb",
+    "test/reports/test_dividendsreport.rb",
     "test/reports/test_index_report.rb",
     "test/reports/test_ivolatilityreport.rb",
+    "test/reports/test_porfolioreport.rb",
     "test/reports/test_report.rb",
     "test/reports/test_sdreport.rb",
     "test/reports/test_weekliesreport.rb",
@@ -111,7 +115,6 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/core/test_dateErrors.rb",
     "test/core/test_dateutil.rb",
-    "test/core/test_downloader.rb",
     "test/helper.rb",
     "test/math/test_arraymath.rb",
     "test/math/test_calculatechains.rb",
@@ -121,9 +124,10 @@ Gem::Specification.new do |s|
     "test/model/test_stock.rb",
     "test/reports/test_chains_report.rb",
     "test/reports/test_correlationstdreport.rb",
-    "test/reports/test_earnings_report.rb",
+    "test/reports/test_dividendsreport.rb",
     "test/reports/test_index_report.rb",
     "test/reports/test_ivolatilityreport.rb",
+    "test/reports/test_porfolioreport.rb",
     "test/reports/test_report.rb",
     "test/reports/test_sdreport.rb",
     "test/reports/test_weekliesreport.rb",
@@ -155,6 +159,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_runtime_dependency(%q<sinatra>, [">= 0"])
       s.add_runtime_dependency(%q<launchy>, [">= 0"])
+      s.add_runtime_dependency(%q<choice>, [">= 0"])
+      s.add_runtime_dependency(%q<highline>, [">= 0"])
     else
       s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
@@ -169,6 +175,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<sinatra>, [">= 0"])
       s.add_dependency(%q<launchy>, [">= 0"])
+      s.add_dependency(%q<choice>, [">= 0"])
+      s.add_dependency(%q<highline>, [">= 0"])
     end
   else
     s.add_dependency(%q<cucumber>, [">= 0"])
@@ -184,6 +192,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<sinatra>, [">= 0"])
     s.add_dependency(%q<launchy>, [">= 0"])
+    s.add_dependency(%q<choice>, [">= 0"])
+    s.add_dependency(%q<highline>, [">= 0"])
   end
 end
 
