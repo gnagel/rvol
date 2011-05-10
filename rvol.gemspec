@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rvol}
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
@@ -92,6 +92,7 @@ Gem::Specification.new do |s|
     "test/reports/test_chains_report.rb",
     "test/reports/test_correlationstdreport.rb",
     "test/reports/test_dividendsreport.rb",
+    "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
     "test/reports/test_ivolatilityreport.rb",
     "test/reports/test_porfolioreport.rb",
@@ -125,6 +126,7 @@ Gem::Specification.new do |s|
     "test/reports/test_chains_report.rb",
     "test/reports/test_correlationstdreport.rb",
     "test/reports/test_dividendsreport.rb",
+    "test/reports/test_earnings_report.rb",
     "test/reports/test_index_report.rb",
     "test/reports/test_ivolatilityreport.rb",
     "test/reports/test_porfolioreport.rb",
@@ -159,7 +161,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_runtime_dependency(%q<sinatra>, [">= 0"])
       s.add_runtime_dependency(%q<launchy>, [">= 0"])
-      s.add_runtime_dependency(%q<choice>, [">= 0"])
       s.add_runtime_dependency(%q<highline>, [">= 0"])
     else
       s.add_dependency(%q<cucumber>, [">= 0"])
@@ -175,7 +176,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<sinatra>, [">= 0"])
       s.add_dependency(%q<launchy>, [">= 0"])
-      s.add_dependency(%q<choice>, [">= 0"])
       s.add_dependency(%q<highline>, [">= 0"])
     end
   else
@@ -192,7 +192,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<sinatra>, [">= 0"])
     s.add_dependency(%q<launchy>, [">= 0"])
-    s.add_dependency(%q<choice>, [">= 0"])
     s.add_dependency(%q<highline>, [">= 0"])
   end
 end
