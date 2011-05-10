@@ -38,7 +38,7 @@ class PortfolioReport < Report
   # Used to print a genereic info of the report.
   #
   def printInfo
-    puts 'this method should explain the report in plain english implement me'
+    'this method should explain the report in plain english implement me'
   end
 
   #

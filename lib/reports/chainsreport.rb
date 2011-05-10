@@ -21,7 +21,7 @@ class ChainsReport < Report
     ReportPrinter.new.printChainsReportSingle(chains,stock[0])
   end
   def printInfo
-   puts 'A report for a single stock with options chains and other information like put call volume'
+    'A report for a single stock with options chains and other information like put call volume'
   end
 end
 
@@ -31,7 +31,7 @@ class ChainsReportAll < Report
     ReportPrinter.new.printChainsReport(chains)
   end
   def printInfo
-    puts 'A report for all chains in the S&P500 gives an overview of the whole view of the market in terms of put/call ratios volume etc'
+     'A report for all chains in the S&P500 gives an overview of the whole view of the market'
   end
 end
 
@@ -44,7 +44,7 @@ class ChainsReportTop10Volume < Report
     ReportPrinter.new.printChainsReport(chains)
   end
   def printInfo
-    puts 'A report with the top ten in volume in S&P500/Top rated stock/ETF options'
+     'A report with the top ten in volume in S&P500/Top rated stock/ETF options'
   end
 end
 
@@ -57,7 +57,7 @@ class ChainsTop10OpenInt < Report
     ReportPrinter.new.printChainsReport(chains)
   end
   def printInfo
-    puts 'A report with the top ten in open interest in S&P500/Top rated stock/ETF options '
+     'A report with the top ten in open interest in S&P500/Top rated stock/ETF options '
   end
 end
 
@@ -70,7 +70,7 @@ class ChainsTop10ImpliedVolatility < Report
   end
 
   def printInfo
-    puts 'A report with the top ten in implied volatility in S&P500/Top rated stock/ETF options'
+     'A report with the top ten in implied volatility in S&P500/Top rated stock/ETF options'
   end
 end
 
@@ -84,7 +84,7 @@ class ChainsTop10ChangeInOptionPrice < Report
     ReportPrinter.new.printChainsReport(chains)
   end
   def printInfo
-    puts 'A report with the top ten % change in price in S&P500/Top rated stock/ETF options'
+     'A report with the top ten % change in price in S&P500/Top rated stock/ETF options'
   end
 end
 
@@ -98,22 +98,22 @@ class ChainsTop10Calls < Report
     ReportPrinter.new.printTop10OptionsVolReport(tickers)
   end
   def printInfo
-    puts 'A report with the most total calls exchanged today in S&P500/Top rated stock/ETF options'
+     'A report with the most total calls exchanged today in S&P500/Top rated stock/ETF options'
   end
 end
 
 
-class ChainsTop10Puts < Report
+class ChainsTop10 < Report
   #
   # report the chains with the highest call volatility. This could be a bearish signal
   #
   def generateReport
-    tickers = Ticker.all(:order => [ :totalPuts.desc ]).first 10
+    tickers = Ticker.all(:order => [ :total.desc ]).first 10
     ReportPrinter.new.printTop10OptionsVolReport(tickers)
   end
 
   def printInfo
-    puts 'A report with the most total puts exchanged today in S&P500/Top rated stock/ETF options'
+     'A report with the most total  exchanged today in S&P500/Top rated stock/ETF options'
   end
 
 end

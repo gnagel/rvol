@@ -14,8 +14,8 @@ class Report
   # Print all reports available
   #
   def printAllReports
-    puts '********************************** Printing all reports ****************************************'
-    reports = ObjectSpace.each_object(Class).select { |klass| klass.superclass == Report}
+    table = Table(%w[Report_Name Report_Description])
+    reports = ObjectSpace.each_object(Class).select { |klass| klass.superclass == Report }
     reports.each do |report|
       puts 'Report: '+report.to_s
 
@@ -24,11 +24,9 @@ class Report
       rescue => e
         puts e
       end
-      reportti.printInfo
-      puts ''
-
+      table << [report,reportti.printInfo]
     end
-
+    print table
   end
 
   #
@@ -38,7 +36,7 @@ class Report
     puts 'printing report base class this should be implemented in the report'
   end
 
-   #
+  #
   # this method needs to be overriden. It will generate the report on screen.With args
   #
   def generateReportArgs(args)

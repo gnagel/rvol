@@ -2,9 +2,11 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 require 'pp'
-autoload :Rvol, 'Rvol'
+require 'rvol'
 
-
+#
+#
+#
 class Rvolcmd2
   include Rvol
 
@@ -36,69 +38,71 @@ class Rvolcmd2
       opts.separator ""
       opts.separator "Specific options:"
 
-
       opts.on("-p", "--printreports", "Print all available reports") do
-          cmd.printReports
-        end
-
-        opts.on("-r", "--report [REPORT]", "Print the given report use rvol -p to get a list of reports") do |report|
-          cmd.runReport(report)
-        end
-
-        opts.on("-c", "--chainReport [TICKER]", "Show basic into and list chains for ticker") do |ticker|
-          cmd.chainReport(ticker)
-        end
-
-        opts.on("-i", "--indexReport [INDEX]", "Show basic into and list chains for index (-i SP500)") do |index|
-          cmd.indexReport(index)
-        end
-
-        opts.on("-e", "--eval [tickers]", "Evaluate tickers separated by , (-e AAPL,GOOG)") do
-          cmd.evaluate(tickers)
-        end
-
-
-        opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
-          puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
-          case type
-            when 'snapshot'
-              cmd.runSnapShot
-            when 'historical'
-              cmd.runSnapShotHistorical
-            else
-              cmd.runSnapShot
-              cmd.runSnapShotHistorical
-          end
-        end
-        opts.on("", "--downloader", "start cron type timer downloader, will run 5:00 PM every weekday") do
-          cmd.runCron
-        end
-        opts.separator ""
-        opts.separator "Common options:"
-        opts.on_tail("-h", "--help", "Show this message") do
-          puts opts
-          exit
-        end
-        # Another typical switch to print the version.
-        opts.on_tail("-v", "--version", "Show version") do
-          options.version = cmd.version[0]
-          exit
-        end
-
-    # List of arguments.
-      opts.on("--report ticker1,ticker2,...", Array, "Example 'list' of arguments") do |list|
-        options.list = list
+        options.command = "printreports"
       end
+
+      opts.on("-r", "--report REPORT", "Print the given report use rvol -p to get a list of reports") do |report|
+        options.command = "report"
+        options.args = report
+      end
+
+      opts.on("-c", "--chainReport TICKER", "Show basic into and list chains for ticker") do |ticker|
+        options.command = "chainReport"
+        options.args = ticker
+      end
+
+      opts.on("-i", "--indexReport INDEX", "Show basic into and list chains for index (-i SP500)") do |index|
+        options.command = "indexReport"
+        options.args = index
+      end
+
+      opts.on("-e", "--eval tickers", "Evaluate tickers separated separated by ',' , (-e AAPL,GOOG)") do |tickers|
+        options.command = "eval"
+        options.args = tickers
+      end
+
+
+      opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
+        puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
+
+        options.command = "snapshot"
+        options.args = type
+      end
+      opts.on("", "--downloader", "start cron type timer downloader, will run 5:00 PM every weekday") do
+        options.command = "downloader"
+      end
+      opts.separator ""
+      opts.separator "Common options:"
+      opts.on_tail("-h", "--help", "Show this message") do
+        puts opts
+        exit
+      end
+      # Another typical switch to print the version.
+      opts.on_tail("-v", "--version", "Show version") do
+        options.version = cmd.version[0]
+        exit
+      end
+
+      # List of arguments.
+      #opts.on("--report ticker1,ticker2,...", Array, "Example 'list' of arguments") do |list|
+      #  options.list = list
+      #end
 
 
     end
 
     opts.parse!(args)
     options
-  end # parse()
+  end
 
- # class OptparseExample
+  # parse()
 
-options = Rvolcmd2.parse(ARGV)
-pp options
+
+  options = Rvolcmd2.parse(ARGV)
+  puts 'COMMAND: ' + options.command.to_s
+  puts 'ARGS: ' + options.args.to_s
+  puts ''
+  puts options
+#pp options
 end

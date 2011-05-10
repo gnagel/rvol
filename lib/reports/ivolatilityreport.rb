@@ -16,7 +16,7 @@ class IvolatilityReport < Report
   end
 
   def printInfo
-    puts 'A report of stock scouter top 10 stocks odered by their implied volatilities'
+    'A report of stock scouter top 10 stocks odered by their implied volatilities'
   end
   
 end

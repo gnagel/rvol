@@ -16,7 +16,7 @@ class EarningsReport < Report
   end
 
   def printInfo
-    puts 'A report with the coming earnings for the next month with front and back month implied volatilities '
+    'A report with the coming earnings for the next month with front and back month implied volatilities '
   end
   #
   # Load earnings only for sp500

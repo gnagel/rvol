@@ -13,7 +13,7 @@ class Sdreport < Report
     ReportPrinter.new.printTop50SdevReport(tickers)
   end
   def printInfo
-    puts 'Prints the top 50 standard deviations from the whole universe of stock (S&P500, Stock scouter, top 100 ETF:s)'
+    'Prints the top 50 standard deviations from the whole universe of stock (S&P500, Stock scouter, top 100 ETF:s)'
   end
 end
 
@@ -30,7 +30,7 @@ class Stdreporttop20scouter < Report
     ReportPrinter.new.printScouterStd(scouterArray)
   end
   def printInfo
-    puts 'A report that shows the top Standard deviations in the Stock scouter top rated stocks look for drops in price for entering a position'
+    'A report that shows the top Standard deviations in the Stock scouter top rated stocks look'
   end
 end
 
@@ -47,6 +47,6 @@ class Stdreportshit20scouter < Report
     ReportPrinter.new.printScouterStd(scouterArray)
   end
    def printInfo
-    puts 'A report that shows the top Standard deviations in the Stock scouter worst rated stocks look for tops in price for entering a short position'
+    'A report that shows the top Standard deviations in the Stock scouter worst rated stocks'
   end
 end
