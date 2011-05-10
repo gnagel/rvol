@@ -18,31 +18,35 @@ class EarningsReport < Report
   def printInfo
     'A report with the coming earnings for the next month with front and back month implied volatilities '
   end
+
   #
-  # Load earnings only for sp500
+  # Load earnings only for sp500 and get the front and back month values
   #
   def loadData
-    earnings = Earning.all
-    sp500 = Ticker.all(:index=>'SP500').collect{|tick|tick.symbol}
     earray = Array.new
-    earnings.each{|e|
-      if sp500.include?(e.ticker)
-        earray << e
+    earnings = Earning.all
+    sp500 = Ticker.all(:index=>'SP500')
+    sp500.each do |sp|
+      ticker = Earning.first(:ticker=>sp.symbol)
+      if ticker!=nil
+        ticker.frontMonth = sp.frontMonth
+        ticker.backMonth = sp.backMonth
+        ticker.save
+        earray << ticker
       end
-    }
+    end
     return earray
   end
 
   def checkHasEarnings(ticker)
-       Earning.all.each do |earning|
-        if ticker == earning.ticker
-         puts 'This stock has earnings on: '+ earning.date
-         return true
-        end
-       end
+    Earning.all.each do |earning|
+      if ticker == earning.ticker
+        puts 'This stock has earnings on: '+ earning.date
+        return true
+      end
+    end
     return false
   end
-
 
 
 end

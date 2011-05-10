@@ -16,10 +16,12 @@ DataMapper.finalize
 DataMapper.auto_migrate!
 
 # GENERATE THE TEST DATABASE FROMINTERNETDATA
-puts 'GENERATING TEST DATABASE'
+    puts 'GENERATING TEST DATABASE'
 
     EarningsScraper.new.getEarningsMonth2(true)
-    ticker = ['AAPL','LVS','GOOG','IBM','SPY']
+
+    ticker = ['AAPL','LVS','GOOG','IBM']
+
     ticker.each { |ticker|
       begin
         tick = Ticker.new
@@ -32,6 +34,20 @@ puts 'GENERATING TEST DATABASE'
         puts boom
       end
     }
+
+    Earning.all.each { |ticker|
+      begin
+        tick = Ticker.new
+        tick.created_at = Time.now
+        tick.symbol = ticker
+        tick.index = 'SP500'
+        tick.save
+      rescue => boom
+        puts 'error  ' + ticker
+        puts boom
+      end
+    }
+
     Stocks.new.downloadStock2(ticker,true)
     chains = OptionChainsScraper.new.loadChains(ticker,true)
     Historicalscraper.new.downloadHistoricalData(Stockdaily.all,true)

@@ -5,7 +5,7 @@ require 'reports/report'
 #
 # Weeklies report
 #
-class Weekliesreport < Report
+class WeekliesReport < Report
   #
   # Finds all the weeklies for this week. This is done with the date in the ticker string
   #
