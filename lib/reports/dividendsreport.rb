@@ -22,7 +22,7 @@ class DividendsReport < Report
   #
   #
   def printInfo
-
+     "A report showing the dividends for the next month"
   end
 
   def checkHasDividendts(symbol)

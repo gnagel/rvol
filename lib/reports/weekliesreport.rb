@@ -36,6 +36,6 @@ class Weekliesreport < Report
   # Prints the info about this report
   #
   def printInfo
-    puts 'This report will print all weeklies and their standard deviations'
+    'This report will print all weeklies and their standard deviations'
   end
 end

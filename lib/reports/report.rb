@@ -17,8 +17,6 @@ class Report
     table = Table(%w[Report_Name Report_Description])
     reports = ObjectSpace.each_object(Class).select { |klass| klass.superclass == Report }
     reports.each do |report|
-      puts 'Report: '+report.to_s
-
       begin
         reportti = Kernel.const_get(report.to_s).new
       rescue => e
