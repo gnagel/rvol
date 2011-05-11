@@ -22,25 +22,16 @@ class RssScraper
 
     print "number of items: ", rss.items.size, "\n"
 
-    table = Table(%w[News])
+    table = Table(%w[Date News])
 
     rss.items.each{|item|
-      title = item.title
-      description = Nokogiri::HTML(item.description).to_plain_text
-      table << [description]
-      #puts wrap_text(description,120)
+      title = item.title[0,100]
+      description = item.link
+      table << [item.date.strftime("%d/%m/%y at %I:%M%p"),title]
     }
-    pp table
 
-  end
+    print table
 
-  def wrap_text(txt, col = 80)
-    txt.gsub(/(.{1,#{col}})( +|$\n?)|(.{1,#{col}})/, "\\1\\3\n")
-  end
-
-  begin
-    srr = RssScraper.new
-    srr.loadRSS('LVS')
   end
 
 end

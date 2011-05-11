@@ -36,16 +36,20 @@ module Rvol
   DataMapper.auto_upgrade!
 
 
-  def runReport(arg)
-    puts 'Report name: '+ arg
+  def runReport(reportName,arg=nil)
+    puts 'Report name: '+ reportName
     begin
-      report = Kernel.const_get(arg).new
+      report = Kernel.const_get(reportName).new
     rescue => e
       puts 'report generation failed check the name with rvol -p'
       #puts e
     end
     report.printInfo
+    if(arg==nil)
     report.generateReport
+    else
+     report.generateReportArgs(arg)
+    end
 
   end
 
