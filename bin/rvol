@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby -W0
 # encoding: utf-8
 require 'rvolcmd'
-options = Rvolcmd.parse(ARGV)
+# if nothing in input put -h
+#parse command line
+Rvolcmd.new ARGV
