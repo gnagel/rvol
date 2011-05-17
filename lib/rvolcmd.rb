@@ -60,7 +60,7 @@ class Rvolcmd
         options.args = tickers
       end
 
-      opts.on("-n", "--news ticker", "Evaluate tickers separated separated by ',' , (-e AAPL,GOOG)") do |ticker|
+      opts.on("-n", "--news ticker", "Get a list of latest news for a ticker',' , (-n MCD)") do |ticker|
         options.command = "news"
         options.args = ticker
       end

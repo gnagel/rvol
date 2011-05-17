@@ -1,4 +1,4 @@
-<map version="0.8.1">
+<map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1272438520354" ID="Freemind_Link_1518656022" MODIFIED="1272438543760" TEXT="finance">
 <node CREATED="1272438547651" HGAP="58" ID="_" MODIFIED="1272438555963" POSITION="right" TEXT="application" VSHIFT="-21">
@@ -6,7 +6,7 @@
 <node CREATED="1272438656291" HGAP="26" ID="Freemind_Link_1130408799" MODIFIED="1272438662228" TEXT="blog" VSHIFT="-35"/>
 </node>
 <node CREATED="1272438568088" HGAP="34" ID="Freemind_Link_514096178" MODIFIED="1272438576651" TEXT="data" VSHIFT="9">
-<node CREATED="1272438581026" HGAP="32" ID="Freemind_Link_365785542" MODIFIED="1272438587182" TEXT="cucumber" VSHIFT="-14">
+<node CREATED="1272438581026" ID="Freemind_Link_365785542" MODIFIED="1305561755638" TEXT="cucumber">
 <node CREATED="1272439031007" HGAP="21" ID="Freemind_Link_1333428469" MODIFIED="1272439301287" TEXT="features" VSHIFT="-27"/>
 </node>
 </node>
@@ -16,5 +16,6 @@
 <node CREATED="1272438664541" HGAP="31" ID="Freemind_Link_953567242" MODIFIED="1272438674478" TEXT="maths" VSHIFT="-28"/>
 </node>
 <node CREATED="1272439313833" ID="Freemind_Link_1300188864" MODIFIED="1272439316208" POSITION="right" TEXT="broker"/>
+<node CREATED="1305560339936" ID="ID_1254700537" MODIFIED="1305560339936" POSITION="left" TEXT=""/>
 </node>
 </map>
