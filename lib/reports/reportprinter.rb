@@ -107,12 +107,20 @@ class ReportPrinter
     print table
   end
 
-  def printScouterStd(tickers)
+  def printScouterStd20(tickers)
     table = Table(%w[Symbol Name Price AverageVolume Volume StandardDeviation20])
     tickers.each { |stock|
       table <<[stock.symbol, stock.name, stock.price, stock.avolume, stock.volume, stock.std20]
     }
     print table.sort_rows_by("StandardDeviation20",:order => :descending)
+  end
+
+    def printScouterStd5(tickers)
+    table = Table(%w[Symbol Name Price AverageVolume Volume StandardDeviation5])
+    tickers.each { |stock|
+      table <<[stock.symbol, stock.name, stock.price, stock.avolume, stock.volume, stock.std5]
+    }
+    print table.sort_rows_by("StandardDeviation5",:order => :descending)
   end
 
   #

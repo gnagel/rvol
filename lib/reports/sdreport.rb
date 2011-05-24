@@ -27,7 +27,24 @@ class Stdreporttop20scouter < Report
     scouter.each do |tick|
       scouterArray << Stockdaily.first(:symbol=>tick.symbol)
     end
-    ReportPrinter.new.printScouterStd(scouterArray)
+    ReportPrinter.new.printScouterStd20(scouterArray)
+  end
+  def printInfo
+    'A report that shows the top Standard deviations in the Stock scouter top rated stocks look'
+  end
+end
+
+#
+#   Prints the top 20 scouter standards deviation report
+#
+class Stdreporttop5scouter < Report
+  def generateReport
+    scouter = Ticker.all(:index=>'stockscouter-10')
+    scouterArray = Array.new
+    scouter.each do |tick|
+      scouterArray << Stockdaily.first(:symbol=>tick.symbol)
+    end
+    ReportPrinter.new.printScouterStd5(scouterArray)
   end
   def printInfo
     'A report that shows the top Standard deviations in the Stock scouter top rated stocks look'

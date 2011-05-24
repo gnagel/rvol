@@ -8,6 +8,6 @@ class Test_weekliesreport < Test::Unit::TestCase
 
   def test_weekliesload
 
-    Weekliesreport.new.generateReport
+    WeekliesReport.new.generateReport
   end
 end
