@@ -12,6 +12,14 @@ class Scraper
   end
 
   #
+  # Download stock info  from yahoo
+  #
+  def self.downLoadYahooChains(url)
+    request = Typhoeus::Request.new(url,:timeout=>30000)
+  end
+
+
+  #
   # Download S&P500 list from wikipedia
   #
   def self.downLoadSP500WikiPedia

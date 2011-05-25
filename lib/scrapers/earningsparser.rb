@@ -25,7 +25,7 @@ class EarningsScraper
       date = n.strftime("%Y%m%d")
       url="http://biz.yahoo.com/research/earncal/"+date+".html"
 
-      request = Typhoeus::Request.new(url)
+      request = Typhoeus::Request.new(url,:timeout=>10000)
       request.on_complete { | response |
         begin
           if(response.code==200)

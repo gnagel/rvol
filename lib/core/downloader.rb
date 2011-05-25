@@ -63,7 +63,8 @@ class Downloader
       x.report('Calculate standard deviations: ') {
         self.calculateStd }
       x.report('Calculate correlations: ') {
-        self.caclulateCorrelations
+        # skip this for now too slow
+        #self.caclulateCorrelations
       }
     end
   end

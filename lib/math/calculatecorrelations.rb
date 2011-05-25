@@ -10,6 +10,7 @@ class Calculatecorrelations
     past = 60*60*24*30
     oneday = 60*60*24
     twentyago = date - past
+    index = 0
     # load all etfs
     tickers = Ticker.all(:index=>'etf')
     tickers2 = Array.new(tickers)
@@ -39,7 +40,8 @@ class Calculatecorrelations
                 end
               end
             end
-            puts 'correlation ' + ticker.symbol + ' AND '+ticker2.symbol+' '+correlation.to_s
+            index+=1
+            puts index.to_s + ' correlation ' + ticker.symbol + ' AND '+ticker2.symbol+' '+correlation.to_s
           rescue => error
             puts 'Correlation calcuation failed!'
             puts error

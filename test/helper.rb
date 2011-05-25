@@ -11,53 +11,56 @@ require 'model/stockcorrelation'
 
 #set the test db an in memory db
 DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default,Rvol.config['test'])
+DataMapper.setup(:default, Rvol.config['test'])
 DataMapper.finalize
 DataMapper.auto_migrate!
 
 # GENERATE THE TEST DATABASE FROMINTERNETDATA
-    puts 'GENERATING TEST DATABASE'
+puts 'GENERATING TEST DATABASE'
 
-    EarningsScraper.new.getEarningsMonth2(true)
+# check if the database is there :
+if (Earning.count==0)
 
-    ticker = ['AAPL','LVS','GOOG','IBM']
+  EarningsScraper.new.getEarningsMonth2(true)
 
-    ticker.each { |ticker|
-      begin
-        tick = Ticker.new
-        tick.created_at = Time.now
-        tick.symbol = ticker
-        tick.index = 'SP500'
-        tick.save
-      rescue => boom
-        puts 'error  ' + ticker
-        puts boom
-      end
-    }
+  ticker = ['AAPL', 'LVS', 'GOOG', 'IBM']
 
-    Earning.all.each { |ticker|
-      begin
-        tick = Ticker.new
-        tick.created_at = Time.now
-        tick.symbol = ticker
-        tick.index = 'SP500'
-        tick.save
-      rescue => boom
-        puts 'error  ' + ticker
-        puts boom
-      end
-    }
+  ticker.each { |ticker|
+    begin
+      tick = Ticker.new
+      tick.created_at = Time.now
+      tick.symbol = ticker
+      tick.index = 'SP500'
+      tick.save
+    rescue => boom
+      puts 'error  ' + ticker
+      puts boom
+    end
+  }
 
-    Stocks.new.downloadStock2(ticker,true)
-    chains = OptionChainsScraper.new.loadChains(ticker,true)
-    Historicalscraper.new.downloadHistoricalData(Stockdaily.all,true)
+  Earning.all.each { |ticker|
+    begin
+      tick = Ticker.new
+      tick.created_at = Time.now
+      tick.symbol = ticker
+      tick.index = 'SP500'
+      tick.save
+    rescue => boom
+      puts 'error  ' + ticker
+      puts boom
+    end
+  }
 
-
-    CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
-    CalculateStd.new.calculateStd
-    CalculateChains.new.calculateTotalChains
-    Calculatecorrelations.new.calculateCorrelations
+  Stocks.new.downloadStock2(ticker, true)
+  chains = OptionChainsScraper.new.loadChains(ticker, true)
+  Historicalscraper.new.downloadHistoricalData(Stockdaily.all, true)
 
 
+  CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
+  CalculateStd.new.calculateStd
+  CalculateChains.new.calculateTotalChains
+  Calculatecorrelations.new.calculateCorrelations
+
+end
 puts 'DONE! Starting testing!'
 # DONE

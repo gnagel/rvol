@@ -26,20 +26,23 @@ class CalculateChains
         # load all chain strikes
         arrayFront = frontChains.collect { |chain| chain.strike.to_f }
         # gets the closest strike to the price
+        puts tick.symbol
         stock = Stockdaily.first(:symbol=>tick.symbol)
-        closestStrike = arrayFront.closest stock.price.to_f
+        if (stock!=nil)
+          closestStrike = arrayFront.closest stock.price.to_f
 
-        impliedVolatilities = getImpliedVolatilities(frontChains, closestStrike)
-        impliedVolatilities2 = getImpliedVolatilities(backChains, closestStrike)
+          impliedVolatilities = getImpliedVolatilities(frontChains, closestStrike)
+          impliedVolatilities2 = getImpliedVolatilities(backChains, closestStrike)
 
-        if (impliedVolatilities.mean!='NaN')
-          tick.frontMonth = "%0.2f" % (impliedVolatilities.mean)
+          if (impliedVolatilities.mean!='NaN')
+            tick.frontMonth = "%0.2f" % (impliedVolatilities.mean)
+          end
+          if (impliedVolatilities2.mean!='NaN')
+            tick.backMonth = "%0.2f" % (impliedVolatilities2.mean)
+          end
         end
-        if (impliedVolatilities2.mean!='NaN')
-          tick.backMonth = "%0.2f" % (impliedVolatilities2.mean)
-        end
+        tick.save
       end
-     tick.save
     }
     return tickers
   end

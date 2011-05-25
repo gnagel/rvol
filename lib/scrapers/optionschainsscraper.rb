@@ -35,7 +35,7 @@ class OptionChainsScraper
           # this is the date for the url
           parsedDate = date.strftime("%Y-%m")
           url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsedDate)
-          request = Typhoeus::Request.new(url)
+          request = Scraper.downLoadYahooChains(url)
           request.on_complete { |response|
             if (response.code==200)
               count= count+1
