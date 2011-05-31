@@ -9,5 +9,6 @@ require 'test/unit'
 class Test_Options_Scraper < Test::Unit::TestCase
   def test_rssscraper
   RssScraper.new.loadRSS('LVS')
+     RssScraper.new.opennews('LVS',1)
   end
 end

@@ -2,6 +2,7 @@
 require 'reports/report'
 require 'core/cron.rb'
 require 'yaml'
+require 'scrapers/rss'
 
 #
 # Module for all commomns methods used in the system
@@ -71,14 +72,24 @@ module Rvol
   def runSnapShot
     down = Downloader.new.initEarningsAndChains
   end
-
+  #
+  # Evaluate the ticker from market info
+  #
   def evaluate(tickers)
+    puts tickers
     aticks = tickers.split(',')
-
   end
 
-
-
+  #
+  # Load the news from google finance for a ticker
+  #
+  def news(ticker,number)
+    if number.length == 1
+       RssScraper.new.opennews(ticker,number[0])
+    else
+      RssScraper.new.loadRSS(ticker)
+    end
+  end
   #
   # Run the downloader. Downloads all daily data
   #

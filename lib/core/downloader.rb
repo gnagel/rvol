@@ -163,6 +163,7 @@ class Downloader
     puts 'starting download best and worst stockscouter tickers'
     Stockscouter.new.parseScouterTop10
     Stockscouter.new.parseScouterTop1
+    Stockscouter.new.parseScouterTop50
   end
 
   def downloadEtfTopVol100

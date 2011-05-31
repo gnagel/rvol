@@ -60,9 +60,10 @@ class Rvolcmd
         options.args = tickers
       end
 
-      opts.on("-n", "--news ticker", "Get a list of latest news for a ticker',' , (-n MCD)") do |ticker|
+      opts.on("-n", "--news TICKER ARGS", "Get a list of latest news for a ticker',' , (-n MCD)") do |ticker|
         options.command = "news"
-        options.args = ticker
+        options.ticker = ticker
+        options.args = args
       end
 
 
@@ -126,8 +127,8 @@ class Rvolcmd
       end
     when 'eval'
       self.new.evaluate(options.args)
-    when 'eval'
-      self.new.news(options.args)
+    when 'news'
+      self.new.news(options.ticker,options.args)
     when 'snapshot'
       loader = self.new
       loader.runSnapShot

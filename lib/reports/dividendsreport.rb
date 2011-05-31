@@ -15,6 +15,7 @@ class DividendsReport < Report
     date = DateTime.now
     onemonth = date + (60*60*24*30)
     dividends = Stockdaily.all(:exdividenddate.lt=>onemonth,:exdividenddate.gt=>date)
+
     ReportPrinter.new.printDividendsReport(dividends)
   end
 

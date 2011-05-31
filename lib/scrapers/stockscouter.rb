@@ -1,3 +1,4 @@
+require 'nokogiri'
 # encoding: utf-8
 #
 # Downloads top lists from stock scouter
@@ -18,13 +19,14 @@ class Stockscouter
       symbol.each do |sym|
         if sym.include? '/detail/stock_quote?symbol='
           i+=1
-          symbol = sym.sub('/detail/stock_quote?symbol=','').chomp
-          save(symbol,10)
+          symbol = sym.sub('/detail/stock_quote?symbol=', '').chomp
+          save(symbol, 10)
           puts symbol
         end
       end
     end
   end
+
   #
   # Parses the tickers from the page rated 1
   #
@@ -39,22 +41,37 @@ class Stockscouter
       symbol.each do |sym|
         if sym.include? '/detail/stock_quote?symbol='
           i+=1
-          symbol = sym.sub('/detail/stock_quote?symbol=','').chomp
-          save(symbol,1)
+          symbol = sym.sub('/detail/stock_quote?symbol=', '').chomp
+          save(symbol, 1)
           puts symbol
         end
       end
     end
   end
+
+  #
+  # Parses the tickers from the page rated 1
+  #
+  def parseScouterTop50
+    response = Scraper.downLoadStockScouterTop50
+    doc = Nokogiri::HTML(response.body)
+    links = doc.css('a')
+    links.each do |link|
+      if link.attribute('href').to_s.include? 'http://investing.money.msn.com/investments/stock-price?symbol='
+        save(link.content,50)
+        puts link.content
+      end
+    end
+
+
+  end
+
   #
   # Stores the symbol to db
   #
-  def save(symbol,rating)
-    ticker = Ticker.new
-    ticker.symbol = symbol
-    ticker.created_at = Time.now
-    ticker.index = 'stockscouter-'+rating.to_s
-    ticker.save
+  def save(symbol, rating)
+    index = 'stockscouter-'+rating.to_s
+    ticker = Ticker.create(:symbol=>symbol, :created_at=>Time.now, :index=>index)
   end
 
 end
