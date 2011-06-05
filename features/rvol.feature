@@ -18,6 +18,6 @@ Scenario: Run rvol -p
   Then I should see: "Report_Name"
   And I should see: "Report_Description"
 
-Scenario: Run rvol -r
-  Given I run "rvol -r"
-  Then I should see: "Report_Description"
+#Scenario: Run rvol -r
+#  Given I run "rvol -r"
+#  Then I should see: "Report_Description"
