@@ -100,4 +100,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+task :clean do
+  puts 'cleanin mf'
+end
 
