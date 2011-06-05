@@ -20,4 +20,4 @@ Scenario: Run rvol -p
 
 Scenario: Run rvol -r
   Given I run "rvol -r"
-  Then the output should contain ""
+  Then I should see: "Report_Description"
