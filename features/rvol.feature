@@ -13,7 +13,11 @@ Scenario: Run rvol
 #
 #
 #
-Scenario: Run rvol
+Scenario: Run rvol -p
   Given I run "rvol -p"
   Then I should see: "Report_Name"
   And I should see: "Report_Description"
+
+Scenario: Run rvol -r
+  Given I run "rvol -r"
+  Then the output should contain ""

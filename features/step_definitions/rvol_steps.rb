@@ -21,14 +21,15 @@ end
 
 Given /^I run "([^"]*)"$/ do |arg1|
    begin
-  @test2 = %x{rvol -p}
-  rescue
-    flunk('not installed')
+  @test2 = %x{#{arg1}}
+  rescue => e
+    flunk('fail something is wrong! ' +e.to_s)
   end
 end
 
 Then /^I should see: "([^"]*)"$/ do |arg1|
-  if not @test.include? arg1
+  puts @test2
+  if not @test2.include? arg1
     flunk 'not working'
   end
 end
