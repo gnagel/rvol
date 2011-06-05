@@ -51,6 +51,9 @@ if (Earning.count==0)
     end
   }
 
+  Stockscouter.new.parseScouterTop10
+  Stockscouter.new.parseScouterTop1
+
   Stocks.new.downloadStock2(ticker, true)
   chains = OptionChainsScraper.new.loadChains(ticker, true)
   Historicalscraper.new.downloadHistoricalData(Stockdaily.all, true)
@@ -59,7 +62,7 @@ if (Earning.count==0)
   CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
   CalculateStd.new.calculateStd
   CalculateChains.new.calculateTotalChains
-  Calculatecorrelations.new.calculateCorrelations
+  #Calculatecorrelations.new.calculateCorrelations
 
 end
 puts 'DONE! Starting testing!'

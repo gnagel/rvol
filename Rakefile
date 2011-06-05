@@ -105,7 +105,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 task :clean do
-  puts 'deleteting database'
+  puts 'deleting database'
   if File.exists?(ENV['HOME']+'/.rvol'+'/marketsnapshot.db')
     Dir.delete(ENV['HOME']+'/.rvol'+'/marketsnapshot.db')
   end
