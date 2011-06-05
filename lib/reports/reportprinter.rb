@@ -109,10 +109,14 @@ class ReportPrinter
 
   def printScouterStd20(tickers)
     table = Table(%w[Symbol Name Price AverageVolume Volume StandardDeviation20])
+    if tickers != nil
     tickers.each { |stock|
       table <<[stock.symbol, stock.name, stock.price, stock.avolume, stock.volume, stock.std20]
     }
     print table.sort_rows_by("StandardDeviation20",:order => :descending)
+    else
+      puts 'Nothing to report!'
+    end
   end
 
     def printScouterStd5(tickers)

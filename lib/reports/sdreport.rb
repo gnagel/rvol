@@ -1,4 +1,4 @@
- require 'math/arraymath'
+require 'math/arraymath'
 require 'reports/reportprinter'
 require 'reports/report'
 #
@@ -12,6 +12,7 @@ class Sdreport < Report
     tickers = Stockdaily.all(:order => [:std20.desc]).first 20
     ReportPrinter.new.printTop50SdevReport(tickers)
   end
+
   def printInfo
     'Prints the top 50 standard deviations from the whole universe of stock (S&P500, Stock scouter, top 100 ETF:s)'
   end
@@ -23,14 +24,17 @@ end
 class Stdreporttop20scouter < Report
   def generateReport
     scouter = Ticker.all(:index=>'stockscouter-10')
+
     scouterArray = Array.new
     scouter.each do |tick|
-      if tick!=nil
-        scouterArray << Stockdaily.first(:symbol=>tick.symbol)
+      symbol = Stockdaily.first(:symbol=>tick.symbol)
+      if symbol!=nil
+        scouterArray << symbol
       end
     end
     ReportPrinter.new.printScouterStd20(scouterArray)
   end
+
   def printInfo
     'A report that shows the top Standard deviations in the Stock scouter top rated stocks look'
   end
@@ -44,10 +48,14 @@ class Stdreporttop5scouter < Report
     scouter = Ticker.all(:index=>'stockscouter-10')
     scouterArray = Array.new
     scouter.each do |tick|
-      scouterArray << Stockdaily.first(:symbol=>tick.symbol)
+      symbol = Stockdaily.first(:symbol=>tick.symbol)
+      if symbol!=nil
+        scouterArray << symbol
+      end
     end
     ReportPrinter.new.printScouterStd5(scouterArray)
   end
+
   def printInfo
     'A report that shows the top Standard deviations in the Stock scouter top rated stocks look'
   end
@@ -61,11 +69,15 @@ class Stdreportshit20scouter < Report
     scouter = Ticker.all(:index=>'stockscouter-1')
     scouterArray = Array.new
     scouter.each do |tick|
-      scouterArray << Stockdaily.first(:symbol=>tick.symbol)
+      symbol = Stockdaily.first(:symbol=>tick.symbol)
+      if symbol!=nil
+        scouterArray << symbol
+      end
     end
     ReportPrinter.new.printScouterStd20(scouterArray)
   end
-   def printInfo
+
+  def printInfo
     'A report that shows the top Standard deviations in the Stock scouter worst rated stocks'
   end
 end
