@@ -14,6 +14,7 @@ class CalculateChains
 
     tickers = Ticker.all
     tickers.each { |tick|
+      puts 'calculating front and back month IV for all stocks '
       ticker = tick.symbol
       osymbol = DateUtil.getOptSymbThisMonth(ticker)
       osymbol2 = DateUtil.getOptSymbNextMonth(ticker)
@@ -26,7 +27,6 @@ class CalculateChains
         # load all chain strikes
         arrayFront = frontChains.collect { |chain| chain.strike.to_f }
         # gets the closest strike to the price
-        puts tick.symbol
         stock = Stockdaily.first(:symbol=>tick.symbol)
         if (stock!=nil)
           closestStrike = arrayFront.closest stock.price.to_f

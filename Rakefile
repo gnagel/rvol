@@ -35,11 +35,8 @@ begin
     gem.homepage = "http://github.com/tonik/rvol"
     gem.authors = ["Toni Karhu"]
     gem.add_development_dependency "cucumber"
-    gem.add_development_dependency  "shoulda"
-    gem.add_dependency "dm-core", ">= 1.1.0"
-    gem.add_dependency "dm-validations", ">= 1.1.0"
-    gem.add_dependency "dm-sqlite-adapter", ">= 1.1.0"
-    gem.add_dependency "dm-migrations", ">= 1.1.0"
+    gem.add_dependency "data_mapper"
+    gem.add_dependency "dm-sqlite-adapter"
     gem.add_dependency "ruport"
     gem.add_dependency "typhoeus"
     gem.add_dependency "ruport-util"

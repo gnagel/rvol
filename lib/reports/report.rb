@@ -26,7 +26,6 @@ class Report
     end
     print table
   end
-
   #
   # this method needs to be overriden. It will generate the report on screen.
   #

@@ -3,7 +3,9 @@ require 'reports/report'
 require 'core/cron.rb'
 require 'yaml'
 require 'scrapers/rss'
-
+require 'dm-core'
+require 'dm-migrations'
+require 'dm-do-adapter'
 #
 # Module for all commomns methods used in the system
 #
@@ -31,6 +33,7 @@ module Rvol
   if !File.exists?(ENV['HOME']+'/.rvol')
     Dir.mkdir(ENV['HOME']+'/.rvol')
   end
+
   snapshot = 'sqlite://'+ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
   DataMapper.setup(:default, snapshot)
   DataMapper.finalize

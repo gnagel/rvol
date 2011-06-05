@@ -9,7 +9,8 @@ require 'launchy'
 class Tools
   def openwebpage(url)
     checkplatform
-    system('open '+url)
+    #system('open '+url)
+    Launchy.open(url)
   end
 
   def openscouter(stock)
