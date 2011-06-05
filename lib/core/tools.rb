@@ -40,11 +40,6 @@ class Tools
 
 
   def checkplatform
-    if RUBY_PLATFORM.start_with? 'x86_64-darwin'
-
-    else
-      puts 'Oops your not using mac os x write the code for this!'
-      Process.exit
-    end
+    # launcy should handle all platforms
   end
 end
