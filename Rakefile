@@ -35,7 +35,10 @@ begin
     gem.homepage = "http://github.com/tonik/rvol"
     gem.authors = ["Toni Karhu"]
     gem.add_development_dependency "cucumber"
-    gem.add_dependency "data_mapper"
+    gem.add_development_dependency "rcov"
+    gem.add_dependency "dm-core"
+    gem.add_dependency "dm-migrations"
+    gem.add_dependency "dm-validations"
     gem.add_dependency "dm-sqlite-adapter"
     gem.add_dependency "ruport"
     gem.add_dependency "typhoeus"
@@ -44,6 +47,7 @@ begin
     gem.add_dependency "nokogiri"
     gem.add_dependency "sinatra"
     gem.add_dependency "highline"
+    gem.add_dependency "launchy"
     
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
@@ -80,7 +84,7 @@ begin
   Cucumber::Rake::Task.new(:features) do
     |feat|
        feat.rcov = true
-  task :features => :check_dependencies
+  task :features => [:check_dependencies,:install]
   end
 rescue LoadError
   task :features do 
