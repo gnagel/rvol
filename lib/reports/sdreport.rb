@@ -25,7 +25,9 @@ class Stdreporttop20scouter < Report
     scouter = Ticker.all(:index=>'stockscouter-10')
     scouterArray = Array.new
     scouter.each do |tick|
-      scouterArray << Stockdaily.first(:symbol=>tick.symbol)
+      if tick!=nil
+        scouterArray << Stockdaily.first(:symbol=>tick.symbol)
+      end
     end
     ReportPrinter.new.printScouterStd20(scouterArray)
   end
