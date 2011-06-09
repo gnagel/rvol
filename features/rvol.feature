@@ -7,17 +7,17 @@ Feature: Using rvol
 #
 #
 Scenario: Run rvol
-  Given I run rvol
-  Then I should see "Usage: rvol [options]"
-  And I should not see "command not found"
+  Given I run: "rvol"
+  Then I should see: "Usage: rvol [options]"
+  And I should not see: "command not found"
 #
 #
 #
 Scenario: Run rvol -p
-  Given I run "rvol -p"
-  Then I should see: "Report_Name"
-  And I should see: "Report_Description"
+Given I run: "rvol -p"
+ Then I should see: "Report_Name"
+ And I should see: "Report_Description"
 
-#Scenario: Run rvol -r
-#  Given I run "rvol -r"
-#  Then I should see: "Report_Description"
+Scenario: Run rvol -r
+ Given I run: "rvol -r"
+ Then I should not see: "missing argument"

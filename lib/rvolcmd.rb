@@ -28,7 +28,8 @@ class Rvolcmd
     opts = OptionParser.new do |opts|
       opts.banner = "Usage: rvol [options]
 
-        run rvol -s to download a market snapshot after this you can view all of the reports (download 20-30 minutes do only once).
+        run rvol -s to download a market snapshot after this you can view
+        all of the reports (download 20-30 minutes do only once).
 
         Some Examples (download snapshot first):
 
