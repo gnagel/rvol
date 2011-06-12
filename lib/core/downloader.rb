@@ -150,7 +150,7 @@ class Downloader
   ##
   def downloadEarnings
     puts 'starting download earnings'
-    EarningsScraper.new.getEarningsMonth2
+    EarningsScraper.new.getEarningsMonth2(false)
   end
 
   def downloadHistorical

@@ -21,14 +21,14 @@ class EarningsScraper
       days = 2
     end
     t = DateTime.now
-    t.step(t+days,step=1) { | n |
+    t.step(t+days, step=1) { |n|
       date = n.strftime("%Y%m%d")
       url="http://biz.yahoo.com/research/earncal/"+date+".html"
 
-      request = Typhoeus::Request.new(url,:timeout=>10000)
-      request.on_complete { | response |
+      request = Typhoeus::Request.new(url, :timeout=>10000)
+      request.on_complete { |response|
         begin
-          if(response.code==200)
+          if (response.code==200)
             puts 'HTTP RESPONSE: 200 for Date: '+date
             doc = Nokogiri::HTML(response.body)
             chains = doc.search("//a[@href]")
@@ -37,7 +37,8 @@ class EarningsScraper
                 ticker = obj.inner_text
                 # no filtering
                 #if filter.include?(ticker)
-                  earning = Earning.create(:date=>date,:ticker=>ticker)
+                earning = Earning.new(date, ticker)
+                boolean = earning.save
               end
             end
           else
@@ -45,7 +46,7 @@ class EarningsScraper
             #puts response.body
           end
         rescue => boom
-          puts 'failed for date' +date
+          puts 'failed for date ' +date
           puts boom
         end
       } # end request
