@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = %q{2011-06-09}
+  s.date = %q{2011-06-12}
   s.default_executable = %q{rvol}
   s.email = %q{tonikarhu@gmail.com}
   s.executables = ["rvol"]
@@ -102,6 +102,7 @@ Gem::Specification.new do |s|
     "test/reports/test_sdreport.rb",
     "test/reports/test_weekliesreport.rb",
     "test/scrapers/test_capsparser.rb",
+    "test/scrapers/test_earningssparser.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_parsing.rb",
