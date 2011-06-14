@@ -103,17 +103,17 @@ class ChainsTop10Calls < Report
 end
 
 
-class ChainsTop10 < Report
+class ChainsTop10Puts < Report
   #
-  # report the chains with the highest call volatility. This could be a bearish signal
+  # report the chains with the highest puts volatility. This could be a bearish signal
   #
   def generateReport
-    tickers = Ticker.all(:order => [ :total.desc ]).first 10
+    tickers = Ticker.all(:order => [ :totalPuts.desc ]).first 10
     ReportPrinter.new.printTop10OptionsVolReport(tickers)
   end
 
   def printInfo
-     'A report with the most total  exchanged today in S&P500/Top rated stock/ETF options'
+     'A report with the most total puts exchanged today in S&P500/Top rated stock/ETF options'
   end
 
 end
