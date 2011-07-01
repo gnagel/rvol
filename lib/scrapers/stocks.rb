@@ -42,6 +42,7 @@ class Stocks
               stock.parseDate(splitted[5])
               stock.dividendyield= splitted[6]
               stock.dpershare= splitted[7]
+              stock.shortratio = splitted[8]
 
               stock.created_at = DateTime.now
               stocks << stock

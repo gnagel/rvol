@@ -39,6 +39,11 @@ module Rvol
   DataMapper.finalize
   DataMapper.auto_upgrade!
 
+  # cleanup old databases
+  def clean
+      file = ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
+      File.delete(file)
+  end
 
   def runReport(reportName,arg=nil)
     puts 'Report name: '+ reportName
@@ -98,6 +103,13 @@ module Rvol
   #
   def runSnapShotHistorical
     down = Downloader.new.initHistoricalAndCorrelations
+  end
+
+  #
+  # Run the downloader. Downloads all daily data
+  #
+  def study(stock)
+     Tools.new.researchStock(stock)
   end
 
   #

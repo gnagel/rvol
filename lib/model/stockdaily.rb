@@ -18,7 +18,8 @@ class Stockdaily
   property :exdividenddate,Date      # q Ex-Dividend Date
   property :dividendyield, String    # y Dividend Yield
   property :dpershare,     String    # d Dividend/Share
-  
+  property :shortratio,    Float     # s7 shortratio
+
   property :std20, Float, :required => false
   property :std10, Float, :required => false
   property :std5,  Float, :required => false

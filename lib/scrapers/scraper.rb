@@ -8,7 +8,7 @@ class Scraper
   # Download stock info  from yahoo
   #
   def self.downLoadYahooCSV(csvTickers)
-    request = Typhoeus::Request.new('http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(csvTickers+'&f=sl1a2vnqyd&e=.csv'))
+    request = Typhoeus::Request.new('http://download.finance.yahoo.com/d/quotes.csv?s='+URI.escape(csvTickers+'&f=sl1a2vnqyds7&e=.csv'))
   end
 
   #

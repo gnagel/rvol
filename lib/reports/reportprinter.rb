@@ -59,8 +59,12 @@ class ReportPrinter
       rescue
       end
       stock = Stockdaily.first(:symbol=>elem.ticker)
+      begin
       table << [elem.date, elem.ticker, stock.name, stock.price, checkIVol(elem.frontMonth), checkIVol(elem.backMonth), checkValue(difference), stock.avolume]
-    }
+      rescue => error
+        puts 'error in loading '+error.to_s
+      end
+      }
     print table
   end
 
