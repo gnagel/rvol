@@ -61,8 +61,8 @@ class ReportPrinter
       stock = Stockdaily.first(:symbol=>elem.ticker)
       begin
       table << [elem.date, elem.ticker, stock.name, stock.price, checkIVol(elem.frontMonth), checkIVol(elem.backMonth), checkValue(difference), stock.avolume]
-      rescue => error
-        puts 'error in loading '+error.to_s
+      rescue
+             # todo log here
       end
       }
     print table
@@ -78,7 +78,10 @@ class ReportPrinter
         difference = elem.frontMonth-elem.backMonth
       rescue
       end
+      begin
       table << [elem.exdividenddate, elem.symbol, elem.name, elem.price, elem.avolume]
+      rescue
+      end
     }
     print table
   end
@@ -115,8 +118,11 @@ class ReportPrinter
     table = Table(%w[Symbol Name Price AverageVolume Volume StandardDeviation20])
     if tickers != nil
     tickers.each { |stock|
+      begin
       table <<[stock.symbol, stock.name, stock.price, stock.avolume, stock.volume, stock.std20]
-    }
+      rescue
+      end
+      }
     print table.sort_rows_by("StandardDeviation20",:order => :descending)
     else
       puts 'Nothing to report!'
@@ -126,7 +132,10 @@ class ReportPrinter
     def printScouterStd5(tickers)
     table = Table(%w[Symbol Name Price AverageVolume Volume StandardDeviation5])
     tickers.each { |stock|
+      begin
       table <<[stock.symbol, stock.name, stock.price, stock.avolume, stock.volume, stock.std5]
+      rescue
+      end
     }
     print table.sort_rows_by("StandardDeviation5",:order => :descending)
   end
