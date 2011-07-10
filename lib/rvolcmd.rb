@@ -82,7 +82,7 @@ class Rvolcmd
         options.command = "downloader"
       end
 
-      opts.on("--clean ", "Cleanup old database if problems with data storage use this if there are errors with data loading") do |type|
+      opts.on("--clean", "Cleanup old database if problems with data storage use this if there are errors with data loading") do |type|
         puts 'deleting old database'
         options.command = "clean"
       end
