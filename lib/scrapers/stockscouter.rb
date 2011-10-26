@@ -58,12 +58,25 @@ class Stockscouter
     links = doc.css('a')
     links.each do |link|
       if link.attribute('href').to_s.include? 'http://investing.money.msn.com/investments/stock-price?symbol='
-        save(link.content,50)
+        save(link.content, TOP50)
         puts link.content
       end
     end
+  end
 
-
+  #
+  # Parses the tickers from the page rated 1
+  #
+  def parseScouterTop10List
+    response = Scraper.downLoadStockScouter10
+    doc = Nokogiri::HTML(response.body)
+    links = doc.css('a')
+    links.each do |link|
+      if link.attribute('href').to_s.include? 'http://investing.money.msn.com/investments/stock-price?symbol='
+        save(link.content, TOP10)
+        puts link.content
+      end
+    end
   end
 
   #

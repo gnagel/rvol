@@ -5,7 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rvol"
-    gem.summary ="Rvol enables you to study market volatility from free data on the internet.
+    gem.summary ="
+    Rvol enables you to study market volatility from free data on the internet.
     I trade stocks, options and futures as a hobby.  Often some of the strategies that i have used 
     include looking at earnings dates for stocks and investing in these dates with different options
     strategies. 
@@ -23,11 +24,13 @@ begin
     market including stock prices, options chains, and earnings events for the month ahead.
   
     Install: gem install rvol
-    Usage: rvol -h (displays options), 
-    To check info for a particular stock use: rvol -r AAPL. 
+
+    Usage: rvol -h (displays options),
+
+    To check info for a particular stock use: rvol -t AAPL.
+
     All other features require the market snapshot to be taken use rvol -s to take a snapshot (20-30 minutes). 
-    Then for instance rvol -e (earnings report with front month and backmonth volatilities) 
-    
+
     **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on MAC OS X. **
     (Linux should work, windows will need special libraries installed )
     "
