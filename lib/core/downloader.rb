@@ -33,7 +33,11 @@ class Downloader
 
     DataMapper.finalize
     #DataMapper.auto_migrate!
-    DataMapper.auto_upgrade!
+    begin
+      DataMapper.auto_upgrade!
+      rescue => boom
+         puts boom
+    end
     # cleanup database
     self.cleanup
 
@@ -41,8 +45,7 @@ class Downloader
       x.report('Downloading: ') {
 
         self.downloadSP500Tickers
-        self.downloadEtfTopVol100
-        self.downloadStockscouterStocks
+        #self.downloadEtfTopVol100
         self.downloadstockdetails
         self.downloadEarnings
         self.downloadSChains
@@ -62,10 +65,10 @@ class Downloader
       }
       x.report('Calculate standard deviations: ') {
         self.calculateStd }
-      x.report('Calculate correlations: ') {
+      #x.report('Calculate correlations: ') {
         # skip this for now too slow
         #self.caclulateCorrelations
-      }
+      #}
     end
   end
 

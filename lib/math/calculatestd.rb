@@ -10,6 +10,7 @@ class CalculateStd
     date = Time.now
     # 60s * 60  * 24 * 30  = 30 days = 20 trading days
     past = 60*60*24*30
+    # 60s * 60  * 24 * 7  = 7 days = 5 trading days
     past5 = 60*60*24*7
     twentyago = date - past
     fiveago = date - past5

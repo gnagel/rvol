@@ -12,7 +12,6 @@ Scenario: Run rvol
   And I should not see: "command not found"
 #
 #
-#
 Scenario: Run rvol -p
 Given I run: "rvol -p"
  Then I should see: "Report_Name"

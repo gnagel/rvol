@@ -106,7 +106,7 @@ module Rvol
   end
 
   #
-  # Run the downloader. Downloads all daily data
+  # Study
   #
   def study(stock)
      Tools.new.researchStock(stock)

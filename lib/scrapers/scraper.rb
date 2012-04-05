@@ -74,14 +74,14 @@ class Scraper
   # Single call to get top 50-100 with rating 1 from stock scouter
   #
   def self.downLoadStockScouterTop1100
-    response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=1&page=2&col=13')
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stockscouter-top-rated-stocks?sco=10&category=&choice=')
   end
 
   ##
   # Single call only to get list of stockscouter rated 10
   #
   def self.downLoadStockScouter10
-    response = Typhoeus::Request.get('http://moneycentral.msn.com/investor/stockrating/srstopstocksresults.aspx?sco=10')
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stockscouter-top-rated-stocks?sco=10&category=&choice=')
   end
 
   def self.downloadFoolTop510
