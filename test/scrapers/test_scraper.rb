@@ -35,37 +35,6 @@ class Test_scraper  < Test::Unit::TestCase
     hydra.run
   end
 
-  def test_downloadScouterTop50
-    response = Scraper.downLoadStockScouterTop50
-    debugResponse(response)
-  end
-
-  def test_downLoadStockScouter10
-    response = Scraper.downLoadStockScouter10
-    debugResponse(response)
-  end
-  
-  def test_downLoadStockScouterTop1050
-    response = Scraper.downLoadStockScouterTop1050
-    debugResponse(response)
-  end 
-  
-  def test_downLoadStockScouterTop10100
-    response = Scraper.downLoadStockScouterTop10100
-    debugResponse(response)
-  end 
-  
-  def test_downLoadStockScouterTop150
-    response = Scraper.downLoadStockScouterTop150
-    debugResponse(response)
-  end
-  
-  def test_downLoadStockScouterTop1100
-    response = Scraper.downLoadStockScouterTop1100
-    debugResponse(response)
-  end
-  
-  
   def test_downLoadETF100
     response = Scraper.down100VolETF
     debugResponse(response)
