@@ -38,32 +38,18 @@ if (Earning.count==0)
     end
   }
 
-  Earning.all.each { |ticker|
-    begin
-      tick = Ticker.new
-      tick.created_at = Time.now
-      tick.symbol = ticker
-      tick.index = 'SP500'
-      tick.save
-    rescue => boom
-      puts 'error  ' + ticker
-      puts boom
-    end
-  }
-
-  Stockscouter.new.parseScouterTop10
-  Stockscouter.new.parseScouterTop1
-
   Stocks.new.downloadStock2(ticker, true)
   chains = OptionChainsScraper.new.loadChains(ticker, true)
   Historicalscraper.new.downloadHistoricalData(Stockdaily.all, true)
-
-
   CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
   CalculateStd.new.calculateStd
   CalculateChains.new.calculateTotalChains
   #Calculatecorrelations.new.calculateCorrelations
 
 end
-puts 'DONE! Starting testing!'
+puts '****************************** DONE! Starting testing! ***********************************'
+puts '***'
+puts '***'
+puts '***'
+
 # DONE

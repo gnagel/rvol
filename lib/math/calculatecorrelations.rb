@@ -1,54 +1,98 @@
+require 'model/stockcorrelation'
+require 'statsample'
 #
 # Calculate correlations
 #
 class Calculatecorrelations
 
-  def calculateCorrelations
-    puts 'loading report'
-    date = Time.now
-    # 60s * 60  * 24 * 30  = 30 days = 20 trading days
-    past = 60*60*24*30
-    oneday = 60*60*24
-    twentyago = date - past
-    index = 0
-    # load all etfs
-    tickers = Ticker.all(:index=>'etf')
-    tickers2 = Array.new(tickers)
-    for i in 0..19 do
-      days = oneday*i
-      tickers.each do |ticker|
-        # TODO sort by date
-        history = Stockhistorical.all(:symbol => ticker.symbol, :date.gt=>twentyago-days, :date.lt=>date-days)
 
-        arrayPrices = history.collect { |tic| tic.close.to_f }
-        tickers2.each do |ticker2|
-          history2 = Stockhistorical.all(:symbol => ticker2.symbol, :date.gt=>twentyago-days, :date.lt=>date-days)
-          arrayPrices2 = history2.collect { |tic| tic.close.to_f }
+  def calculateYearlyCorrelationRF
+    processed = Array.new
+    tickrs = Ticker.all(:index=>'SP500')
+    tickrs2 = Array.new(tickrs)
+    # half year correlation
+    days = DateTime.now-175
+    arrayPrices = Stockhistorical.all(:date.gt=>days,:order =>[:date.asc])
+    # for each ticker
+    tickrs.each do |tickr|
+      processed << tickr.symbol
+      # get all history for the given ticker
+      arrayPricesSymbol  =  arrayPrices.find_all{|hist| hist.symbol == tickr.symbol}.collect { |tickr| tickr.close.to_f }
+      arrayPricesSymbol = arrayPricesSymbol.to_scale
+
+      tickrs2.each do |tickr2|
           begin
-            correlation = arrayPrices.correlation(arrayPrices2)
-            if ticker.symbol != ticker2.symbol
-              scorrelation = Stockcorrelation.new
-              scorrelation.created_at = (date-days)
-              scorrelation.symbol = ticker.symbol
-              scorrelation.symbol2 = ticker2.symbol
-              scorrelation.correlation = correlation
-              if scorrelation.save
-              else
-                puts 'Error saving correlation'
-                scorrelation.errors.each do |e|
-                  puts e
-                end
-              end
+            if (tickr != tickr2&&!processed.include?(tickr2.symbol))
+              arrayPricesSymbol2 =  arrayPrices.find_all{|hist| hist.symbol == tickr2.symbol}.collect { |tickr2| tickr2.close.to_f }
+              arrayPricesSymbol2 = arrayPricesSymbol2.to_scale
+              #ycorrelation = arrayPricesSymbol.correlation(arrayPricesSymbol2)
+              ycorrelation = Statsample::Bivariate.pearson(arrayPricesSymbol,arrayPricesSymbol2)
+              puts " #{tickr.symbol} AND #{tickr2.symbol} CORRELATION #{ycorrelation}"
+              saveCorrelation(tickr, tickr2, ycorrelation,175)
             end
-            index+=1
-            puts index.to_s + ' correlation ' + ticker.symbol + ' AND '+ticker2.symbol+' '+correlation.to_s
-          rescue => error
-            puts 'Correlation calcuation failed!'
-            puts error
+              rescue => error
+                      puts "Correlation calcuation failed for #{tickr.symbol} AND #{tickr2.symbol}!"
+                      puts error
           end
-
-        end
       end
-    end #end 0..19
+    end
   end
+
+
+
+
+  #
+  #  Calculate correlations
+  #
+  def calculateCurrentCorrelation(days)
+    processed = Array.new
+    tickrs = Ticker.all(:index=>'SP500')
+    tickrs2 = Array.new(tickrs)
+    daysNoWeekends = (days / 5)*2 + days - 1
+    puts daysNoWeekends
+    arrayPrices = Stockhistorical.all(:date.gt=>DateTime.now-daysNoWeekends,:order =>[:date.asc])
+
+    # for each ticker
+    tickrs.each do |tickr|
+      processed << tickr.symbol
+      # get all history for the given ticker
+     arrayPricesSymbol  =  arrayPrices.find_all{|hist| hist.symbol == tickr.symbol}.collect { |tickr| tickr.close.to_f }
+     arrayPricesSymbol = arrayPricesSymbol.to_scale
+      tickrs2.each do |tickr2|
+          begin
+            if (tickr != tickr2&&!processed.include?(tickr2.symbol))
+              arrayPricesSymbol2 = arrayPrices.find_all{|hist| hist.symbol == tickr2.symbol}.collect { |tickr2| tickr2.close.to_f }
+              arrayPricesSymbol2 = arrayPricesSymbol2.to_scale
+              #ycorrelation = arrayPricesSymbol.correlation(arrayPricesSymbol2)
+              ycorrelation = Statsample::Bivariate.pearson(arrayPricesSymbol,arrayPricesSymbol2)
+              puts " #{tickr.symbol} AND #{tickr2.symbol} CORRELATION #{days} #{ycorrelation}"
+              saveCorrelation(tickr, tickr2, ycorrelation,days)
+            end
+              rescue => error
+                      puts 'Correlation calcuation failed!'
+                      puts error
+          end
+      end
+    end
+  end
+
+  #private methods
+  private
+
+  def saveCorrelation(tickr, tickr2, ycorrelation,days)
+    correlationToSave = Stockcorrelation.new
+    correlationToSave.created_at = DateTime.now
+    correlationToSave.symbol = tickr.symbol
+    correlationToSave.symbol2 = tickr2.symbol
+    correlationToSave.correlation = ycorrelation
+    correlationToSave.days = days
+    if correlationToSave.save
+    else
+      puts 'saving failed'
+      correlationToSave.errors.each do |e|
+        puts e
+      end
+    end
+  end
+
 end

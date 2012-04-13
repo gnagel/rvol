@@ -2,7 +2,7 @@
 require 'typhoeus'
 require 'nokogiri'
 require "model/stock"
-require 'CSV'
+require 'csv'
 require 'math/arraymath'
 require 'scrapers/scraper'
 #

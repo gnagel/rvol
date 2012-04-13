@@ -23,6 +23,11 @@ class Stockdaily
   property :std20, Float, :required => false
   property :std10, Float, :required => false
   property :std5,  Float, :required => false
+
+  property :cor365, Float, :required => false
+  property :cor20, Float, :required => false
+  property :cor10, Float, :required => false
+
   #
   #
   #

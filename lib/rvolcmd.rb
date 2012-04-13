@@ -143,6 +143,9 @@ class Rvolcmd
       loader = self.new
       loader.runSnapShot
       loader.runSnapShotHistorical
+      loader.runSnapShotCorrelations
+    when 'correlation'
+      self.new.runSnapShotCorrelations
     when 'downloader'
       downloader.runCron
     when 'study'

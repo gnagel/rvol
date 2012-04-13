@@ -4,7 +4,6 @@ require "scrapers/historicalscraper"
 require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsparser"
-require "scrapers/stockscouter"
 require 'reports/earningsreport'
 require 'reports/IndexReport'
 require 'reports/Sdreport'
@@ -58,19 +57,28 @@ class Downloader
     end
   end
 
-  def initHistoricalAndCorrelations
+  def initHistorical
     Benchmark.bm do |x|
       x.report('Download Historical: ') {
         self.downloadHistorical
       }
       x.report('Calculate standard deviations: ') {
         self.calculateStd }
-      #x.report('Calculate correlations: ') {
-        # skip this for now too slow
-        #self.caclulateCorrelations
-      #}
+
     end
   end
+
+  def calculateCorrelations
+    Benchmark.bm do |x|
+          x.report('Download Historical: ') {
+
+    puts 'starting calculate corrrelations'
+    Calculatecorrelations.new.calculateYearlyCorrelationRF
+    Calculatecorrelations.new.calculateCurrentCorrelation(14)
+      }
+    end
+  end
+
 
   #
   # Cleanup the datase
@@ -172,11 +180,6 @@ class Downloader
   def downloadEtfTopVol100
     puts 'starting download top Vol ETF:s'
     Etf.new.parse100TopVolEtf
-  end
-
-  def caclulateCorrelations
-    puts 'starting calculate corrrelations'
-    Calculatecorrelations.new.calculateCorrelations
   end
 
   #

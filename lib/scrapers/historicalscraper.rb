@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'CSV'
+require 'csv'
 require 'typhoeus'
 require 'thread'
 require 'scrapers/scraper'

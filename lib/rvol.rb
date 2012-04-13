@@ -102,7 +102,7 @@ module Rvol
   # Run the downloader. Downloads all daily data
   #
   def runSnapShotHistorical
-    down = Downloader.new.initHistoricalAndCorrelations
+    down = Downloader.new.initHistorical
   end
 
   #
