@@ -105,6 +105,9 @@ module Rvol
     down = Downloader.new.initHistorical
   end
 
+  def runSnapShotCorrelations
+    Downloader.new.calculateCorrelations
+  end
   #
   # Study
   #
