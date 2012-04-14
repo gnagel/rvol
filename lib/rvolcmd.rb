@@ -72,10 +72,9 @@ class Rvolcmd
         options.ticker = ticker
       end
 
-      opts.on("-s", "--snapshot [type]", "Download market snapshot, type can be either snapshot or historical") do |type|
+      opts.on("-s", "--snapshot", "Download market snapshot, type can be either snapshot ") do
         puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
         options.command = "snapshot"
-        options.args = type
       end
 
       opts.on("", "--downloader", "start cron type timer downloader, will run 5:00 PM every weekday") do
@@ -85,6 +84,10 @@ class Rvolcmd
       opts.on("--clean", "Cleanup old database if problems with data storage use this if there are errors with data loading") do |type|
         puts 'deleting old database'
         options.command = "clean"
+      end
+
+      opts.on("-o","--test", "used for to test a particular usecase") do
+        options.command = "test"
       end
 
       # Done here with commands
@@ -152,6 +155,9 @@ class Rvolcmd
       self.new.study(options.ticker)
     when 'clean'
       self.new.clean
+    when 'test'
+      puts 'Testing'
+      self.new.test
 
   end
 end

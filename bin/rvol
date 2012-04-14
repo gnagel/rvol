@@ -3,4 +3,4 @@
 require 'rvolcmd'
 # if nothing in input put -h
 #parse command line
-Rvolcmd.new ARGV
+Rvolcmd.new

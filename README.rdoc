@@ -5,6 +5,13 @@
 	in the creation of the database. Earnings are downloaded and listed with implied volatilities for front and back
 	month options. There are some reports which can be generated after the database is downloaded look at rvol -p.
 
+== Notes
+
+*Database stored in user_home/.rvol
+
+*Developemt and tested on Mac OS X. With ruby 1.9.2/3. Problems may occur with non nix based systems.
+
+
 == Note on Patches/Pull Requests
  
 * Fork the project.

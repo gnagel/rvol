@@ -39,4 +39,13 @@ class Correlation < Test::Unit::TestCase
       Calculatecorrelations.new.calculateCurrentCorrelation(30)
     end
   end
+
+      # test 20 day correlation calculation
+  def test_getCorrelationIrregularity
+    begin
+      puts 'testing resport data'
+      Calculatecorrelations.new.getCorrelationIrregularity
+    end
+  end
+
 end
