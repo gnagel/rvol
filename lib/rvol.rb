@@ -122,10 +122,11 @@ module Rvol
     Cron.new.run
   end
 
-  #
+    #
   # Run a test on whatever
   #
-  def test
+  def testCorr
+    puts 'wtf'
     Calculatecorrelations.new.getCorrelationIrregularity
   end
 

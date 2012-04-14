@@ -156,8 +156,9 @@ class Rvolcmd
     when 'clean'
       self.new.clean
     when 'test'
-      puts 'Testing'
-      self.new.test
+      self.new.testCorr
 
   end
+
+
 end
