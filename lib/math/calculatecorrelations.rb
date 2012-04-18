@@ -78,19 +78,25 @@ class Calculatecorrelations
 
   #,:limit=>20
   def getCorrelationIrregularity
-     higlyCorrelatedStocks175 = Stockcorrelation.all(:days=>175,:correlation.gt => 0.9)
+     puts 'in here'
+     higlyCorrelatedStocks175 = Stockcorrelation.all(:days=>175,:correlation.gt => 0.98)
+     puts higlyCorrelatedStocks175.size
      # for each of these find stocks from the 10 day correlations where correlation is low
-     higlyCorrelatedStocks14 = Stockcorrelation.all(:days=>10,:order =>[:correlation.asc])
+     higlyCorrelatedStocks14 = Stockcorrelation.all(:days=>14,:order =>[:correlation.asc])
      matches = Array.new
      higlyCorrelatedStocks175.each do |highcor|
-        matches += higlyCorrelatedStocks14.find_all{|lowcor|lowcor.symbol == highcor.symbol && lowcor.symbol2 && highcor.symbol2 }
+        matches += Stockcorrelation.all(:symbol=>highcor.symbol,:symbol2=>highcor.symbol2,:days=>14)
      end
-     matches.sort_by!{|correl|correl.correlation}
 
+     i = 0
      matches.each do |cor|
+          i+=1
           puts cor.symbol
           puts cor.symbol2
           puts cor.correlation
+       if i==20
+        break
+       end
     end
   end
 

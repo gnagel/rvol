@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'typhoeus'
+require 'rubygems'
 require 'nokogiri'
 require "model/stock"
 require 'csv'

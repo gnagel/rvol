@@ -126,7 +126,6 @@ module Rvol
   # Run a test on whatever
   #
   def testCorr
-    puts 'wtf'
     Calculatecorrelations.new.getCorrelationIrregularity
   end
 
