@@ -86,7 +86,15 @@ class Rvolcmd
         options.command = "clean"
       end
 
-      opts.on("-o","--test", "used for to test a particular usecase") do
+      opts.on("--correlationAll", "Calculate correlation for all instruments for the past 170 trading days") do
+            options.command = "test"
+      end
+
+      opts.on("--correlation10", "Calculate correlation for all instruments for the past 10 trading days") do
+            options.command = "test"
+      end
+
+      opts.on("--test", "used for to test a particular usecase") do
         options.command = "test"
       end
 
@@ -146,9 +154,10 @@ class Rvolcmd
       loader = self.new
       loader.runSnapShot
       loader.runSnapShotHistorical
-      loader.runSnapShotCorrelations
-    when 'correlation'
+    when 'correlationAll'
       self.new.runSnapShotCorrelations
+    when 'correlation10'
+        self.new.runSnapShotCorrelations10
     when 'downloader'
       downloader.runCron
     when 'study'
