@@ -87,11 +87,11 @@ class Rvolcmd
       end
 
       opts.on("--correlationAll", "Calculate correlation for all instruments for the past 170 trading days") do
-            options.command = "test"
+            options.command = "correlationAll"
       end
 
       opts.on("--correlation10", "Calculate correlation for all instruments for the past 10 trading days") do
-            options.command = "test"
+            options.command = "correlation10"
       end
 
       opts.on("--test", "used for to test a particular usecase") do
