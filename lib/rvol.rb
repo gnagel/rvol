@@ -108,6 +108,10 @@ module Rvol
   def runSnapShotCorrelations
     Downloader.new.calculateCorrelations
   end
+
+  def runSnapShotCorrelations10
+    Downloader.new.calculateCorrelations10
+  end
   #
   # Study
   #
