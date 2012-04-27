@@ -15,18 +15,16 @@ class Stockdaily
   property :avolume,       String, :required => true    # a2 average volume
   property :volume,        String, :required => true    # v volume
   property :name,          String  # n name
-  property :exdividenddate,Date, :required => false   # q Ex-Dividend Date
+  property :exdividenddate,Date,   :required => false   # q Ex-Dividend Date
   property :dividendyield, String, :required => false # y Dividend Yield
   property :dpershare,     String, :required => false # d Dividend/Share
-  property :shortratio,    Float, :required => false  # s7 shortratio
+  property :shortratio,    Float,  :required => false  # s7 shortratio
 
   property :std20, Float, :required => false
   property :std10, Float, :required => false
   property :std5,  Float, :required => false
 
-  property :cor365, Float, :required => false
-  property :cor20, Float, :required => false
-  property :cor10, Float, :required => false
+
 
   #
   #

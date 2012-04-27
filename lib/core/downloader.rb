@@ -30,55 +30,28 @@ class Downloader
   # initialize download
   def initEarningsAndChains
 
-    DataMapper.finalize
-    #DataMapper.auto_migrate!
-    begin
-      DataMapper.auto_upgrade!
-      rescue => boom
-         puts boom
-    end
-    # cleanup database
-    self.cleanup
-
-    Benchmark.bm do |x|
-      x.report('Downloading: ') {
-
         self.downloadSP500Tickers
-        #self.downloadEtfTopVol100
+        self.downloadEtfTopVol100
         self.downloadstockdetails
         self.downloadEarnings
         self.downloadSChains
-      }
-      x.report('Calculating: ') {
+        self.downloadHistorical
+        self.calculateStd
         self.calculateFronAndBackMonth
         self.calculateTotalChains
-
-      }
-    end
-  end
-
-  def initHistorical
-    Benchmark.bm do |x|
-      x.report('Download Historical: ') {
-        self.downloadHistorical
-      }
-      x.report('Calculate standard deviations: ') {
-        self.calculateStd }
-
-    end
   end
 
   def calculateCorrelations
-    Benchmark.bm do |x|
-          x.report('Download Historical: ') {
-
-    puts 'starting calculate corrrelations'
+    puts 'starting calculate corrrelations All'
     Calculatecorrelations.new.calculateYearlyCorrelationRF
-    Calculatecorrelations.new.calculateCurrentCorrelation(14)
-      }
-    end
   end
 
+  def calculateCorrelations10
+    puts 'starting calculate corrrelations 10'
+    calc = Calculatecorrelations.new
+    calc.cleanCorrelation10
+    calc.calculateCurrentCorrelation(10)
+  end
 
   #
   # Cleanup the datase

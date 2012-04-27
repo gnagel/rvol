@@ -42,8 +42,12 @@ class Stocks
               stock.parseDate(splitted[5])
               stock.dividendyield= splitted[6]
               stock.dpershare= splitted[7]
-              stock.shortratio = splitted[8]
-
+              begin
+                Float(splitted[8])
+                stock.shortratio = splitted[8]
+              rescue
+                puts 'no shortratio available : ' + splitted[8]
+              end
               stock.created_at = DateTime.now
               stocks << stock
               if persist

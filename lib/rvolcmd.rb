@@ -94,6 +94,11 @@ class Rvolcmd
             options.command = "correlation10"
       end
 
+      opts.on("--history", "load 1 year history for all tickers in system") do
+        options.command = "history"
+      end
+
+
       opts.on("--test", "used for to test a particular usecase") do
         options.command = "test"
       end
@@ -152,18 +157,20 @@ class Rvolcmd
       self.new.news(options.ticker, options.args)
     when 'snapshot'
       loader = self.new
+      loader.clean
       loader.runSnapShot
-      loader.runSnapShotHistorical
     when 'correlationAll'
       self.new.runSnapShotCorrelations
     when 'correlation10'
-        self.new.runSnapShotCorrelations10
+      self.new.runSnapShotCorrelations10
     when 'downloader'
       downloader.runCron
     when 'study'
       self.new.study(options.ticker)
     when 'clean'
       self.new.clean
+    when 'history'
+      self.new.runSnapShotHistorical
     when 'test'
       self.new.testCorr
 

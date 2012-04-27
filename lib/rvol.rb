@@ -34,15 +34,42 @@ module Rvol
     Dir.mkdir(ENV['HOME']+'/.rvol')
   end
 
-  snapshot = 'sqlite://'+ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
-  DataMapper.setup(:default, snapshot)
-  DataMapper.finalize
-  DataMapper.auto_upgrade!
+  # If you want the logs displayed you have to do this before the call to setup
+  #DataMapper::Logger.new($stdout, :Error)
 
-  # cleanup old databases
+
+  ################Database setup #########################
+  snapshot = 'sqlite://'+ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
+  mysql = Rvol.config['rvol_main']
+  DataMapper.setup(:default, mysql)
+  ################ Mysql Database setup ##################
+
+  #mysql = Rvol.config['rvol_main']
+  #DataMapper.setup(:mysql, mysql)
+  #DataMapper.repository(:mysql) {
+  #DataMapper.finalize
+  #DataMapper.auto_upgrade!
+  #}
+
+
+  # cleanup old database and create¨
   def clean
       file = ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
-      File.delete(file)
+      if File.exist?(file)
+        File.delete(file)
+      end
+      puts 'CREATING data-snapshot DATABASE'
+      ################Database setup #########################
+      begin
+      mysql = Rvol.config['rvol_main']
+      DataMapper.setup(:default, mysql)
+      DataMapper.finalize
+      DataMapper.auto_migrate!
+
+      rescue => e
+        puts 'error with creating a new sql lite database: '
+        puts e
+      end
   end
 
   def runReport(reportName,arg=nil)
@@ -102,7 +129,7 @@ module Rvol
   # Run the downloader. Downloads all daily data
   #
   def runSnapShotHistorical
-    down = Downloader.new.initHistorical
+    Downloader.new.downloadHistorical
   end
 
   def runSnapShotCorrelations

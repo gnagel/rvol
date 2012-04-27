@@ -5,35 +5,15 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rvol"
-    gem.summary ="
-    Rvol enables you to study market volatility from free data on the internet.
-    I trade stocks, options and futures as a hobby.  Often some of the strategies that i have used 
-    include looking at earnings dates for stocks and investing in these dates with different options
-    strategies. 
-    
-    Rvol downloads options chains, calculates implied volatilites for them and has features 
-    to list top 10 type of lists for potential investment opportunities. 
-    
-    Put call ratios are calculated , total amount of puts or calls for a particular company etc are available.
-    These can be used to measure market sentiment. 
-   
-    Different filters can be used to find stocks/options with high volatilities, stocks with 
-    high options volume for the day etc which are indicators of forthcoming events. 
-    
-    Rvol concentrates on the S&P500 at the moment. At anytime rvol can be used to download a snapshot from the
-    market including stock prices, options chains, and earnings events for the month ahead.
-  
-    Install: gem install rvol
+    gem.summary ="Gem for analysing financial data mainly concentrating on options and stokcs associated with them. Usage: rvol -h
+    	A database is created for datamining stocks , options, and implied volatilities which are calculated
+    	in the creation of the database. Earnings are downloaded and listed with implied volatilities for front and back
+    	month options. There are some reports which can be generated after the database is downloaded look at rvol -p.
+      <br>
+      To check info for a particular stock use: rvol -t AAPL.
+      <br>
+      All other features require the market snapshot to be taken use rvol -s to take a snapshot (20-30 minutes)."
 
-    Usage: rvol -h (displays options),
-
-    To check info for a particular stock use: rvol -t AAPL.
-
-    All other features require the market snapshot to be taken use rvol -s to take a snapshot (20-30 minutes). 
-
-    **rvol is under development at the moment and is not in a stable state. Tested to work with ruby 1.9.2 on MAC OS X. **
-    (Linux should work, windows will need special libraries installed )
-    "
     gem.email = "tonikarhu@gmail.com"
     gem.homepage = "http://github.com/tonik/rvol"
     gem.authors = ["Toni Karhu"]
@@ -42,6 +22,12 @@ begin
     gem.add_dependency "dm-migrations"
     gem.add_dependency "dm-validations"
     gem.add_dependency "dm-sqlite-adapter"
+    # problem in mac os x do : gem install mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config
+    # gem.add_dependency "mysql"
+    # and here
+    # gem install dm-mysql-adapter --no-rdoc --no-ri -- --with-mysql-dir=/usr/local/mysql/
+    gem.add_dependency "dm-mysql-adapter"
+    gem.add_dependency "peach"
     gem.add_dependency "ruport"
     gem.add_dependency "typhoeus"
     gem.add_dependency "ruport-util"

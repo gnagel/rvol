@@ -11,5 +11,7 @@ class Stockcorrelation
     property :days,                        String,  :required => true
     property :symbol,                      String,  :required => true
     property :symbol2,                     String,  :required => true
-    property :correlation,                 Float,  :required => true
+    property :uniqueid,                    String,  :required => true, :unique => true
+    property :correlation,                 Float,   :required => true
+
 end

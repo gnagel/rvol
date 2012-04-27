@@ -37,8 +37,8 @@ class EarningsScraper
                 ticker = obj.inner_text
                 # no filtering
                 #if filter.include?(ticker)
-                earning = Earning.new(date, ticker)
-                boolean = earning.save
+                earning = Earning.create(:date=>date,:ticker=>ticker)
+
               end
             end
           else
