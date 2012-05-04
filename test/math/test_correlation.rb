@@ -48,4 +48,23 @@ class Correlation < Test::Unit::TestCase
     end
   end
 
+  # test delta calculation
+  def test_deltaCalcualtion
+    begin
+      puts 'testing delta'
+      Calculatecorrelations.new.calculateDelta('AAPL', 'LVS',10)
+    end
+  end
+
+  # test delta calculation
+  def test_getCorrelatedStocks
+    begin
+      puts 'getCorrelatedStocks'
+      Calculatecorrelations.new.getCorrelatedStocks('AAPL').each do |cor|
+        puts cor.symbol
+        puts cor.correlation
+
+      end
+    end
+  end
 end

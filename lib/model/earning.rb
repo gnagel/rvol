@@ -11,10 +11,11 @@ class Earning
   property :ticker,                      String, :unique => true
   property :frontMonth,                  Float
   property :backMonth,                   Float
-  def initialize(date,ticker)
-    self.date = date
-    self.ticker = ticker
-    self.created_at = Time.now
-  end
+
+  #def initialize(date,ticker)
+  #  self.date = date
+  #  self.ticker = ticker
+  #  self.created_at = Time.now
+  #end
 
 end

@@ -3,7 +3,8 @@ require 'statsample'
 require 'peach'
 require 'monitor'
 #
-# Calculate correlations
+# Calculate correlations. This class calculates correlations for all instruments
+# in a given set.
 #
 class Calculatecorrelations < Monitor
 
@@ -31,7 +32,10 @@ class Calculatecorrelations < Monitor
                 #ycorrelation = arrayPricesSymbol.correlation(arrayPricesSymbol2)
                 ycorrelation = Statsample::Bivariate.pearson(arrayPricesSymbol,arrayPricesSymbol2)
                 puts " #{tickr.symbol} AND #{tickr2.symbol} CORRELATION #{ycorrelation}"
-                saveCorrelation(tickr, tickr2, ycorrelation,175)
+                delta = calculateDelta2(arrayPricesSymbol, arrayPricesSymbol2)
+                puts "DELTA for #{tickr.symbol} AND #{tickr2.symbol}: #{delta}"
+
+                saveCorrelation(tickr, tickr2, ycorrelation,delta,175)
               end
                 rescue => error
                         puts "Correlation calcuation failed for #{tickr.symbol} AND #{tickr2.symbol}!"
@@ -45,10 +49,14 @@ class Calculatecorrelations < Monitor
       puts "Time elapsed #{(endTime - startTime)} seconds"
   end
 
+  def calculateDelta2(arrayPricesSymbol, arrayPricesSymbol2)
+    arrayRatio = Array.new
+    for i in 0..arrayPricesSymbol.size-1
+      arrayRatio << arrayPricesSymbol[i] / arrayPricesSymbol2[i]
+    end
 
-
-
-
+    delta = arrayRatio.to_scale.sd
+  end
 
   #
   #  Calculate correlations
@@ -57,8 +65,7 @@ class Calculatecorrelations < Monitor
     processed = Array.new
     tickrs = Ticker.all(:index=>'SP500')
     tickrs2 = Array.new(tickrs)
-    daysNoWeekends = (days / 5)*2 + days - 1
-    puts daysNoWeekends
+    daysNoWeekends = (days / 5)*2 + days + 1
     arrayPrices = Stockhistorical.all(:date.gt=>DateTime.now-daysNoWeekends,:order =>[:date.asc])
 
     # for each ticker
@@ -74,8 +81,12 @@ class Calculatecorrelations < Monitor
               arrayPricesSymbol2 = arrayPricesSymbol2.to_scale
               #ycorrelation = arrayPricesSymbol.correlation(arrayPricesSymbol2)
               ycorrelation = Statsample::Bivariate.pearson(arrayPricesSymbol,arrayPricesSymbol2)
+              delta = calculateDelta2(arrayPricesSymbol, arrayPricesSymbol2)
+
               puts " #{tickr.symbol} AND #{tickr2.symbol} CORRELATION #{days} #{ycorrelation}"
-              saveCorrelation(tickr, tickr2, ycorrelation,days)
+              puts "DELTA for #{tickr.symbol} AND #{tickr2.symbol}: #{delta}"
+
+              saveCorrelation(tickr, tickr2, ycorrelation,0,days)
             end
               rescue => error
                       puts 'Correlation calcuation failed!'
@@ -85,40 +96,76 @@ class Calculatecorrelations < Monitor
     end
   end
 
-  #,:limit=>20
+  #
+  #
+  #
   def getCorrelationIrregularity
 
      higlyCorrelatedStocks175 = Stockcorrelation.all(:days=>175,:correlation.gt => 0.98)
-     puts higlyCorrelatedStocks175.size
+     puts "found this many highly correlated stocks:  #{higlyCorrelatedStocks175.size}"
      matches = Array.new
      higlyCorrelatedStocks175.each do |highcor|
         matches += Stockcorrelation.all(:symbol=>highcor.symbol,:symbol2=>highcor.symbol2,:days=>10,:correlation.lt => 0.3)
      end
-
+     puts 'Found this many with 10 day correlation less than 0.3 correlation: '
      i = 0
      matches.each do |cor|
           i+=1
           puts cor.symbol
           puts cor.symbol2
           puts cor.correlation
+
     end
   end
+
+  #
+  # Get a list of highly correlated stocks
+  #
+  def getCorrelatedStocks(symbol)
+    correlated = Stockcorrelation.all(:symbol=>symbol,:days=>175,:correlation.gt => 0.90) + Stockcorrelation.all(:symbol2=>symbol,:days=>175,:correlation.gt => 0.90)
+  end
+
 
   def cleanCorrelation10
     Stockcorrelation.all(:days=>10).destroy
   end
 
+  #
+  #Calculate the ratio of the pair
+  #
+  def calculatePriceRatio
+
+  end
+
+  # Calculate the delta of the pair for the past 10 days.
+  def calculateDelta(symbol1,symbol2,days)
+    daysNoWeekends = (days / 5) * 2 + days+1
+    arrayPrices1   = Stockhistorical.all(:symbol=>symbol1,:date.gt=>DateTime.now-daysNoWeekends,:order =>[:date.asc])
+    arrayPrices2   = Stockhistorical.all(:symbol=>symbol2,:date.gt=>DateTime.now-daysNoWeekends,:order =>[:date.asc])
+
+    arrayRatio = Array.new
+
+    for i in 0..arrayPrices1.size-1
+      arrayRatio << arrayPrices1[i].close.to_f - arrayPrices2[i].close.to_f
+    end
+
+    delta = arrayRatio.to_scale.sd
+    delta
+  end
+
   #private methods
   private
 
-  def saveCorrelation(tickr, tickr2, ycorrelation,days)
+  def saveCorrelation(tickr, tickr2, ycorrelation,delta,days)
     correlationToSave = Stockcorrelation.new
     correlationToSave.created_at = DateTime.now
     correlationToSave.symbol = tickr.symbol
     correlationToSave.symbol2 = tickr2.symbol
     correlationToSave.correlation = ycorrelation
+    correlationToSave.delta = delta
     correlationToSave.days = days
     correlationToSave.uniqueid = tickr.symbol+tickr2.symbol+days.to_s
+    # synchronized for file access problems with sqllite
     synchronize do
       if correlationToSave.save
       else

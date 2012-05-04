@@ -65,7 +65,7 @@ class Downloader
      Stockcorrelation.destroy
   end
 
-  # This will download all S&P 500 data from the internet and
+  # This will download all S&P 500 tickers from the internet and
   # store it in a database. Failed reads should be logged for
   # later processing
   def downloadSP500Tickers
@@ -139,6 +139,7 @@ class Downloader
 
   def downloadHistorical
     puts 'starting download historical'
+    Stockhistorical.destroy!
     stocks = Stockdaily.all
     Historicalscraper.new.downloadHistoricalData(stocks, true)
   end

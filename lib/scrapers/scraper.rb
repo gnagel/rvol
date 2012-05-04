@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'rubygems'
 require 'typhoeus'
 #
 # Connect to the internet and downloads stock info from various sites

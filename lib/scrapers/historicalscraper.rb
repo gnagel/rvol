@@ -16,7 +16,6 @@ class Historicalscraper
       request = Scraper.downLoadHistory(ticker.symbol)
       request.on_complete { | response |
         if(response.code==200)
-          dates = Stockhistorical.all(:symbol=>ticker.symbol).collect { |tic| tic.date }
           count+=1
           puts 'HTTP RESPONSE: 200 Historical  '+ticker.symbol + ' count: ' +count.to_s
           begin
@@ -29,7 +28,8 @@ class Historicalscraper
               history.low = row[3]
               history.close = row[4]
               history.volume = row[5]
-              if persist && !dates.include?(history.date)
+
+              if persist
                 if history.save
                 else
                   puts 'Error saving history'

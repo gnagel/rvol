@@ -52,7 +52,7 @@ module Rvol
   #}
 
 
-  # cleanup old database and create¨
+  # cleanup old database and create
   def clean
       file = ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
       if File.exist?(file)
@@ -64,7 +64,12 @@ module Rvol
       mysql = Rvol.config['rvol_main']
       DataMapper.setup(:default, mysql)
       DataMapper.finalize
-      DataMapper.auto_migrate!
+      DataMapper.auto_upgrade!
+
+      Ticker.destroy
+      Stockdaily.destroy
+      Chain.destroy
+      Earning.destroy
 
       rescue => e
         puts 'error with creating a new sql lite database: '

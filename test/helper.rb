@@ -16,7 +16,7 @@ DataMapper.finalize
 DataMapper.auto_migrate!
 
 # GENERATE THE TEST DATABASE FROMINTERNETDATA
-puts 'GENERATING TEST DATABASE'
+puts 'GENERATING TEST DATABASE AND TESTING SCRAPERS'
 
 # check if the database is there :
 if (Earning.count==0)
@@ -41,10 +41,7 @@ if (Earning.count==0)
   Stocks.new.downloadStock2(ticker, true)
   chains = OptionChainsScraper.new.loadChains(ticker, true)
   Historicalscraper.new.downloadHistoricalData(Stockdaily.all, true)
-  CalculateChains.new.calculateFrontAndBackMonthsMeanIVITM
-  CalculateStd.new.calculateStd
-  CalculateChains.new.calculateTotalChains
-  #Calculatecorrelations.new.calculateCorrelations
+
 
 end
 puts '****************************** DONE! Starting testing! ***********************************'
