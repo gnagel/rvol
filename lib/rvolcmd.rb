@@ -72,6 +72,11 @@ class Rvolcmd
         options.ticker = ticker
       end
 
+      opts.on("--correlated TICKER", "Get a list of correlated instruments',' , (--correlated MCD)") do |ticker|
+        options.command = "correlated"
+        options.ticker = ticker
+      end
+
       opts.on("-s", "--snapshot", "Download market snapshot, type can be either snapshot ") do
         puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
         options.command = "snapshot"
@@ -167,6 +172,8 @@ class Rvolcmd
       downloader.runCron
     when 'study'
       self.new.study(options.ticker)
+    when 'correlated'
+      self.new.correlated(options.ticker)
     when 'clean'
       self.new.clean
     when 'history'

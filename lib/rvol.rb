@@ -64,7 +64,9 @@ module Rvol
       mysql = Rvol.config['rvol_main']
       DataMapper.setup(:default, mysql)
       DataMapper.finalize
-      DataMapper.auto_upgrade!
+
+      # Automatically create the tables if they don't exist
+      DataMapper.auto_migrate!
 
       Ticker.destroy
       Stockdaily.destroy
@@ -138,17 +140,41 @@ module Rvol
   end
 
   def runSnapShotCorrelations
-    Downloader.new.calculateCorrelations
+    Calculatecorrelations.new.calculateYearlyCorrelationRF
   end
 
   def runSnapShotCorrelations10
-    Downloader.new.calculateCorrelations10
+    puts 'starting calculate corrrelations 20'
+    calc = Calculatecorrelations.new
+    calc.cleanCorrelation10
+    calc.calculateCurrentCorrelation(20)
   end
   #
   # Study
   #
   def study(stock)
      Tools.new.researchStock(stock)
+  end
+
+  #
+  # Get all correlated stocks
+  #
+  def correlated(stock)
+    begin
+      puts "stock correlated with #{stock}"
+      Calculatecorrelations.new.getCorrelatedStocks(stock).each do |cor|
+        puts "#{cor.symbol} and  #{cor.symbol2} CORRELATION #{cor.correlation}"
+      end
+    end
+  end
+
+  def getIrregularCorrelation
+
+    matches = Calculatecorrelations.new.getCorrelationIrregularity
+    matches.each do |cor|
+      puts "#{cor.symbol} and  #{cor.symbol2} CORRELATION #{cor.correlation}"
+    end
+
   end
 
   #
@@ -162,7 +188,6 @@ module Rvol
   # Run a test on whatever
   #
   def testCorr
-    Calculatecorrelations.new.getCorrelationIrregularity
   end
 
 end

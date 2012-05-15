@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 
 require 'helper'
 require "model/earning"
-require "reports/correlationSTDreport"
+require "reports/correlationreport"
 require "model/stockdaily"
 require 'math/calculatecorrelations'
 

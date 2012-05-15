@@ -4,10 +4,6 @@ require "scrapers/historicalscraper"
 require "scrapers/stocks"
 require "scrapers/optionschainsscraper"
 require "scrapers/earningsparser"
-require 'reports/earningsreport'
-require 'reports/IndexReport'
-require 'reports/Sdreport'
-require 'reports/correlationSTDreport'
 require "model/stock"
 require "model/chain"
 require "model/earning"
@@ -70,19 +66,7 @@ class Downloader
   # later processing
   def downloadSP500Tickers
     puts 'starting download SP500 tickers'
-    result = Stocks.new.downloadSP500
-    result.each { |ticker|
-      begin
-        tick = Ticker.new
-        tick.created_at = Time.now
-        tick.symbol = ticker
-        tick.index = 'SP500'
-        tick.save
-      rescue => boom
-        puts 'error  ' + ticker
-        puts boom
-      end
-    }
+    Stocks.new.downloadSP500
   end
 
   # This will download all S&P 500 data from the internet and

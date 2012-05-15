@@ -13,6 +13,7 @@ class Stockcorrelation
     property :symbol2,                     String,  :required => true
     property :uniqueid,                    String,  :required => true, :unique => true
     property :correlation,                 Float,   :required => true
+    property :industry,                    String,   :required => false
     property :delta,                       Float,   :required => false
 
 end

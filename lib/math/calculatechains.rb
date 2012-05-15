@@ -41,7 +41,11 @@ class CalculateChains
             tick.backMonth = "%0.2f" % (impliedVolatilities2.mean)
           end
         end
-        tick.save
+        begin
+          tick.save
+        rescue => error
+          puts "Failed fron and back month save  #{error} values: #{tick.frontMonth} #{tick.backMonth}"
+        end
       end
     }
     return tickers

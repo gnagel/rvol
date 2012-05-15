@@ -44,7 +44,10 @@ class Correlation < Test::Unit::TestCase
   def test_getCorrelationIrregularity
     begin
       puts 'testing resport data'
-      Calculatecorrelations.new.getCorrelationIrregularity
+      matches = Calculatecorrelations.new.getCorrelationIrregularity
+      matches.each do |cor|
+        puts "#{cor.symbol} and  #{cor.symbol2} CORRELATION #{cor.correlation}"
+      end
     end
   end
 
@@ -61,9 +64,9 @@ class Correlation < Test::Unit::TestCase
     begin
       puts 'getCorrelatedStocks'
       Calculatecorrelations.new.getCorrelatedStocks('AAPL').each do |cor|
+        puts 'stocks correlated with AAPL'
         puts cor.symbol
         puts cor.correlation
-
       end
     end
   end

@@ -80,11 +80,30 @@ class Stocks
     doc = Nokogiri::HTML(response.body)
     doc.css('a.external').each do |tick|
       if tick.to_s.include?('www.nyse.com') || tick.to_s.include?('www.nasdaq.com')
-        tick = tick.inner_text
+        symbol = tick.inner_text
+        industry = "empty"
+
+        doc.xpath("//tr").each do |tr|
+          if tr.to_s.include?('www.nyse.com') || tr.to_s.include?('www.nasdaq.com')
+            if(tr.to_s.include?(symbol))
+              industry = tr.xpath("td[4]").inner_text
+            end
+          end
+        end
+
+        ticker = Ticker.new
+        ticker.industry = industry
+        ticker.created_at = Time.now
+        ticker.symbol = symbol
+        ticker.index = 'SP500'
+        ticker.save
         results << tick
-        puts tick
       end
     end
+
+
+
+
     return results
   end
 
