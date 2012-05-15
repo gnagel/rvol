@@ -13,7 +13,7 @@
 
 	3. install mysql gem: "gem install mysql"
 
-	4. install mysql gem: "gem install dm-mysql-adapter"
+	4. install dm mysql adapter gem: "gem install dm-mysql-adapter"
 
 == Notes
 
