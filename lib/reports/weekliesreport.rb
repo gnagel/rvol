@@ -30,7 +30,7 @@ class WeekliesReport< Report
         sdaily = Stockdaily.first(:symbol=>tick)
         array << sdaily
     end
-    ReportPrinter.new.printScouterStd5(array)
+    ReportPrinter.new.printStd5(array)
   end
 
   #
