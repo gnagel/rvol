@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = "2012-04-21"
+  s.date = "2012-05-15"
   s.email = "tonikarhu@gmail.com"
   s.executables = ["rvol"]
   s.extra_rdoc_files = [
@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
     "lib/model/stockdaily.rb",
     "lib/model/stockhistorical.rb",
     "lib/reports/chainsreport.rb",
-    "lib/reports/correlationSTDreport.rb",
+    "lib/reports/correlationreport.rb",
     "lib/reports/dividendsreport.rb",
     "lib/reports/earningsreport.rb",
     "lib/reports/indexreport.rb",
@@ -100,6 +100,8 @@ Gem::Specification.new do |s|
     "test/reports/test_report.rb",
     "test/reports/test_sdreport.rb",
     "test/reports/test_weekliesreport.rb",
+    "test/scrapers/test.rb",
+    "test/scrapers/test2.rb",
     "test/scrapers/test_capsparser.rb",
     "test/scrapers/test_earningssparser.rb",
     "test/scrapers/test_historicalscraper.rb",
@@ -113,8 +115,8 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/tonik/rvol"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.21"
-  s.summary = "Gem for analysing financial data mainly concentrating on options and stokcs associated with them. Usage: rvol -h A database is created for datamining stocks , options, and implied volatilities which are calculated in the creation of the database. Earnings are downloaded and listed with implied volatilities for front and back month options. There are some reports which can be generated after the database is downloaded look at rvol -p. <br> To check info for a particular stock use: rvol -t AAPL. <br> All other features require the market snapshot to be taken use rvol -s to take a snapshot (20-30 minutes)."
+  s.rubygems_version = "1.8.24"
+  s.summary = "Gem for creating a database for datamining stock markets focusing on SP500 data. The created database could be used for instance from R or Matlab or similar to do quantitative analysis. You could script new datamining functions extending the Rvol library, load the data into a statistics package, or use it with your own quantitative framework.  Usage: rvol -s will create the database. The database will contain stocks (with industries), options, and implied volatilities. Earnings are downloaded and listed with implied volatilities for front and back month options. There are some reports, which can be generated after the database is downloaded look at rvol -p. Have a look at the website if you want to use mysql for a more robust system."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
@@ -125,6 +127,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<dm-migrations>, [">= 0"])
       s.add_runtime_dependency(%q<dm-validations>, [">= 0"])
       s.add_runtime_dependency(%q<dm-sqlite-adapter>, [">= 0"])
+      s.add_runtime_dependency(%q<peach>, [">= 0"])
       s.add_runtime_dependency(%q<ruport>, [">= 0"])
       s.add_runtime_dependency(%q<typhoeus>, [">= 0"])
       s.add_runtime_dependency(%q<ruport-util>, [">= 0"])
@@ -140,6 +143,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<dm-migrations>, [">= 0"])
       s.add_dependency(%q<dm-validations>, [">= 0"])
       s.add_dependency(%q<dm-sqlite-adapter>, [">= 0"])
+      s.add_dependency(%q<peach>, [">= 0"])
       s.add_dependency(%q<ruport>, [">= 0"])
       s.add_dependency(%q<typhoeus>, [">= 0"])
       s.add_dependency(%q<ruport-util>, [">= 0"])
@@ -156,6 +160,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<dm-migrations>, [">= 0"])
     s.add_dependency(%q<dm-validations>, [">= 0"])
     s.add_dependency(%q<dm-sqlite-adapter>, [">= 0"])
+    s.add_dependency(%q<peach>, [">= 0"])
     s.add_dependency(%q<ruport>, [">= 0"])
     s.add_dependency(%q<typhoeus>, [">= 0"])
     s.add_dependency(%q<ruport-util>, [">= 0"])
