@@ -5,9 +5,9 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 require 'pp'
-require 'rvol'
+autoload :Rvol, 'rvol'
 #
-#
+# Main class for parsing command line commands
 #
 class Rvolcmd
   include Rvol
@@ -26,6 +26,15 @@ class Rvolcmd
     options.verbose = false
 
     opts = OptionParser.new do |opts|
+
+      puts ''
+      puts "____________________________________________________________________"
+      puts ''
+      puts "RVOL version #{@@version}"
+      puts "database set to: #{@@database}"
+      puts "____________________________________________________________________"
+      puts ''
+
       opts.banner = "Usage: rvol [options]
 
         run rvol -s to download a market snapshot after this you can view
@@ -137,7 +146,7 @@ class Rvolcmd
   # parse()
 
 
-  options = Rvolcmd.parse(ARGV)
+  options = parse(ARGV)
   # puts 'ARGS: ' + options.args
   # puts options
 

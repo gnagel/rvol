@@ -14,6 +14,6 @@ class IndexReport < Report
     ReportPrinter.new.printIndexReport(data);
   end
   def printInfo
-    'A report for a certain group of stocks SP500, stockscouter-10, etf  etc'
+    'A report for a certain group of stocks SP500'
   end
 end

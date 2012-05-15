@@ -12,11 +12,11 @@ class IvolatilityReport < Report
   #
   #
   def generateReport
-    IndexReport.new.generateReport('stockscouter-10')
+    IndexReport.new.generateReport('SP500')
   end
 
   def printInfo
-    'A report of stock scouter top 10 stocks odered by their implied volatilities'
+    'A report of stock odered by their implied volatilities'
   end
   
 end

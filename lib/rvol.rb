@@ -15,10 +15,6 @@ module Rvol
 
   # Version
   @@version = IO.readlines(File.join(File.dirname(__FILE__), '../VERSION'))
-  # Returns config for use in all sub classes
-  def Rvol.config
-    @@config
-  end
 
   def version
     @@version
@@ -29,7 +25,8 @@ module Rvol
   end
 
   # default adater for all db action stored in gem home directory
-  #snapshot = 'sqlite://' + File.join(ENV['GEM_HOME'],'gems','rvol-'+@@version[0])+'/'+Rvol.config['snapshot']
+  #snapshot = 'sqlite://' + File.join(ENV['GEM_HOME'],'gems','rvol-'+@@version[0])+'/'+@@config['snapshot']
+  # make a fodler for rvol
   if !File.exists?(ENV['HOME']+'/.rvol')
     Dir.mkdir(ENV['HOME']+'/.rvol')
   end
@@ -38,45 +35,43 @@ module Rvol
   #DataMapper::Logger.new($stdout, :Error)
 
 
-  ################Database setup #########################
-  snapshot = 'sqlite://'+ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
-  mysql = Rvol.config['rvol_main']
-  DataMapper.setup(:default, mysql)
-  ################ Mysql Database setup ##################
+  ################Database setup ##############################
+  # if envinronmental variable RVOL_DB = mysql then use mysql #
+  # else use the sqllite database in the home folder.         #
+  #############################################################
+  # sql lite filename
+  @@database = 'sqlite://'+ENV['HOME']+'/.rvol/'+@@config['snapshot']
 
-  #mysql = Rvol.config['rvol_main']
-  #DataMapper.setup(:mysql, mysql)
-  #DataMapper.repository(:mysql) {
-  #DataMapper.finalize
-  #DataMapper.auto_upgrade!
-  #}
+  # Mysql Database setup if RVOL_DB=mysql set and
+  # database rvol_main is there
+  if ENV['RVOL_DB'] == 'mysql'
+    @@database = @@config['rvol_main']
+  end
 
+  DataMapper.setup(:default, @@database)
 
-  # cleanup old database and create
+  # destroy old database and create new
   def clean
-      file = ENV['HOME']+'/.rvol/'+Rvol.config['snapshot']
-      if File.exist?(file)
-        File.delete(file)
-      end
-      puts 'CREATING data-snapshot DATABASE'
-      ################Database setup #########################
-      begin
-      mysql = Rvol.config['rvol_main']
-      DataMapper.setup(:default, mysql)
-      DataMapper.finalize
+    ## delete whole sqllite database
+    #file = ENV['HOME']+'/.rvol/'+@@config['snapshot']
+    #if File.exist?(file)
+    #    File.delete(file)
+    #    file.close
+    #end
 
-      # Automatically create the tables if they don't exist
-      DataMapper.auto_migrate!
+    puts 'CREATING data-snapshot DATABASE'
+    ################Database setup #####################
+    begin
 
-      Ticker.destroy
-      Stockdaily.destroy
-      Chain.destroy
-      Earning.destroy
+    DataMapper.setup(:default, @@database)
+    DataMapper.finalize
+    # Automatically create the tables if they don't exist
+    DataMapper.auto_migrate!
 
-      rescue => e
-        puts 'error with creating a new sql lite database: '
+    rescue => e
+        puts "error with creating a new database: #{@@database}"
         puts e
-      end
+    end
   end
 
   def runReport(reportName,arg=nil)
@@ -169,12 +164,10 @@ module Rvol
   end
 
   def getIrregularCorrelation
-
     matches = Calculatecorrelations.new.getCorrelationIrregularity
     matches.each do |cor|
       puts "#{cor.symbol} and  #{cor.symbol2} CORRELATION #{cor.correlation}"
     end
-
   end
 
   #

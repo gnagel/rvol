@@ -18,7 +18,6 @@ class PortfolioReport < Report
     end
     # Load Dividends day
     # Check if earnings in the next month
-    # Check if still in scouter rating
 
     # 1. get earnings
       portfolio.each do |port|
