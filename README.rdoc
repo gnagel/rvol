@@ -6,9 +6,13 @@
 	month options. There are some reports which can be generated after the database is downloaded look at rvol -p.
 
 	If you want to use mysql do the following:
+
 	1. Install mysql and create schema rvol_main user:root pw=''
+
 	2. set the environmenta variable RVOL_DB=mysql
+
 	3. install mysql gem: "gem install mysql"
+
 	3. install mysql gem: "gem install dm-mysql-adapter"
 
 == Notes
