@@ -85,10 +85,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-task :clean do
-  puts 'deleting database'
-  if File.exists?(ENV['HOME']+'/.rvol'+'/marketsnapshot.db')
-    Dir.delete(ENV['HOME']+'/.rvol'+'/marketsnapshot.db')
-  end
-end
 
