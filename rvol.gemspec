@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "rvol"
-  s.version = "0.5.1"
+  s.version = "0.5.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
@@ -116,7 +116,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/tonik/rvol"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
-  s.summary = "Gem for creating a database for datamining stock markets focusing on SP500 data. The created database could be used for instance from R or Matlab or similar to do quantitative analysis. You could script new datamining functions extending the Rvol library, load the data into a statistics package, or use it with your own quantitative framework.  Usage: rvol -s will create the database. The database will contain stocks (with industries), options, and implied volatilities. Earnings are downloaded and listed with implied volatilities for front and back month options. There are some reports, which can be generated after the database is downloaded look at rvol -p. Have a look at the website if you want to use mysql for a more robust system."
+  s.summary = "Gem for creating a database for datamining stock markets focusing on SP500 data. The created database could be used for instance from R or Matlab or similar to do quantitative analysis. You could script new datamining functions extending the Rvol library, load the data into a statistics package, or use it with your own quantitative framework.  Usage: rvol -s will create the database. The database contains stocks (with industries), options, and implied volatilities and calculated standard deviations for the day. Earnings are downloaded and listed with implied volatilities for front and back month options. There are some reports, which can be generated after the database is downloaded look at rvol -p. There is a funtion to calculate correlations between stocks in the same industry groups (--correlationAll, --correlation10 (10 day correlation),this will take a long time and jruby is recommended for a better use of system resources. Have a look at the website if you want to use mysql for a more robust system."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
