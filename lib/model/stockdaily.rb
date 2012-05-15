@@ -24,6 +24,7 @@ class Stockdaily
   property :std10, Float, :required => false
   property :std5,  Float, :required => false
 
+  property :analystRatio, Float, :required => false # average buy/sell ratio from analysts 1 best 5 worst
 
 
   #

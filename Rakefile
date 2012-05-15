@@ -5,7 +5,15 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rvol"
-    gem.summary ="Gem for creating a database for datamining stock markets focusing on SP500 data. The created database could be used for instance from R or Matlab or similar to do quantitative analysis. You could script new datamining functions extending the Rvol library, load the data into a statistics package, or use it with your own quantitative framework.  Usage: rvol -s will create the database. The database will contain stocks (with industries), options, and implied volatilities. Earnings are downloaded and listed with implied volatilities for front and back month options. There are some reports, which can be generated after the database is downloaded look at rvol -p. Have a look at the website if you want to use mysql for a more robust system."
+    gem.summary ="Gem for creating a database for datamining stock markets focusing on SP500 data. The created database
+could be used for instance from R or Matlab or similar to do quantitative analysis. You could script new datamining
+functions extending the Rvol library, load the data into a statistics package, or use it with your own quantitative
+framework.  Usage: rvol -s will create the database. The database contains stocks (with industries), options, and
+implied volatilities and calculated standard deviations for the day. Earnings are downloaded and listed with implied
+volatilities for front and back month options. There are some reports, which can be generated after the database is
+downloaded look at rvol -p. There is a funtion to calculate correlations between stocks in the same industry groups
+(--correlationAll, --correlation10 (10 day correlation),this will take a long time and jruby is recommended for a better use of system resources. Have a look at the website
+if you want to use mysql for a more robust system."
     gem.email = "tonikarhu@gmail.com"
     gem.homepage = "http://github.com/tonik/rvol"
     gem.authors = ["Toni Karhu"]

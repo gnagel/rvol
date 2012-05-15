@@ -15,6 +15,9 @@ class Ticker
   property :backMonth,                   Float
   property :totalCalls,                  Integer
   property :totalPuts,                   Integer
+
+  property :analystRatio, Float, :required => false # average buy/sell ratio from analysts 1 best 5 worst
+
 end
 
 

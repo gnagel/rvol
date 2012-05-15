@@ -66,7 +66,8 @@ class Downloader
   # later processing
   def downloadSP500Tickers
     puts 'starting download SP500 tickers'
-    Stocks.new.downloadSP500
+    yahooDownloader = Stocks.new
+    yahooDownloader.downloadSP500
   end
 
   # This will download all S&P 500 data from the internet and

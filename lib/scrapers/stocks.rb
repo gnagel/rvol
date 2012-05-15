@@ -74,6 +74,9 @@ class Stocks
     stocks
   end
 
+  #
+  # Downloads the S&P500 stocks and industries from wikipedia
+  #
   def downloadSP500
     results = Array.new
     response = Scraper.downLoadSP500WikiPedia
@@ -96,16 +99,13 @@ class Stocks
         ticker.created_at = Time.now
         ticker.symbol = symbol
         ticker.index = 'SP500'
+        ticker.analystRatio = downloadRecommendation(symbol)
         ticker.save
-        results << tick
+        results << ticker
       end
     end
-
-
-
-
-    return results
   end
+
 
   def downloadSP500Yahoo
 
@@ -125,6 +125,24 @@ class Stocks
     end
     hydra.run();
     return results
+  end
+
+  #
+  # This will download the mean recommendation value for a stock!
+  #
+  def downloadRecommendation(ticker)
+    url = "http://finance.yahoo.com/q/ao?s=#{ticker}&ql=1"
+    response = Typhoeus::Request.get(url)
+    doc = Nokogiri::HTML(response.body)
+    doc.xpath("//tr").each do |tr|
+      if(tr.to_s.include?('Mean Recommendation (this week):'))
+        mean = tr.xpath("td[2]").inner_text
+        if mean !=nil && mean.length>0
+        puts "#{ticker} MEAN: #{mean}"
+        return mean
+        end
+      end
+    end
   end
 
   def Stocks.testInternetConnection?

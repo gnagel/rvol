@@ -65,11 +65,6 @@ class Rvolcmd
         options.args = args
       end
 
-      opts.on("-e", "--eval tickers", "Evaluate tickers separated separated by ',' , (-e AAPL,GOOG)") do |tickers|
-        options.command = "eval"
-        options.args = tickers
-      end
-
       opts.on("-n", "--news TICKER ARGS", "Get a list of latest news for a ticker',' , (-n MCD)") do |ticker|
         options.command = "news"
         options.ticker = ticker
@@ -81,18 +76,9 @@ class Rvolcmd
         options.ticker = ticker
       end
 
-      opts.on("--correlated TICKER", "Get a list of correlated instruments',' , (--correlated MCD)") do |ticker|
-        options.command = "correlated"
-        options.ticker = ticker
-      end
-
       opts.on("-s", "--snapshot", "Download market snapshot, type can be either snapshot ") do
         puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
         options.command = "snapshot"
-      end
-
-      opts.on("", "--downloader", "start cron type timer downloader, will run 5:00 PM every weekday") do
-        options.command = "downloader"
       end
 
       opts.on("--clean", "Cleanup old database if problems with data storage use this if there are errors with data loading") do |type|
@@ -106,6 +92,11 @@ class Rvolcmd
 
       opts.on("--correlation10", "Calculate correlation for all instruments for the past 10 trading days") do
             options.command = "correlation10"
+      end
+
+      opts.on("--correlated TICKER", "Get a list of correlated instruments (remember to do the --correlationAll first )',' , (--correlated MCD)") do |ticker|
+        options.command = "correlated"
+        options.ticker = ticker
       end
 
       opts.on("--history", "load 1 year history for all tickers in system") do
@@ -165,8 +156,6 @@ class Rvolcmd
       else
         self.new.runReport(options.report, options.args)
       end
-    when 'eval'
-      self.new.evaluate(options.args)
     when 'news'
       self.new.news(options.ticker, options.args)
     when 'snapshot'
@@ -177,8 +166,6 @@ class Rvolcmd
       self.new.runSnapShotCorrelations
     when 'correlation10'
       self.new.runSnapShotCorrelations10
-    when 'downloader'
-      downloader.runCron
     when 'study'
       self.new.study(options.ticker)
     when 'correlated'

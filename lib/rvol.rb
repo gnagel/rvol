@@ -157,7 +157,12 @@ module Rvol
   def correlated(stock)
     begin
       puts "stock correlated with #{stock}"
-      Calculatecorrelations.new.getCorrelatedStocks(stock).each do |cor|
+      if Calculatecorrelations.count == 0
+        puts "There are no correlations calculated did you run the rvol --correlationAll"
+      end
+      stocks = Calculatecorrelations.new.getCorrelatedStocks(stock)
+
+      stocks.each do |cor|
         puts "#{cor.symbol} and  #{cor.symbol2} CORRELATION #{cor.correlation}"
       end
     end
@@ -170,17 +175,11 @@ module Rvol
     end
   end
 
-  #
-  # Run daily download with a cron job at 17:00 on every weekday
-  #
-  def runCron
-    Cron.new.run
-  end
-
     #
   # Run a test on whatever
   #
-  def testCorr
+  def testCase
+    puts 'im a testcase'
   end
 
 end
