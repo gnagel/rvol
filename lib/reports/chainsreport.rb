@@ -15,7 +15,7 @@ class ChainsReport < Report
   def generateReportArgs(ticker)
     chains = OptionChainsScraper.new.loadChains([ticker],false)
     filter = DateUtil.getOptSymbThisMonth(ticker)
-    chains = chains.find_all{|cha|cha.symbol.include? filter }
+    chains = chains.find_all{|cha|cha.symbol == filter }
     # get the general stock info
     stock = Stocks.new.downloadStock2([ticker],true)
     ReportPrinter.new.printChainsReportSingle(chains,stock[0])
@@ -28,7 +28,14 @@ end
 class ChainsReportAll < Report
   def generateReport
     chains = Chain.all
-    ReportPrinter.new.printChainsReport(chains)
+    sp500 = Ticker.all(:indexName=>'SP500')
+    filtered = Array.new
+    sp500.each do |sp|
+      filtered += chains.find_all{ |chain|
+          chain.ticker==sp.symbol
+      }
+    end
+    ReportPrinter.new.printChainsReport(filtered)
   end
   def printInfo
      'A report for all chains in the S&P500 gives an overview of the whole view of the market'

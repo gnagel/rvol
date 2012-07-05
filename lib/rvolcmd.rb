@@ -5,6 +5,8 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 require 'pp'
+require 'rufus/scheduler'
+
 autoload :Rvol, 'rvol'
 #
 # Main class for parsing command line commands
@@ -76,7 +78,7 @@ class Rvolcmd
         options.ticker = ticker
       end
 
-      opts.on("-s", "--snapshot", "Download market snapshot, type can be either snapshot ") do
+      opts.on("-s", "--snapshot", "Download market snapshot") do
         puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
         options.command = "snapshot"
       end
@@ -103,10 +105,26 @@ class Rvolcmd
         options.command = "history"
       end
 
-
       opts.on("--test", "used for to test a particular usecase") do
         options.command = "test"
       end
+
+      opts.on("--cronjob", "run cron type job every hour at half past") do
+        puts '*** MARKETSNAPSHOT SCHEDULER WAITING ***  ' + Time.now.to_s
+        scheduler = Rufus::Scheduler.start_new
+        scheduler.cron '30 16-24 * * 1-5' do
+          # take market snapshot
+          puts '*** RUNNING SNAPSHOT OF MARKETS ***       ' + Time.now.to_s
+          loader = self.new
+          loader.clean
+          loader.runSnapShot
+          puts '*** MARKETSNAPSHOT SCHEDULER WAITING ***  ' + Time.now.to_s
+        end
+
+        scheduler.join
+
+      end
+
 
       # Done here with commands
 

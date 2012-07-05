@@ -5,6 +5,6 @@ require 'haml'
 #
 class Server
   get '/' do
-    haml :index
+    haml :indexName
   end
 end

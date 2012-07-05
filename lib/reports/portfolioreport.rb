@@ -50,7 +50,7 @@ class PortfolioReport < Report
 
     table = Table(%w[Portfolio Earnings? Dividends Rating News])
     chains.each { |elem|
-      table << [elem.type, elem.ticker ]
+      table << [elem.optiontype, elem.ticker ]
     }
     print table
     puts addVol(chains)

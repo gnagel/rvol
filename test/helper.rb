@@ -1,5 +1,4 @@
 # encoding: utf-8
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'Rvol'
 require 'test/unit'
 require 'dm-core'
@@ -11,7 +10,10 @@ require 'model/stockcorrelation'
 
 #set the test db an in memory db
 DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, Rvol.config['test'])
+
+puts File.dirname(__FILE__)
+
+DataMapper.setup(:default, "sqlite::memory:")
 DataMapper.finalize
 DataMapper.auto_migrate!
 
@@ -23,19 +25,11 @@ if (Earning.count==0)
 
   EarningsScraper.new.getEarningsMonth2(true)
 
-  ticker = ['AAPL', 'LVS', 'GOOG', 'IBM']
+  ticker = ['AAPL', 'LVS','IBM']
 
   ticker.each { |ticker|
-    begin
-      tick = Ticker.new
-      tick.created_at = Time.now
-      tick.symbol = ticker
-      tick.index = 'SP500'
-      tick.save
-    rescue => boom
-      puts 'error  ' + ticker
-      puts boom
-    end
+
+      Ticker.create(:created_at=>Time.now,:symbol=>ticker,:indexName=>'SP500')
   }
 
   Stocks.new.downloadStock2(ticker, true)

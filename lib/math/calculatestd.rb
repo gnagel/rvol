@@ -1,10 +1,11 @@
 require 'model/stockhistorical'
 require 'peach'
+require 'monitor'
 require 'statsample'
 #
 # Calculates all std (Standard deviations)
 #
-class CalculateStd
+class CalculateStd < Monitor
   #
   # Calculates all std (Standard deviations) for stock held in the database.
   #
@@ -23,8 +24,10 @@ class CalculateStd
       stock.std5 = arrayPrices2.to_scale.sd
       i+=1
       puts i.to_s+ ' STD 20 day and 5 day for '+stock.symbol.to_s+' '+  stock.std20.to_s + ' STD 5 '+  stock.std5.to_s
-
-      stock.save
+      # synchronized for file access problems with sqllite
+      synchronize do
+        stock.save
+      end
       rescue => e
         puts 'calculateStd failed '+e.to_s
       end

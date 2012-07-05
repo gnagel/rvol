@@ -25,7 +25,7 @@ class EarningsReport < Report
   def loadData
     earray = Array.new
     earnings = Earning.all
-    sp500 = Ticker.all(:index=>'SP500')
+    sp500 = Ticker.all(:indexName=>'SP500')
     sp500.each do |sp|
       ticker = Earning.first(:ticker=>sp.symbol)
       if ticker!=nil

@@ -86,8 +86,7 @@ class Downloader
   # Chains should be loaded for the next 2 months
   def downloadSChains
     puts 'starting download chains'
-    result = Ticker.all()
-    OptionChainsScraper.new.loadChains(result.collect { |tic| tic.symbol }, true)
+    OptionChainsScraper.new.loadChains(Ticker.all(), true)
   end
 
   #

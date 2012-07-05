@@ -15,8 +15,9 @@ class Chain
 
   property :id,                          Serial    # An auto-increment integer key
   property :created_at,                  DateTime, :required => true # A DateTime, for any date you might like.
-  property :type,                        String, :required => true
+  property :optiontype,                  String, :required => true
   property :ticker,                      String, :required => true
+  property :indexType,                   String, :required => true
   property :date,                        Date,   :required => true
   property :strike,                      String, :required => true
   property :symbol,                      String, :required => true
@@ -28,10 +29,11 @@ class Chain
   property :openInt,                     Integer,:required => true
   property :ivolatility,                 String, :required => true
   
-  def initialize(type,ticker, date,strike, symbol, last,chg,bid,ask,vol,openInt)
+  def initialize(type,ticker,indexType, date,strike, symbol, last,chg,bid,ask,vol,openInt)
     self.created_at = Time.now
-    self.type=type
+    self.optiontype=type
     self.ticker=ticker
+    self.indexType=indexType
     self.date=date
     self.strike=strike
     self.symbol=symbol
@@ -62,16 +64,20 @@ class Chain
       yields = 0
       oprice = self.last
       # call 0 put 1
-      type=='C'? callorput=0: callorput=1
+      optiontype=='C'? callorput=0: callorput=1
       # get cache if not there get from db if not there get from web
       stock = @@cache[self.ticker] ||= Stockdaily.first(:symbol=>self.ticker)
       stock = @@cache[self.ticker] ||= Stocks.new.downloadStock2([self.ticker],false)[0]
       ivol = iv.IV(stock.price.to_f, self.strike.to_f, expTimeYear.to_f, irate.to_f, yields.to_f, callorput, oprice.to_f)
-      self.ivolatility = ivol.to_f
+      # test if float
+      Float(ivol)
+      # if greater than 0 save it othervise something went wrong
+      if ivol > 0
+        self.ivolatility = ivol.to_f
+      end
     rescue Exception => boom
-      puts 'ivolatility calculation failed '
+      puts 'ivolatility calculation failed'
       puts boom
     end
   end
-
 end

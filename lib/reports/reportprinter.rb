@@ -12,7 +12,7 @@ class ReportPrinter
 
     table = Table(%w[Type Ticker ExpiryIn Strike Symbol Last Chg Bid Ask Vol openInt ImpliedVolatility])
     chains.each { |elem|
-      table << [elem.type, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol, elem.last, elem.chg, elem.bid, elem.ask,
+      table << [elem.optiontype, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol, elem.last, elem.chg, elem.bid, elem.ask,
                 elem.vol, elem.openInt, checkIVol(elem.ivolatility)]
     }
     print table
@@ -28,7 +28,7 @@ class ReportPrinter
     tableHead << [stock.name, stock.symbol, stock.price, stock.avolume, stock.volume, stock.exdividenddate]
     table = Table(%w[Type Ticker ExpiryIn Strike Symbol Last Chg Bid Ask Vol openInt ImpliedVolatility])
     chains.each { |elem|
-      table << [elem.type, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol, elem.last, elem.chg, elem.bid, elem.ask,
+      table << [elem.optiontype, elem.ticker, elem.date.strftime("%d"), elem.strike, elem.symbol, elem.last, elem.chg, elem.bid, elem.ask,
                 elem.vol, elem.openInt, checkIVol(elem.ivolatility)]
     }
     print tableHead
@@ -160,7 +160,7 @@ class ReportPrinter
     valueC = 0
     valueP = 0
     summable = chains.each { |x|
-      if x.type=='C'
+      if x.optiontype=='C'
         valueC += x.vol
       else
         valueP += x.vol
@@ -179,7 +179,7 @@ class ReportPrinter
     valueC = 0
     valueP = 0
     summable2 = chains.each { |x|
-      if x.type=='C'
+      if x.optiontype=='C'
         valueC += x.openInt
       else
         valueP += x.openInt

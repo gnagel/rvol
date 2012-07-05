@@ -15,7 +15,7 @@ class Etf
         ticker.symbol = td.content
         next if ticker.symbol == 'ETFs'
         puts ticker.symbol
-        ticker.index = 'etf'
+        ticker.indexName = 'etf'
         ticker.created_at = Time.now
 
         if !ticker.save

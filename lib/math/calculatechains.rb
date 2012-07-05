@@ -1,11 +1,11 @@
 # encoding: utf-8
 require 'model/chain'
-
+require 'monitor'
 # encoding: utf-8
 #
 #  Calculations for options chains
 #
-class CalculateChains
+class CalculateChains < Monitor
 
   #
   # Load all tickers and calculate mean implied volatilities to near ITM options
@@ -13,7 +13,7 @@ class CalculateChains
   def calculateFrontAndBackMonthsMeanIVITM
 
     tickers = Ticker.all
-    tickers.each { |tick|
+    tickers.peach { |tick|
       puts 'calculating front and back month IV for all stocks '
       ticker = tick.symbol
       osymbol = DateUtil.getOptSymbThisMonth(ticker)
@@ -42,7 +42,10 @@ class CalculateChains
           end
         end
         begin
-          tick.save
+          # synchronized for file access problems with sqllite
+          synchronize do
+            tick.save
+          end
         rescue => error
           puts "Failed fron and back month save  #{error} values: #{tick.frontMonth} #{tick.backMonth}"
         end
@@ -63,10 +66,10 @@ class CalculateChains
       osymbol = DateUtil.getOptSymbThisMonth(ticker.symbol)
       frontChains = Chain.all(:symbol.like=>osymbol+'%')
       frontChains.each { |chain|
-        if chain.type == 'C'
+        if chain.optiontype == 'C'
           calls += chain.vol
         end
-        if chain.type == 'P'
+        if chain.optiontype == 'P'
           putsa += chain.vol
         end
       }

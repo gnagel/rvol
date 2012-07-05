@@ -34,19 +34,20 @@ class OptionChainsScraper
           end
           # this is the date for the url
           parsedDate = date.strftime("%Y-%m")
-          url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick+"&m="+parsedDate)
+          url = "http://finance.yahoo.com/q/op?s="+URI.escape(tick.symbol+"&m="+parsedDate)
           request = Scraper.downLoadYahooChains(url)
           request.on_complete { |response|
             if (response.code==200)
               count= count+1
               if tickers.size > 1
-                puts 'HTTP RESPONSE: 200 '+tick + ' count: ' +count.to_s
+                puts 'HTTP RESPONSE: 200 '+tick.symbol + ' count: ' +count.to_s
               end
               doc = Nokogiri::HTML(response.body)
               doc.search("//table[@class='yfnc_datamodoutline1']").each do |tr|
                 i = 0
                 type = ""
-                ticker = tick
+                ticker = tick.symbol
+                indexType = tick.indexName
                 symbol =""
                 dateS = ""
                 strike =""
@@ -84,7 +85,7 @@ class OptionChainsScraper
                       if (symbol.include? DateUtil.tickerSlicer(ticker))
                         dateS = DateUtil.getDateFromOptSymbol(ticker, symbol)
                         if dateS!='N/A'
-                          chain = Chain.new(type, ticker, dateS, strike, symbol, last, chg, bid, ask, vol, open)
+                          chain = Chain.new(type, ticker,indexType, dateS, strike, symbol, last, chg, bid, ask, vol, open)
                           #puts chain.toString
                           chains << chain
                           persistSingle(chain, persist)

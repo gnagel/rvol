@@ -14,7 +14,7 @@ class Calculatecorrelations < Monitor
   def calculateYearlyCorrelationRF
       startTime = Time.now
       processed = Array.new
-      tickrs = Ticker.all(:index=>'SP500')
+      tickrs = Ticker.all(:indexName=>'SP500')
       tickrs2 = Array.new(tickrs)
       # half year correlation
       days = DateTime.now-175
@@ -68,7 +68,7 @@ class Calculatecorrelations < Monitor
   #
   def calculateCurrentCorrelation(days)
     processed = Array.new
-    tickrs = Ticker.all(:index=>'SP500')
+    tickrs = Ticker.all(:indexName=>'SP500')
     tickrs2 = Array.new(tickrs)
     daysNoWeekends = (days / 5)*2 + days + 1
     arrayPrices = Stockhistorical.all(:date.gt=>DateTime.now-daysNoWeekends,:order =>[:date.asc])

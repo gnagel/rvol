@@ -37,7 +37,8 @@ if you want to use mysql for a more robust system."
     gem.add_dependency "highline"
     gem.add_dependency "launchy"
     gem.add_dependency "statsample"
-    
+    gem.add_dependency "rufus-scheduler"
+
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

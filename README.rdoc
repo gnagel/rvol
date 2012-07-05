@@ -16,7 +16,7 @@
 
 	1. Install mysql and create schema rvol_main user:root pw=''
 
-	2. set the environmenta variable RVOL_DB=mysql
+	2. set the environmental variable RVOL_DB=mysql
 
 	3. install mysql gem: "gem install mysql"
 

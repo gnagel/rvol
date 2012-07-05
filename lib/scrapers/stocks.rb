@@ -98,8 +98,9 @@ class Stocks
         ticker.industry = industry
         ticker.created_at = Time.now
         ticker.symbol = symbol
-        ticker.index = 'SP500'
-        ticker.analystRatio = downloadRecommendation(symbol)
+        ticker.indexName = 'SP500'
+        # downlaoad some statistics like recommendation change and recommendation mean.
+        downloadRecommendation(symbol,ticker)
         ticker.save
         results << ticker
       end
@@ -123,27 +124,37 @@ class Stocks
       }
       hydra.queue(request)
     end
-    hydra.run();
+    hydra.run()
     return results
   end
 
   #
   # This will download the mean recommendation value for a stock!
   #
-  def downloadRecommendation(ticker)
-    url = "http://finance.yahoo.com/q/ao?s=#{ticker}&ql=1"
+  def downloadRecommendation(symbol,ticker)
+    url = "http://finance.yahoo.com/q/ao?s=#{symbol}&ql=1"
     response = Typhoeus::Request.get(url)
     doc = Nokogiri::HTML(response.body)
     doc.xpath("//tr").each do |tr|
       if(tr.to_s.include?('Mean Recommendation (this week):'))
         mean = tr.xpath("td[2]").inner_text
         if mean !=nil && mean.length>0
-        puts "#{ticker} MEAN: #{mean}"
-        return mean
+        puts "#{symbol} MEAN ANALYST RECOMMENDATION: #{mean}"
+        ticker.analystRatio = mean
+        end
+      end
+      if(tr.to_s.include?('Change:'))
+        meanChange = tr.xpath("td[2]").inner_text
+        if meanChange !=nil && meanChange.length>0
+          puts "#{symbol} MEAN ANALYST RECOMMENDATION CHANGE: #{meanChange}"
+          ticker.analystRatioChange = meanChange
         end
       end
     end
   end
+
+
+
 
   def Stocks.testInternetConnection?
     Ping.pingecho "google.com", 1, 80

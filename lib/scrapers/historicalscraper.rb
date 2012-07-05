@@ -1,8 +1,8 @@
 # encoding: utf-8
 require 'csv'
-require 'typhoeus'
 require 'thread'
 require 'scrapers/scraper'
+require 'model/stockhistorical'
 #
 # Downloads 1 year of historical data for given ticker
 #
@@ -19,7 +19,8 @@ class Historicalscraper
           count+=1
           puts 'HTTP RESPONSE: 200 Historical  '+ticker.symbol + ' count: ' +count.to_s
           begin
-            CSV.parse(response.body,:headers => :first_row) do |row|
+            CSV.parse(response.body,:headers => true) do |row|
+
               history = Stockhistorical.new
               history.symbol = ticker.symbol
               history.date = row[0]
