@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'Rvol'
+require 'rvol'
 require "scrapers/historicalscraper"
 require "scrapers/stocks"
 require "scrapers/optionschainsscraper"

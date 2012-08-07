@@ -13,9 +13,11 @@ class ChainsReport < Report
   # Generate a report of chains for a ticker in this month
   #
   def generateReportArgs(ticker)
-    chains = OptionChainsScraper.new.loadChains([ticker],false)
+    tick = Ticker.new
+    tick.symbol = ticker
+    chains = OptionChainsScraper.new.loadChains([tick],false)
     filter = DateUtil.getOptSymbThisMonth(ticker)
-    chains = chains.find_all{|cha|cha.symbol == filter }
+    chains = chains.find_all{|cha|cha.symbol.include? filter }
     # get the general stock info
     stock = Stocks.new.downloadStock2([ticker],true)
     ReportPrinter.new.printChainsReportSingle(chains,stock[0])

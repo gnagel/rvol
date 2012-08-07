@@ -1,5 +1,5 @@
 rvol_main:
- 'mysql://root:@127.0.0.1:3306/rvol_main'
+ 'mysql://root@127.0.0.1:3306/rvol_main'
 snapshot:
  'marketsnapshot.db'
 history:
