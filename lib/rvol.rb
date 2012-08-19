@@ -144,12 +144,6 @@ module Rvol
     calc.cleanCorrelation10
     calc.calculateCurrentCorrelation(20)
   end
-  #
-  # Study
-  #
-  def study(stock)
-     Tools.new.researchStock(stock)
-  end
 
   #
   # Get all correlated stocks

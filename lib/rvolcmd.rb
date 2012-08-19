@@ -73,11 +73,6 @@ class Rvolcmd
         options.args = args
       end
 
-      opts.on("--study TICKER", "Study a stock from numerous web sites (opens the pages)',' , (--study MCD)") do |ticker|
-        options.command = "study"
-        options.ticker = ticker
-      end
-
       opts.on("-s", "--snapshot", "Download market snapshot") do
         puts 'this can take 1h the first time about 20m after that depending on your processor,network,hd etc'
         options.command = "snapshot"
@@ -184,8 +179,6 @@ class Rvolcmd
       self.new.runSnapShotCorrelations
     when 'correlation10'
       self.new.runSnapShotCorrelations10
-    when 'study'
-      self.new.study(options.ticker)
     when 'correlated'
       self.new.correlated(options.ticker)
     when 'clean'
