@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rvol"
-  s.version = "0.6.0"
+  s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toni Karhu"]
-  s.date = "2012-08-07"
+  s.date = "2012-08-19"
   s.email = "tonikarhu@gmail.com"
   s.executables = ["rvol"]
   s.extra_rdoc_files = [
@@ -36,7 +36,6 @@ Gem::Specification.new do |s|
     "lib/core/dateutil.rb",
     "lib/core/downloader.rb",
     "lib/core/rlog.rb",
-    "lib/core/tools.rb",
     "lib/core/util.rb",
     "lib/math/arraymath.rb",
     "lib/math/calculatechains.rb",
@@ -45,7 +44,7 @@ Gem::Specification.new do |s|
     "lib/math/ivolatility.rb",
     "lib/model/chain.rb",
     "lib/model/earning.rb",
-    "lib/model/financialtatement.rb",
+    "lib/model/fundamental.rb",
     "lib/model/portfolio.rb",
     "lib/model/stock.rb",
     "lib/model/stockcorrelation.rb",
@@ -67,6 +66,7 @@ Gem::Specification.new do |s|
     "lib/scrapers/capsparser.rb",
     "lib/scrapers/earningsparser.rb",
     "lib/scrapers/etf.rb",
+    "lib/scrapers/fundamentalscraper.rb",
     "lib/scrapers/historicalscraper.rb",
     "lib/scrapers/optionschainsscraper.rb",
     "lib/scrapers/rss.rb",
@@ -107,6 +107,7 @@ Gem::Specification.new do |s|
     "test/scrapers/test2.rb",
     "test/scrapers/test_capsparser.rb",
     "test/scrapers/test_earningssparser.rb",
+    "test/scrapers/test_fundamentalscraper.rb",
     "test/scrapers/test_historicalscraper.rb",
     "test/scrapers/test_options_chains_scraper.rb",
     "test/scrapers/test_parsing.rb",
@@ -126,9 +127,8 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<cucumber>, [">= 0"])
-      s.add_runtime_dependency(%q<dm-core>, [">= 0"])
-      s.add_runtime_dependency(%q<dm-migrations>, [">= 0"])
-      s.add_runtime_dependency(%q<dm-validations>, [">= 0"])
+      s.add_runtime_dependency(%q<json_pure>, [">= 0"])
+      s.add_runtime_dependency(%q<data_mapper>, [">= 0"])
       s.add_runtime_dependency(%q<dm-sqlite-adapter>, [">= 0"])
       s.add_runtime_dependency(%q<peach>, [">= 0"])
       s.add_runtime_dependency(%q<ruport>, [">= 0"])
@@ -136,16 +136,12 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<ruport-util>, [">= 0"])
       s.add_runtime_dependency(%q<rufus-scheduler>, [">= 0"])
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
-      s.add_runtime_dependency(%q<sinatra>, [">= 0"])
-      s.add_runtime_dependency(%q<highline>, [">= 0"])
-      s.add_runtime_dependency(%q<launchy>, [">= 0"])
       s.add_runtime_dependency(%q<statsample>, [">= 0"])
       s.add_runtime_dependency(%q<rufus-scheduler>, [">= 0"])
     else
       s.add_dependency(%q<cucumber>, [">= 0"])
-      s.add_dependency(%q<dm-core>, [">= 0"])
-      s.add_dependency(%q<dm-migrations>, [">= 0"])
-      s.add_dependency(%q<dm-validations>, [">= 0"])
+      s.add_dependency(%q<json_pure>, [">= 0"])
+      s.add_dependency(%q<data_mapper>, [">= 0"])
       s.add_dependency(%q<dm-sqlite-adapter>, [">= 0"])
       s.add_dependency(%q<peach>, [">= 0"])
       s.add_dependency(%q<ruport>, [">= 0"])
@@ -153,17 +149,13 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ruport-util>, [">= 0"])
       s.add_dependency(%q<rufus-scheduler>, [">= 0"])
       s.add_dependency(%q<nokogiri>, [">= 0"])
-      s.add_dependency(%q<sinatra>, [">= 0"])
-      s.add_dependency(%q<highline>, [">= 0"])
-      s.add_dependency(%q<launchy>, [">= 0"])
       s.add_dependency(%q<statsample>, [">= 0"])
       s.add_dependency(%q<rufus-scheduler>, [">= 0"])
     end
   else
     s.add_dependency(%q<cucumber>, [">= 0"])
-    s.add_dependency(%q<dm-core>, [">= 0"])
-    s.add_dependency(%q<dm-migrations>, [">= 0"])
-    s.add_dependency(%q<dm-validations>, [">= 0"])
+    s.add_dependency(%q<json_pure>, [">= 0"])
+    s.add_dependency(%q<data_mapper>, [">= 0"])
     s.add_dependency(%q<dm-sqlite-adapter>, [">= 0"])
     s.add_dependency(%q<peach>, [">= 0"])
     s.add_dependency(%q<ruport>, [">= 0"])
@@ -171,9 +163,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<ruport-util>, [">= 0"])
     s.add_dependency(%q<rufus-scheduler>, [">= 0"])
     s.add_dependency(%q<nokogiri>, [">= 0"])
-    s.add_dependency(%q<sinatra>, [">= 0"])
-    s.add_dependency(%q<highline>, [">= 0"])
-    s.add_dependency(%q<launchy>, [">= 0"])
     s.add_dependency(%q<statsample>, [">= 0"])
     s.add_dependency(%q<rufus-scheduler>, [">= 0"])
   end
