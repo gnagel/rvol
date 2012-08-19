@@ -99,4 +99,46 @@ class Scraper
     response = Typhoeus::Request.get('http://finance.yahoo.com/etf/browser/tv?c=0&k=5&f=0&o=d&cs=0&ce=100')
   end
 
+  ##
+  # Income statement from MSN money
+  #
+  def downloadIncomeStamentMSNANN(symbol)
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stock-income-statement/?symbol=us%3A'+symbol+'&stmtView=Ann')
+  end
+
+  ##
+  # Income statement from MSN money
+  #
+  def downloadIncomeStamentMSNQTR(symbol)
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stock-income-statement/?symbol=us%3A'+symbol+'&stmtView=Qtr')
+  end
+
+  ##
+  # Balance sheet from MSN money
+  #
+  def downloadBalanceSheetMSNANN(symbol)
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stock-balance-sheet/?symbol=us%3A'+symbol+'&stmtView=Ann')
+  end
+
+  ##
+  # Income statement from MSN money
+  #
+  def downloadBalanceSheetMSNQTR(symbol)
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stock-balance-sheet/?symbol=us%3A'+symbol+'&stmtView=Qtr')
+  end
+
+  ##
+  # Income statement from MSN money
+  #
+  def downloadCashFlowMSNANN(symbol)
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stock-cash-flow/?symbol=us%3A'+symbol+'&stmtView=Ann')
+  end
+
+  ##
+  # Cash flow from MSN money
+  #
+  def downloadCashFlowMSNQTR(symbol)
+    response = Typhoeus::Request.get('http://investing.money.msn.com/investments/stock-cash-flow/?symbol=us%3A'+symbol+'&stmtView=Qtr')
+  end
+
 end

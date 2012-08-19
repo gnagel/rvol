@@ -7,8 +7,8 @@ class Earning
 
   property :id,                          Serial    # An auto-increment integer key
   property :created_at,                  DateTime, :required => true  # A DateTime, for any date you might like.
-  property :date,                        String, :required => true
-  property :ticker,                      String, :unique => true
+  property :date,                        String,   :required => true
+  property :ticker,                      String,   :unique => true
   property :frontMonth,                  Float
   property :backMonth,                   Float
 

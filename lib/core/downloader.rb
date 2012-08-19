@@ -29,11 +29,11 @@ class Downloader
         self.downloadSP500Tickers
         self.downloadEtfTopVol100
         self.downloadstockdetails
-        self.downloadEarnings
         self.downloadSChains
         self.downloadHistorical
         self.calculateStd
         self.calculateFronAndBackMonth
+        self.downloadEarnings
         self.calculateTotalChains
   end
 

@@ -19,7 +19,7 @@ class EarningsScraper
     filter = Ticker.all(:indexName=>'SP500').collect { |ticker| ticker.symbol }
     days = 30
     if test
-      days = 2
+      days = 10
     end
     t = DateTime.now
     t.step(t+days, step=1) { |n|
@@ -36,9 +36,15 @@ class EarningsScraper
               if obj.to_html.include? "http://finance.yahoo.com/q?"
                 ticker = obj.inner_text
 
-                if filter.include?(ticker)
+                if filter.include?(ticker)||test
                   puts 'Found earnings for: ' +ticker
-                  earning = Earning.create(:created_at => Time.now,:date=>date,:ticker=>ticker)
+                  stock = Ticker.first(:symbol=>ticker)
+                  if stock != nil
+                  earning = Earning.create(:created_at => Time.now,:date=>date,:ticker=>ticker,
+                                           :frontMonth=>stock.frontMonth,:backMonth=>stock.backMonth)
+                  else
+                    earning = Earning.create(:created_at => Time.now,:date=>date,:ticker=>ticker)
+                  end
                 end
               end
             end
@@ -48,7 +54,7 @@ class EarningsScraper
           end
         rescue => boom
           puts 'failed for date ' +date
-          puts boom.backtrace
+          puts boom
         end
       } # end request
       hydra.queue(request)

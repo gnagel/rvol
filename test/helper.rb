@@ -33,7 +33,7 @@ if (Earning.count==0)
   }
 
   Stocks.new.downloadStock2(ticker, true)
-  chains = OptionChainsScraper.new.loadChains(ticker, true)
+  chains = OptionChainsScraper.new.loadChains(Ticker.all, true)
   Historicalscraper.new.downloadHistoricalData(Stockdaily.all, true)
 
 

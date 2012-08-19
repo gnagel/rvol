@@ -3,7 +3,6 @@ require 'typhoeus'
 require 'rss/2.0'
 require 'ruport'
 require 'nokogiri'
-require 'core/tools'
 
 #
 # Rss scraper download market data for a particular ticker from a news rss.
