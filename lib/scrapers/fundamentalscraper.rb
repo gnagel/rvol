@@ -12,6 +12,7 @@ class Fundamentalscraper
          response = Scraper.new.downloadIncomeStamentMSNANN(symbol)
        else if type == 'qtr'
          response = Scraper.new.downloadIncomeStamentMSNQTR(symbol)
+            end
        end
        doc = Nokogiri::HTML(response.body)
        income1 = Incomestatement.new
