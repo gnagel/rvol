@@ -12,7 +12,6 @@ class Stocks
   def downloadStock2(tickers,persist)
     stocks = Array.new
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
-    hydra.disable_memoization
 
     howmany = tickers.size/100
     if(tickers.size<101)

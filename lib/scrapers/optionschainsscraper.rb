@@ -22,7 +22,7 @@ class OptionChainsScraper
     # measures the time to complete
     #Benchmark.bm do |x| x.report{
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
-    hydra.disable_memoization
+
     count=0
     tickers.each { |tick|
       date = DateTime.now

@@ -9,7 +9,6 @@ require 'model/stockhistorical'
 class Historicalscraper
   def downloadHistoricalData(stocks,persist)
     hydra = Typhoeus::Hydra.new(:max_concurrency => 20)
-    hydra.disable_memoization
     count=0
 
     stocks.each do |ticker|

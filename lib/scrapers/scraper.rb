@@ -38,7 +38,8 @@ class Scraper
   #
   # (www.google.com,:timeout=>1000)
   def self.downLoadHistory(ticker)
-    request = Typhoeus::Request.new('http://www.google.com/finance/historical?q='+ticker+'&output=csv',:timeout=>10000)
+    url = 'http://www.google.com/finance/historical?q='+ticker+'&startdate=Jan+01%2C+2005&enddate=Dec+31%2C+2012&output=csv'
+    request = Typhoeus::Request.new(url,:timeout=>10000)
   end
 
   #
